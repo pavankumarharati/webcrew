@@ -43,12 +43,25 @@ function floatTo16BitPCM(input: Float32Array): Int16Array {
   return out
 }
 
+// Box-filter (averaging) decimation, not point sampling. Naive nearest-neighbor
+// downsampling (picking every Nth sample) introduces aliasing that measurably
+// degrades Gemini's speech transcription — found 2026-08-23 auditing a real
+// conversation where the model's actual comprehension stayed correct (replies
+// tracked context fine) but its displayed transcript randomly rendered clearly-
+// English speech in Hindi/Telugu script, consistent with STT struggling on
+// degraded/aliased audio rather than a language-detection bug.
 function downsampleTo16k(input: Float32Array, inputRate: number): Float32Array {
   if (inputRate === 16000) return input
   const ratio = inputRate / 16000
   const outLength = Math.floor(input.length / ratio)
   const out = new Float32Array(outLength)
-  for (let i = 0; i < outLength; i++) out[i] = input[Math.floor(i * ratio)]
+  for (let i = 0; i < outLength; i++) {
+    const start = Math.floor(i * ratio)
+    const end = Math.min(input.length, Math.floor((i + 1) * ratio))
+    let sum = 0
+    for (let j = start; j < end; j++) sum += input[j]
+    out[i] = end > start ? sum / (end - start) : input[start] ?? 0
+  }
   return out
 }
 
