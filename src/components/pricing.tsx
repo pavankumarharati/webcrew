@@ -109,8 +109,8 @@ export default function Pricing() {
               <span className="gradient-brand"> {split('for less than a daily coffee.')}</span>
             </h2>
           </div>
-          <p style={{ color: 'var(--color-muted)', fontSize: '1.05rem', maxWidth: '520px', margin: '20px auto 0', lineHeight: 1.65 }}>
-            Every plan starts with a FREE demo site — no card required. Upgrade only when you see real results.
+          <p style={{ color: 'var(--color-muted)', fontSize: '1.05rem', maxWidth: '560px', margin: '20px auto 0', lineHeight: 1.65 }}>
+            Setup is normally $499 — it's $0 today. Every plan starts with a 2-week free trial, full access, no card required.
           </p>
 
           {/* Social proof pill */}
@@ -121,7 +121,7 @@ export default function Pricing() {
           }}>
             <span className="live-dot" />
             <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text)' }}>
-              First 10 customers — flexible 60-day founding pilot, tailored to budget and usage.
+              $0 setup (normally $499) + 2 weeks free — plus a founding pilot for the first 10 customers, tailored to budget and usage.
             </span>
           </div>
         </div>
@@ -133,8 +133,9 @@ export default function Pricing() {
         }} className="price-journey">
           {[
             { step: '1', label: 'Demo site', price: '$0', note: 'built overnight, no card' },
-            { step: '2', label: 'Own the code', price: '$299', note: 'one-time · yours forever' },
-            { step: '3', label: 'AI team', price: 'from $49/mo', note: 'hosting + 8 AI agents' },
+            { step: '2', label: 'Setup', price: '$0', note: 'normally $499 · free today' },
+            { step: '3', label: 'Free trial', price: '2 weeks', note: 'full access, no card' },
+            { step: '4', label: 'AI team', price: 'from $49/mo', note: 'after your trial ends' },
           ].map((s, i) => (
             <div key={s.step} style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{
@@ -143,11 +144,11 @@ export default function Pricing() {
                 borderRadius: 14, minWidth: 160,
               }}>
                 <div style={{ fontSize: '0.55rem', fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: 6 }}>Step {s.step}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.03em', color: i === 1 ? '#00C26F' : 'var(--color-text)', lineHeight: 1 }}>{s.price}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '-0.03em', color: i === 1 || i === 2 ? '#00C26F' : 'var(--color-text)', lineHeight: 1 }}>{s.price}</div>
                 <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text)', marginTop: 4 }}>{s.label}</div>
                 <div style={{ fontSize: '0.65rem', color: 'var(--color-muted)', marginTop: 2 }}>{s.note}</div>
               </div>
-              {i < 2 && <div style={{ width: 32, height: 1, background: 'var(--color-border)', flexShrink: 0 }} />}
+              {i < 3 && <div style={{ width: 32, height: 1, background: 'var(--color-border)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
@@ -356,8 +357,23 @@ export default function Pricing() {
           <span style={{ fontSize: '0.84rem', color: 'var(--color-muted)' }}>
             All plans include a{' '}
             <strong style={{ color: 'var(--color-text)' }}>FREE demo website built overnight</strong>
-            {' '}— no card required. Pay only if you love it.
+            {', '}<strong style={{ color: 'var(--color-text)' }}>$0 setup</strong> (normally $499),
+            {' '}and a <strong style={{ color: 'var(--color-text)' }}>2-week free trial</strong> — no card required.
             {' '}<a href="#contact" style={{ color: 'var(--color-accent)', fontWeight: 600, textDecoration: 'none' }}>Get started free →</a>
+          </span>
+        </div>
+
+        {/* Budget objection / crew banner */}
+        <div style={{
+          marginTop: 14, textAlign: 'center',
+          padding: '14px 24px',
+          background: 'rgba(0,194,110,0.05)',
+          border: '1px solid rgba(0,194,110,0.15)',
+          borderRadius: 14,
+        }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--color-muted)' }}>
+            Budget tight? <a href="#contact" style={{ color: 'var(--color-accent)', fontWeight: 600, textDecoration: 'none' }}>Talk to our crew</a> — we're here to help.
+            {' '}<span style={{ color: 'var(--color-text)', fontWeight: 600 }}>Happy Customers. Happy Business. Happy Crew.</span>
           </span>
         </div>
 
