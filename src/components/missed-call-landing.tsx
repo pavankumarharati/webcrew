@@ -102,7 +102,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
       {menuOpen && <div className="wc2-mobile-nav">{links.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<a href="#lead-form" onClick={() => setMenuOpen(false)}>See it in action →</a></div>}
 
       <main id="top">
-        <section className="wc2-hero">
+        <section className="wc2-hero" data-avatar-caption="Hey — I'm WebCrew's AI. I'll show you around, or just ask me anything.">
           <div className="wc2-hero-copy">
             <div className="wc2-pill"><Headphones size={14} /> AI front office · available 24/7</div>
             <h1>You miss the call.<br />They call your competitor.<br /><em>We fix that.</em></h1>
@@ -128,7 +128,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           </div>
         </section>
 
-        <section className="wc2-section wc2-problem" id="problem">
+        <section className="wc2-section wc2-problem" id="problem" data-avatar-caption="Every missed call like this is money walking to your competitor.">
           <Eyebrow>The problem</Eyebrow>
           <div className="wc2-split-head"><h2>How much money did your voicemail <em>lose you this week?</em></h2><p>You’re working. Driving. With a customer. On a job. The phone rings, you can’t answer—and they call the next business on Google.</p></div>
           <div className="wc2-problem-grid">
@@ -139,20 +139,20 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           <div className="wc2-inline-cta"><b>Missed call. Missed customer. Lost revenue.</b><Cta>Find my revenue leak</Cta></div>
         </section>
 
-        <section className="wc2-section wc2-solution" id="solution">
+        <section className="wc2-section wc2-solution" id="solution" data-avatar-caption="This is the fix — a 24/7 front office that never misses one.">
           <Eyebrow>The solution</Eyebrow>
           <div className="wc2-split-head"><h2>Your next customer is calling.<br /><em>WebCrew answers.</em></h2><p>WebCrew works like a 24/7 front office for your business. You do the work. We make sure you don’t lose the customer.</p></div>
           <div className="wc2-card-grid">{solutionCards.map(({ icon: Icon, title, body }, i) => <article key={title}><span className="wc2-card-num">0{i + 1}</span><div className="wc2-icon"><Icon /></div><h3>{title}</h3><p>{body}</p></article>)}</div>
         </section>
 
-        <section className="wc2-dark wc2-live-demo">
+        <section className="wc2-dark wc2-live-demo" data-avatar-caption="Not a mockup — call the number and hear it live.">
           <div className="wc2-dark-inner">
             <div><Eyebrow light>Live product proof</Eyebrow><h2>See what happens when you stop <em>missing customers.</em></h2><p>Call our live WebCrew AI Reception and test the experience yourself. It will ask about your business, capture your needs, and can help book a follow-up.</p><a className="wc2-live-call" href={`tel:${AI_RECEPTION_PHONE}`}><PhoneCall size={18} /> <span>Call <strong>(918) 255-5151</strong><small>Live AI Reception · test it now</small></span><ArrowRight size={17} /></a></div>
             <div className="wc2-dark-feed">{['Incoming call received', 'Customer asks about availability', 'Lead qualified', 'Appointment requested', 'Business owner notified'].map((x, i) => <div key={x}><span>{i === 0 ? '6:42 PM' : i < 3 ? '6:43 PM' : '6:44 PM'}</span><i>{i + 1}</i><b>{x}</b><CheckCircle2 /></div>)}</div>
           </div>
         </section>
 
-        <section className="wc2-section wc2-calculator" id="calculator">
+        <section className="wc2-section wc2-calculator" id="calculator" data-avatar-caption="Drag the sliders — that's real revenue slipping through today.">
           <div className="wc2-calc-copy"><Eyebrow>Revenue leak calculator</Eyebrow><h2>What is one missed customer <em>worth to you?</em></h2><p>Not because customers aren’t calling. Because nobody is answering.</p></div>
           <div className="wc2-calc-card">
             <label><span>Missed calls each week <b>{calls}</b></span><input type="range" min="1" max="30" value={calls} onChange={e => setCalls(Number(e.target.value))} /></label>
@@ -162,7 +162,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           </div>
         </section>
 
-        <section className="wc2-section wc2-how" id="how-it-works">
+        <section className="wc2-section wc2-how" id="how-it-works" data-avatar-caption="No new software, no new hire — just answered calls.">
           <Eyebrow>How it works</Eyebrow><div className="wc2-split-head"><h2>From missed calls to <em>booked customers.</em></h2><p>No complicated software. No new employee to train. No customer sitting in voicemail.</p></div>
           <div className="wc2-steps">{[
             ['1', 'Tell us about your business', 'Your services, hours, service area, and how you prefer to handle customers.'],
@@ -172,7 +172,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           <div className="wc2-center"><Cta>Set up my WebCrew</Cta></div>
         </section>
 
-        <section className="wc2-section wc2-compare">
+        <section className="wc2-section wc2-compare" data-avatar-caption="Voicemail loses the lead. WebCrew keeps it.">
           <Eyebrow>Why WebCrew</Eyebrow><h2>Your voicemail isn’t <em>working for you.</em></h2>
           <div className="wc2-table"><div className="head"><b>What happens next?</b><b>Voicemail</b><b className="brand">WebCrew</b></div>{[
             ['Answers instantly', 'No', 'Yes'], ['Available after hours', 'Takes a message', 'Yes'], ['Qualifies customers', 'No', 'Yes'], ['Helps book appointments', 'No', 'Yes'], ['Follows up', 'No', 'Yes'], ['Keeps you informed', 'No', 'Yes'],
@@ -180,16 +180,16 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           <p className="wc2-compare-line">Voicemail records the customer you lost. <strong>WebCrew helps you keep them.</strong></p>
         </section>
 
-        <section className="wc2-dark wc2-industries" id="industries"><div className="wc2-dark-inner stacked"><Eyebrow light>Built for local businesses</Eyebrow><h2>Built for businesses that can’t stop working to <em>answer every call.</em></h2><div className="wc2-industry-grid">{industries.map((x, i) => <div key={x}><span>{String(i + 1).padStart(2, '0')}</span>{x}</div>)}</div><p>For local teams where <b>one missed call can mean one lost job.</b></p><Cta dark>See if WebCrew fits my business</Cta></div></section>
+        <section className="wc2-dark wc2-industries" id="industries" data-avatar-caption="Sound like your business? This was built for exactly that."><div className="wc2-dark-inner stacked"><Eyebrow light>Built for local businesses</Eyebrow><h2>Built for businesses that can’t stop working to <em>answer every call.</em></h2><div className="wc2-industry-grid">{industries.map((x, i) => <div key={x}><span>{String(i + 1).padStart(2, '0')}</span>{x}</div>)}</div><p>For local teams where <b>one missed call can mean one lost job.</b></p><Cta dark>See if WebCrew fits my business</Cta></div></section>
 
-        <section className="wc2-section wc2-proof">
+        <section className="wc2-section wc2-proof" data-avatar-caption="We only show verified results — no fake case studies.">
           <Eyebrow>Customer proof</Eyebrow><div className="wc2-split-head"><h2>Real businesses. Real calls. <em>Real results.</em></h2><p>We only publish verified customer outcomes. No fabricated companies, inflated numbers, or illustrative results presented as fact.</p></div>
           <div className="wc2-proof-placeholder"><ShieldCheck /><div><h3>Verified customer stories are being prepared.</h3><p>Results will appear here after customer approval and verification.</p></div><span>Proof-first policy</span></div>
         </section>
 
-        <section className="wc2-section wc2-faq" id="faq"><Eyebrow>FAQ</Eyebrow><h2>Everything practical. <em>Answered.</em></h2><div className="wc2-faq-list">{faqs.map(([q, a], i) => <button key={q} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span><b>{q}</b>{openFaq === i && <p>{a}</p>}</span><ChevronDown className={openFaq === i ? 'open' : ''} /></button>)}</div></section>
+        <section className="wc2-section wc2-faq" id="faq" data-avatar-caption="Got questions? I can probably answer them faster than reading."><Eyebrow>FAQ</Eyebrow><h2>Everything practical. <em>Answered.</em></h2><div className="wc2-faq-list">{faqs.map(([q, a], i) => <button key={q} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span><b>{q}</b>{openFaq === i && <p>{a}</p>}</span><ChevronDown className={openFaq === i ? 'open' : ''} /></button>)}</div></section>
 
-        <section className="wc2-final" id="contact"><div className="wc2-final-glow" /><div className="wc2-final-grid"><div className="wc2-final-copy"><div className="wc2-pill dark"><Sparkles size={14} /> No credit card · no setup fee</div><h2>Tell us where calls are <em>slipping through.</em></h2><p>Share the pressure points in your business. WebCrew will use them to prepare the right call-answering and follow-up workflow for you.</p><div className="wc2-form-benefits"><span><CheckCircle2 /> Personalized front-office walkthrough</span><span><CheckCircle2 /> Clear missed-revenue diagnosis</span><span><CheckCircle2 /> Human review before automation begins</span></div></div>
+        <section className="wc2-final" id="contact" data-avatar-caption="Ready? Tell me about your business and I'll take it from here."><div className="wc2-final-glow" /><div className="wc2-final-grid"><div className="wc2-final-copy"><div className="wc2-pill dark"><Sparkles size={14} /> No credit card · no setup fee</div><h2>Tell us where calls are <em>slipping through.</em></h2><p>Share the pressure points in your business. WebCrew will use them to prepare the right call-answering and follow-up workflow for you.</p><div className="wc2-form-benefits"><span><CheckCircle2 /> Personalized front-office walkthrough</span><span><CheckCircle2 /> Clear missed-revenue diagnosis</span><span><CheckCircle2 /> Human review before automation begins</span></div></div>
           {leadState === 'sent' ? <div className="wc2-lead-success" id="lead-form"><CheckCircle2 /><h3>Enquiry received.</h3><p>We’ll review your pain points and prepare the most useful next step. {lead.smsConsent ? 'Watch for a confirmation text from WebCrew.' : 'We’ll respond by email or phone without enrolling you in SMS.'}</p><a href="#top">Back to the top</a></div> :
           <form className="wc2-lead-form" id="lead-form" onSubmit={submitLead}>
             <div className="wc2-form-head"><div><b>Build my WebCrew plan</b><small>Usually takes under 2 minutes</small></div><span>Step 1 of 1</span></div>

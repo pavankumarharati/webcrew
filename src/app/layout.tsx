@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import './globals.css'
+import AvatarWidget from '@/components/avatar-widget'
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -230,7 +231,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <AvatarWidget />
+      </body>
     </html>
   )
 }
