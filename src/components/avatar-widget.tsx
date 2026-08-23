@@ -177,6 +177,9 @@ export default function AvatarWidget() {
     })
   }
 
+  // Connects the WS + Gemini session — text chat works off this alone.
+  // Mic capture is layered on separately via startMic() so a denied/failed
+  // mic permission degrades to text-only instead of blocking the session.
   async function startSession() {
     setErrorMsg('')
     setStatus('connecting')
@@ -185,12 +188,7 @@ export default function AvatarWidget() {
     try {
       turnstileTokenRef.current = await getTurnstileToken()
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 } })
-      streamRef.current = stream
-
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
-      const captureCtx: AudioContext = new AudioCtx()
-      captureCtxRef.current = captureCtx
       const playbackCtx: AudioContext = new AudioCtx()
       playbackCtxRef.current = playbackCtx
       nextPlayTimeRef.current = playbackCtx.currentTime
@@ -206,6 +204,7 @@ export default function AvatarWidget() {
         const msg = JSON.parse(event.data)
         if (msg.type === 'ready') {
           setStatus('listening')
+          startMic() // best-effort — failure here just means text-only, session already connected
         } else if (msg.type === 'audio') {
           playChunk(msg.data)
         } else if (msg.type === 'text') {
@@ -237,13 +236,30 @@ export default function AvatarWidget() {
           setStatus(s => (s === 'error' ? s : 'ended'))
         }
       }
+    } catch {
+      setErrorMsg('Could not connect. You can still try again, or type below.')
+      setStatus('error')
+    }
+  }
 
-      // Capture mic → downsample to 16kHz PCM16 → send as base64 JSON frames.
+  // Mic capture — independent of the WS session so it can be retried without
+  // reconnecting. Downsamples to 16kHz PCM16, sent as base64 JSON frames.
+  async function startMic() {
+    if (streamRef.current) return // already capturing
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 } })
+      streamRef.current = stream
+
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
+      const captureCtx: AudioContext = new AudioCtx()
+      captureCtxRef.current = captureCtx
+
       const source = captureCtx.createMediaStreamSource(stream)
       const processor = captureCtx.createScriptProcessor(4096, 1, 1)
       processorRef.current = processor
       processor.onaudioprocess = (e) => {
-        if (ws.readyState !== WebSocket.OPEN) return
+        const ws = wsRef.current
+        if (!ws || ws.readyState !== WebSocket.OPEN) return
         const input = e.inputBuffer.getChannelData(0)
         const down = downsampleTo16k(input, captureCtx.sampleRate)
         const pcm = floatTo16BitPCM(down)
@@ -252,9 +268,17 @@ export default function AvatarWidget() {
       source.connect(processor)
       processor.connect(captureCtx.destination)
     } catch (e: any) {
-      setErrorMsg(e?.name === 'NotAllowedError' ? 'Microphone access was denied. You can still type below.' : 'Could not start voice chat.')
-      setStatus('error')
+      setErrorMsg(e?.name === 'NotAllowedError' ? 'Microphone access was denied. You can still type below.' : 'Could not start the microphone. You can still type below.')
     }
+  }
+
+  function stopMic() {
+    processorRef.current?.disconnect()
+    processorRef.current = null
+    streamRef.current?.getTracks().forEach(t => t.stop())
+    streamRef.current = null
+    captureCtxRef.current?.close().catch(() => {})
+    captureCtxRef.current = null
   }
 
   function playChunk(base64Pcm24: string) {
@@ -294,11 +318,11 @@ export default function AvatarWidget() {
 
   function toggleMic() {
     if (streamRef.current) {
-      wsRef.current?.send(JSON.stringify({ type: 'stop' }))
-      teardown()
-      setStatus('ended')
+      stopMic()
+    } else if (wsRef.current?.readyState === WebSocket.OPEN) {
+      startMic() // session already connected — just (re)try the mic
     } else {
-      startSession()
+      startSession() // no session yet — start fresh (covers idle/ended/error states)
     }
   }
 
