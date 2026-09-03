@@ -13,12 +13,12 @@ WebCrew deploys a full AI front office for local businesses: a cinematic, lead-g
 5. **Weekly Report** — emails a Google Search Console traffic summary every Monday
 
 ## Pricing
-Currently onboarding founding clients directly — pricing available on request. Contact hello@webcrew.app.
-- No setup fee. No contracts. Cancel anytime.
+$0 setup fee, 2-week free trial, then a flat $299/month — the website, AI reception, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.
+- No contracts. Cancel anytime.
 - Every plan starts with a free demo website built overnight, no card required.
 
 ## Key Facts
-- 12 local businesses live with active AI teams (as of July 2026, early access)
+- Early access — onboarding founding clients directly
 - Average build time: 6 hours (no human involvement)
 - Average PageSpeed score: 97/100
 - 25+ niches: HVAC, Roofing, Dental, Med Spa, Salon, Barbershop, Cleaning, Landscaping, Junk Removal, Remodeling, Auto Detailing, Restaurant, Law Firm, Daycare, Plumbing, Pressure Washing, Epoxy Flooring, Foundation Repair, Septic Services, Tree Services, Skin Clinic, IV Therapy, Nail Studio, Real Estate

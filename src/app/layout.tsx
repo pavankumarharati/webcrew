@@ -80,16 +80,10 @@ const SCHEMA = {
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer support',
+        telephone: '+1-918-255-5151',
         email: 'hello@webcrew.app',
         availableLanguage: 'English',
         url: 'https://webcrew.app/#contact',
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '12',
-        bestRating: '5',
-        worstRating: '1',
       },
     },
     {
@@ -131,6 +125,29 @@ const SCHEMA = {
       },
     },
     {
+      '@type': 'ItemList',
+      '@id': 'https://webcrew.app/#whats-included',
+      name: "What's Included in Every WebCrew Plan",
+      description: 'The complete list of what every WebCrew local-business client gets, included in one flat monthly price.',
+      numberOfItems: 10,
+      itemListElement: [
+        'Custom website, built overnight, on your own domain — yours to keep',
+        'AI receptionist that answers every call 24/7, in a voice tuned to your business',
+        'Automatic appointment booking with confirmation',
+        'Call transcript and summary sent after every call',
+        'Instant SMS and email alert the moment a lead comes in',
+        'Missed-call text-back — a caller who can\'t reach you still gets a reply in seconds',
+        'Automatic lead follow-up (day 3, day 10) so a warm lead never goes cold',
+        'Weekly Google Business Profile posts (52 a year) and auto-replies to every Google review',
+        'Monthly traffic and ranking report, 97+ PageSpeed, SSL, mobile-perfect out of the box',
+        'One flat price — $0 setup, 2-week free trial, then $299/mo, everything above included',
+      ].map((text, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: text,
+      })),
+    },
+    {
       '@type': 'HowTo',
       name: 'How to Get an AI Front Office for Your Local Business with WebCrew',
       description: 'WebCrew sets up your AI front office overnight — website built, calls answered, Google managed, reviews replied.',
@@ -166,23 +183,31 @@ const SCHEMA = {
           name: 'What is WebCrew?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'WebCrew is an AI front office for local businesses in the United States. It answers inbound calls 24/7, qualifies leads, captures customer details, supports appointment booking, follows up, and keeps the business owner informed.',
+            text: 'WebCrew is an AI front office for local businesses in the United States. It answers every inbound call 24/7, qualifies leads, books appointments, sends you a summary after every call, and follows up automatically — plus a custom website built overnight, weekly Google Business Profile posts, and automatic review replies, all in one flat monthly plan.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Is the demo really free? What\'s the catch?',
+          name: 'Will WebCrew replace my phone number?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. No credit card, deposit, or setup fee is required to see WebCrew working for your business. You review the experience before deciding whether to continue.',
+            text: 'No. We work with your existing business flow and configure how calls should be answered, routed, summarized, and followed up.',
           },
         },
         {
           '@type': 'Question',
-          name: 'What 5 AI agents does WebCrew provide?',
+          name: 'Can it answer after hours and on weekends?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Every WebCrew client gets 5 AI agents that run 24/7: (1) AI Reception uses Gemini Live voice AI to answer every inbound call, handling bookings, pricing questions, and hours — trained on your specific business. (2) Revenue Alert sends you an instant SMS the moment any lead submits your contact form, so you never miss a hot lead. (3) GBP Post Agent writes and publishes a Google Business Profile update every week, keeping your profile active and signaling relevance to Google\'s local algorithm. (4) Review Reply Agent writes and posts contextual AI replies to every new Google review within hours, showing responsiveness to future customers and boosting review velocity. (5) Weekly Report emails you a Google Search Console summary every Monday showing your top keywords, impressions, clicks, and position trends.',
+            text: 'Yes. WebCrew is designed to respond 24/7, so callers are not pushed into voicemail when your team is unavailable.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How does WebCrew know what to say?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'We learn your services, hours, service area, common questions, booking preferences, and escalation rules before you go live.',
           },
         },
         {
@@ -190,31 +215,23 @@ const SCHEMA = {
           name: 'How fast does WebCrew build a website?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'WebCrew builds and deploys a complete custom website in approximately 6 hours with no human involvement. The AI pipeline runs the moment you submit the form: Firecrawl scans your brand, Gemini AI generates city-specific copy, fal.ai Flux Pro creates custom hero images, and Cloudflare Pages deploys the live Next.js site. Most clients wake up to a text with their live URL the morning after submitting. Sites score an average of 97/100 on Google PageSpeed.',
+            text: 'Most clients wake up to a text with their live site link the morning after submitting the form — the AI pipeline builds and deploys a complete custom website in about 6 hours with no human involvement, averaging 97/100 on Google PageSpeed.',
           },
         },
         {
           '@type': 'Question',
-          name: 'What niches does WebCrew serve?',
+          name: 'What does WebCrew cost?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'WebCrew serves 25+ local business niches across the United States: HVAC, Roofing, Plumbing, Cleaning, Landscaping, Junk Removal, Remodeling, Auto Detailing, Pressure Washing, Epoxy Flooring, Foundation Repair, Septic Services, Tree Services, Dentist, Med Spa, Skin Clinic, IV Therapy, Nail Studio, Salon, Barbershop, Daycare, Restaurant, Law Firm, Real Estate, and more. Every niche gets a fully custom design — different layout, copy, imagery, and local SEO signals, not a swapped-name template.',
+            text: '$0 setup fee and a 2-week free trial. After that it is a flat $299/month — the website, AI receptionist, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Will the website rank on Google and appear in AI search results?',
+          name: 'Can I see it work before committing?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Every WebCrew site launches with LocalBusiness schema markup, FAQPage schema, AggregateRating schema, Service schema, a sitemap.xml, and robots.txt optimized for Google and AI crawler indexing (GPTBot, ClaudeBot, PerplexityBot all allowed). Every plan includes weekly Google Business Profile posts that signal local relevance and automated review replies that increase review velocity — two of the strongest local ranking factors. Most clients receive their first Google-sourced lead within 7 days. Sites also get an llms.txt file so AI systems like ChatGPT, Perplexity, and Gemini can accurately describe the business when users ask local queries.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'What if I already have a website?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Use the "Upgrade My Site" tab in the contact form at webcrew.app. WebCrew builds a complete redesign as a free demo while your current site stays live — zero risk, zero downtime, no DNS changes needed. You compare both versions. If the WebCrew site is better, you switch. If not, you keep yours and pay nothing. The AI pipeline scans your current site for brand signals, colors, and copy, then builds an improved version with better PageSpeed score, richer schema markup, and stronger local SEO signals.',
+            text: 'Yes. Call the live AI Reception line at (918) 255-5151 to test it yourself, or request a walkthrough tailored to your business. No credit card or setup fee is required to see it working.',
           },
         },
       ],

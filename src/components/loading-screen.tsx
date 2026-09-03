@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import BrandMark from './brand-mark'
 
 export default function LoadingScreen() {
   const screenRef  = useRef<HTMLDivElement>(null)
@@ -71,7 +72,7 @@ export default function LoadingScreen() {
 
       <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
         <div ref={logoRef} style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <img src="/logo.png" alt="WebCrew" style={{ width: '56px', height: '56px', objectFit: 'contain' }} />
+          <BrandMark size={56} />
           <span
             style={{
               fontFamily: 'var(--font-display)',

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import { SHOW_PUBLIC_PRICING } from '@/lib/features'
+import BrandMark from './brand-mark'
 
 const LINKS = [
   { label: 'How It Works', href: '#how-it-works' },
@@ -47,7 +48,7 @@ export default function Nav() {
       >
         {/* Logo */}
         <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', zIndex: 10 }}>
-          <img src="/logo.png" alt="WebCrew" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+          <BrandMark size={32} />
           <span style={{
             fontFamily: 'var(--font-display)', fontWeight: 800,
             fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#FFFFFF',

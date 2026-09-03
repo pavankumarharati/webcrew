@@ -8,49 +8,46 @@ if (typeof window !== "undefined") { gsap.registerPlugin(ScrollTrigger) }
 
 const TIERS = [
   {
-    id: 'starter',
-    name: 'Starter',
-    price: 49,
+    id: 'front-office',
+    name: 'AI Front Office',
+    price: 299,
     note: 'per month · cancel anytime',
-    tagline: 'Website + daily growth stack. The perfect start.',
-    cta: 'Get Started Free',
-    popular: false,
-    color: '#0EA5E9',
+    tagline: 'Website + AI receptionist that answers every call, books appointments, and runs your front office end to end.',
+    cta: 'Get Started',
+    popular: true,
+    color: '#00C26F',
     features: [
       { label: 'Website built overnight — custom to your brand', included: true },
       { label: 'Custom domain (yourdomain.com) — yours forever', included: true },
+      { label: 'AI Reception — answers calls 24/7 in your voice', included: true },
+      { label: 'Appointment booking via AI (auto-confirms)', included: true },
+      { label: 'Call transcripts + summary sent after every call', included: true },
       { label: 'Instant lead SMS + email alerts', included: true },
       { label: 'Weekly Google Business Profile posts (52/yr)', included: true },
       { label: 'Reply to every Google review automatically', included: true },
       { label: 'Monthly GSC traffic + ranking report', included: true },
       { label: 'PageSpeed 97/100 · SSL · Mobile-perfect', included: true },
-      { label: 'AI Reception 24/7 call answering', included: false },
-      { label: 'Social media (Instagram + Facebook + GBP)', included: false },
-      { label: 'Ads manager (Google + Meta)', included: false },
-      { label: 'Multi-location dashboard', included: false },
-    ],
-    value: '$430/mo at any agency',
-  },
-  {
-    id: 'growth',
-    name: 'Growth',
-    price: 149,
-    note: 'per month · cancel anytime',
-    tagline: 'Everything in Starter + AI answers every call 24/7.',
-    cta: 'Start Growth Plan',
-    popular: true,
-    color: '#00C26F',
-    comingSoon: false,
-    features: [
-      { label: 'Everything in Starter', included: true },
-      { label: 'AI Reception — answers calls 24/7 in your voice', included: true },
-      { label: 'Appointment booking via AI (auto-confirms)', included: true },
-      { label: 'Call transcripts + summary sent after every call', included: true },
       { label: 'Social media posts (IG + FB + GBP)', included: false, badge: 'Coming Soon' },
       { label: 'Ads manager (Google + Meta)', included: false },
-      { label: 'Multi-location dashboard', included: false },
     ],
     value: '$1,200+/mo at any agency',
+  },
+  {
+    id: 'custom',
+    name: 'Custom',
+    price: 'Custom',
+    note: 'multi-location · e-commerce · integrations',
+    tagline: 'Everything in AI Front Office, sized for multi-location and franchise operators.',
+    cta: 'Talk to our crew',
+    popular: false,
+    color: '#8B5CF6',
+    features: [
+      { label: 'Everything in AI Front Office', included: true },
+      { label: 'Multi-location dashboard', included: true },
+      { label: 'E-commerce / booking integrations', included: true },
+      { label: 'CRM integrations', included: true },
+      { label: 'Dedicated onboarding specialist', included: true },
+    ],
   },
 ]
 
@@ -121,7 +118,7 @@ export default function Pricing() {
           }}>
             <span className="live-dot" />
             <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text)' }}>
-              $0 setup (normally $499) + 2 weeks free — plus a founding pilot for the first 10 customers, tailored to budget and usage.
+              $0 setup (normally $499) + 2 weeks free for every new customer, always.
             </span>
           </div>
         </div>
@@ -135,7 +132,7 @@ export default function Pricing() {
             { step: '1', label: 'Demo site', price: '$0', note: 'built overnight, no card' },
             { step: '2', label: 'Setup', price: '$0', note: 'normally $499 · free today' },
             { step: '3', label: 'Free trial', price: '2 weeks', note: 'full access, no card' },
-            { step: '4', label: 'AI team', price: 'from $49/mo', note: 'after your trial ends' },
+            { step: '4', label: 'AI team', price: '$299/mo', note: 'after your trial ends' },
           ].map((s, i) => (
             <div key={s.step} style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{
@@ -152,10 +149,6 @@ export default function Pricing() {
             </div>
           ))}
         </div>
-
-        <p style={{ textAlign: 'center', maxWidth: 700, margin: '-14px auto 36px', color: 'var(--color-muted)', fontSize: '0.82rem', lineHeight: 1.6 }}>
-          Need AI reception on a smaller starting budget? Tell us what feels comfortable. Eligible founding customers can start with a limited voice pilot from $59/month; included usage and features are confirmed before onboarding.
-        </p>
 
         {/* 2-column card grid */}
         <div
@@ -247,25 +240,27 @@ export default function Pricing() {
                   fontSize: '2.8rem', letterSpacing: '-0.04em',
                   color: tier.popular ? tier.color : 'var(--color-text)',
                 }}>
-                  ${tier.price}
+                  {typeof tier.price === 'number' ? `$${tier.price}` : tier.price}
                 </span>
-                <span style={{ color: 'var(--color-muted)', fontSize: '0.78rem' }}>/mo</span>
+                {typeof tier.price === 'number' && <span style={{ color: 'var(--color-muted)', fontSize: '0.78rem' }}>/mo</span>}
               </div>
               <div style={{ fontSize: '0.72rem', color: 'var(--color-muted)', marginBottom: 10, lineHeight: 1.4 }}>
                 {tier.note}
               </div>
 
               {/* Value comparison */}
-              <div style={{
-                fontSize: '0.68rem', fontWeight: 600,
-                color: tier.color,
-                background: `${tier.color}0C`,
-                border: `1px solid ${tier.color}22`,
-                borderRadius: 7, padding: '6px 10px',
-                marginBottom: 16, lineHeight: 1.4,
-              }}>
-                {tier.value}
-              </div>
+              {(tier as any).value && (
+                <div style={{
+                  fontSize: '0.68rem', fontWeight: 600,
+                  color: tier.color,
+                  background: `${tier.color}0C`,
+                  border: `1px solid ${tier.color}22`,
+                  borderRadius: 7, padding: '6px 10px',
+                  marginBottom: 16, lineHeight: 1.4,
+                }}>
+                  {(tier as any).value}
+                </div>
+              )}
 
               {/* Tagline */}
               <p style={{ color: 'var(--color-muted)', fontSize: '0.82rem', lineHeight: 1.55, marginBottom: 20 }}>
@@ -410,7 +405,7 @@ export default function Pricing() {
 
           <div style={{ padding: '0 32px 24px' }}>
             {[
-              { phase: '1', label: 'Founding Members',    price: 'from $49/mo',  note: 'Locked for life on all current features',     current: true,  badge: 'NOW'  },
+              { phase: '1', label: 'Founding Members',    price: '$299/mo',      note: 'Locked for life on all current features',     current: true,  badge: 'NOW'  },
               { phase: '2', label: 'Public Launch',        price: 'from $199/mo', note: 'Price increases on launch day',               current: false, badge: 'NEXT' },
               { phase: '3', label: 'AI Reception Live',    price: 'from $249/mo', note: 'Reception now default across all plans',      current: false, badge: 'Q3'   },
               { phase: '4', label: 'Business OS v2',       price: 'from $399/mo', note: 'CRM + automations + referral network',        current: false, badge: 'Q4'   },
