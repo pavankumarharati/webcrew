@@ -1,6 +1,7 @@
 export const metadata = {
   title: 'Terms of Service — WebCrew',
   description: 'WebCrew terms of service.',
+  alternates: { canonical: 'https://webcrew.app/terms' },
 }
 
 const EFFECTIVE = 'July 15, 2026'

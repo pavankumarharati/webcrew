@@ -14,12 +14,12 @@ User-agent: PerplexityBot
 Allow: /
 
 User-agent: CCBot
-Disallow: /
+Allow: /
 
 User-agent: anthropic-ai
-Disallow: /
+Allow: /
 
 User-agent: cohere-ai
-Disallow: /
+Allow: /
 
 Sitemap: https://webcrew.app/sitemap.xml

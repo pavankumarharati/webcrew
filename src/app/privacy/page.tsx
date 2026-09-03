@@ -1,6 +1,7 @@
 export const metadata = {
   title: 'Privacy Policy — WebCrew',
   description: 'WebCrew privacy policy — how we collect and use your information.',
+  alternates: { canonical: 'https://webcrew.app/privacy' },
 }
 
 const EFFECTIVE = 'July 15, 2026'

@@ -33,6 +33,10 @@ $0 setup fee, 2-week free trial, then a flat $299/month — the website, AI rece
 
 ## Pages
 - https://webcrew.app — Main site with product details, demo experience, and contact form
+- https://webcrew.app/hvac — AI receptionist and website for HVAC companies, no-heat/no-AC/gas-smell call triage
+- https://webcrew.app/roofing — AI receptionist and website for roofing companies, storm damage and leak call triage
+- https://webcrew.app/plumbing — AI receptionist and website for plumbing companies, burst pipe and emergency call triage
+- https://webcrew.app/electricians — AI receptionist and website for electricians, power outage and safety call triage
 - https://webcrew.app/privacy — Privacy policy including SMS consent and carrier clause
 - https://webcrew.app/terms — Terms of service
 

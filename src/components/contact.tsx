@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import { getReferralCode } from '@/lib/referral'
 
 if (typeof window !== "undefined") { gsap.registerPlugin(ScrollTrigger) }
 
@@ -124,6 +125,7 @@ export default function Contact() {
           submittedAt:   new Date().toISOString(),
           consentTimestamp: new Date().toISOString(),
           consentLanguage: 'I agree to receive SMS updates about my website demo from WebCrew. Message & data rates may apply. Reply STOP to opt out.',
+          referredBy:    getReferralCode() || undefined,
         }),
       })
       setSent(true)
@@ -153,6 +155,7 @@ export default function Contact() {
           websiteUrl: audit.websiteUrl,
           source:     'webcrew.app',
           submittedAt: new Date().toISOString(),
+          referredBy: getReferralCode() || undefined,
         }),
       })
       setSent(true)

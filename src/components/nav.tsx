@@ -10,6 +10,7 @@ const LINKS = [
   { label: 'Showcase',     href: '#showcase' },
   { label: 'Features',     href: '#features' },
   ...(SHOW_PUBLIC_PRICING ? [{ label: 'Pricing', href: '#pricing' }] : []),
+  { label: 'Affiliates',   href: '/affiliate' },
 ]
 
 export default function Nav() {

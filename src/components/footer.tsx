@@ -68,6 +68,7 @@ export default function Footer() {
               { label: 'Showcase',     href: '#showcase' },
               { label: 'Features',     href: '#features' },
               ...(SHOW_PUBLIC_PRICING ? [{ label: 'Pricing', href: '#pricing' }] : []),
+              { label: 'Affiliates',   href: '/affiliate' },
             ].map(l => (
               <a key={l.href} href={l.href} style={{
                 display: 'block', color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem',
@@ -97,6 +98,7 @@ export default function Footer() {
             {[
               { label: 'Privacy Policy',    href: '/privacy' },
               { label: 'Terms of Service',  href: '/terms' },
+              { label: 'Affiliate Terms',   href: '/affiliate-terms' },
               { label: 'Contact Us',        href: '#contact' },
             ].map(l => (
               <a key={l.href} href={l.href} style={{
