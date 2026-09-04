@@ -501,9 +501,9 @@ function MiniFace({ speaking, mouthLevel = 0 }: { speaking: boolean; mouthLevel?
         }} />
       ) : (
         <div style={{
-          position: 'absolute', bottom: 5, left: '50%', transform: 'translateX(-50%)',
-          width: 12, height: 6, borderRadius: '0 0 12px 12px',
-          borderTop: 'none', borderLeft: `2px solid ${ORANGE}`, borderRight: `2px solid ${ORANGE}`, borderBottom: `2px solid ${ORANGE}`,
+          position: 'absolute', bottom: 6, left: '50%', transform: 'translateX(-50%)',
+          width: 11, height: 4, borderRadius: '0 0 11px 11px',
+          borderTop: 'none', borderLeft: `1.5px solid ${ORANGE}`, borderRight: `1.5px solid ${ORANGE}`, borderBottom: `1.5px solid ${ORANGE}`,
         }} />
       )}
     </div>
