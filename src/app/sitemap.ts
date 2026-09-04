@@ -32,5 +32,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://webcrew.app/electricians',
       lastModified: '2026-09-03',
     },
+    {
+      url: 'https://webcrew.app/contractors',
+      lastModified: '2026-09-03',
+    },
+    {
+      url: 'https://webcrew.app/cleaning',
+      lastModified: '2026-09-03',
+    },
+    {
+      url: 'https://webcrew.app/auto-services',
+      lastModified: '2026-09-03',
+    },
+    {
+      url: 'https://webcrew.app/salons',
+      lastModified: '2026-09-03',
+    },
+    {
+      url: 'https://webcrew.app/spas',
+      lastModified: '2026-09-03',
+    },
+    {
+      url: 'https://webcrew.app/home-services',
+      lastModified: '2026-09-03',
+    },
   ]
 }

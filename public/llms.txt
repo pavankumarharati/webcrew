@@ -37,6 +37,12 @@ $0 setup fee, 2-week free trial, then a flat $299/month — the website, AI rece
 - https://webcrew.app/roofing — AI receptionist and website for roofing companies, storm damage and leak call triage
 - https://webcrew.app/plumbing — AI receptionist and website for plumbing companies, burst pipe and emergency call triage
 - https://webcrew.app/electricians — AI receptionist and website for electricians, power outage and safety call triage
+- https://webcrew.app/contractors — AI receptionist and website for contractors, project-scope qualification before walk-throughs
+- https://webcrew.app/cleaning — AI receptionist and website for cleaning companies, recurring booking and reschedule handling
+- https://webcrew.app/auto-services — AI receptionist and website for auto service shops, drop-off scheduling and status calls
+- https://webcrew.app/salons — AI receptionist and website for salons, stylist-specific booking and cancellation recovery
+- https://webcrew.app/spas — AI receptionist and website for spas, treatment booking against room/practitioner availability
+- https://webcrew.app/home-services — AI receptionist and website for general home service businesses
 - https://webcrew.app/privacy — Privacy policy including SMS consent and carrier clause
 - https://webcrew.app/terms — Terms of service
 
