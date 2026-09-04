@@ -43,6 +43,8 @@ $0 setup fee, 2-week free trial, then a flat $299/month — the website, AI rece
 - https://webcrew.app/salons — AI receptionist and website for salons, stylist-specific booking and cancellation recovery
 - https://webcrew.app/spas — AI receptionist and website for spas, treatment booking against room/practitioner availability
 - https://webcrew.app/home-services — AI receptionist and website for general home service businesses
+- https://webcrew.app/ai-receptionist — Deep dive on the AI receptionist itself: how the 24/7 voice AI answering works, independent of any one industry
+- https://webcrew.app/google-business-profile-management — Deep dive on the automatic weekly Google Business Profile posting and review-reply agents
 - https://webcrew.app/privacy — Privacy policy including SMS consent and carrier clause
 - https://webcrew.app/terms — Terms of service
 

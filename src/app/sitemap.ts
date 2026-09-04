@@ -56,5 +56,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://webcrew.app/home-services',
       lastModified: '2026-09-03',
     },
+    {
+      url: 'https://webcrew.app/ai-receptionist',
+      lastModified: '2026-09-04',
+    },
+    {
+      url: 'https://webcrew.app/google-business-profile-management',
+      lastModified: '2026-09-04',
+    },
   ]
 }
