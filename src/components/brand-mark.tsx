@@ -7,6 +7,8 @@
 export default function BrandMark({ size = 32 }: { size?: number }) {
   const eye = Math.max(3, size * 0.14)
   const mouthW = size * 0.42
+  const mouthH = mouthW * 0.55
+  const mouthBorder = Math.max(1.5, size * 0.07)
 
   return (
     <div
@@ -24,7 +26,13 @@ export default function BrandMark({ size = 32 }: { size?: number }) {
       <div className="wc-mark-idle" style={{ position: 'absolute', inset: 0 }}>
         <div className="wc-mark-eye" style={{ position: 'absolute', top: size * 0.32, left: size * 0.28, width: eye, height: eye, borderRadius: '50%', background: '#fff' }} />
         <div className="wc-mark-eye" style={{ position: 'absolute', top: size * 0.32, right: size * 0.28, width: eye, height: eye, borderRadius: '50%', background: '#fff' }} />
-        <div style={{ position: 'absolute', bottom: size * 0.24, left: '50%', transform: 'translateX(-50%)', width: mouthW, height: Math.max(2, size * 0.08), borderRadius: 999, background: 'var(--wc-orange, #ff6b1a)' }} />
+        <div style={{
+          position: 'absolute', bottom: size * 0.22, left: '50%', transform: 'translateX(-50%)',
+          width: mouthW, height: mouthH, borderRadius: `0 0 ${mouthW}px ${mouthW}px`,
+          borderTop: 'none', borderLeft: `${mouthBorder}px solid var(--wc-orange, #ff6b1a)`,
+          borderRight: `${mouthBorder}px solid var(--wc-orange, #ff6b1a)`,
+          borderBottom: `${mouthBorder}px solid var(--wc-orange, #ff6b1a)`,
+        }} />
       </div>
     </div>
   )

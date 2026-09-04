@@ -488,16 +488,24 @@ export default function AvatarWidget() {
 }
 
 function MiniFace({ speaking, mouthLevel = 0 }: { speaking: boolean; mouthLevel?: number }) {
-  const mouthHeight = speaking ? 3 + Math.min(9, mouthLevel * 40) : 2
+  const openHeight = 3 + Math.min(9, mouthLevel * 40)
   return (
     <div className={speaking ? '' : 'wc-avatar-face-idle'} style={{ width: 26, height: 26, position: 'relative' }}>
       <div className="wc-avatar-eye" style={{ position: 'absolute', top: 6, left: 4, width: 4, height: 4, borderRadius: '50%', background: '#fff' }} />
       <div className="wc-avatar-eye" style={{ position: 'absolute', top: 6, right: 4, width: 4, height: 4, borderRadius: '50%', background: '#fff' }} />
-      <div style={{
-        position: 'absolute', bottom: 5, left: '50%', transform: 'translateX(-50%)',
-        width: 12, height: mouthHeight, borderRadius: 6,
-        background: ORANGE, transition: speaking ? 'height 60ms linear' : 'height 200ms ease',
-      }} />
+      {speaking ? (
+        <div style={{
+          position: 'absolute', bottom: 5, left: '50%', transform: 'translateX(-50%)',
+          width: 12, height: openHeight, borderRadius: 6,
+          background: ORANGE, transition: 'height 60ms linear',
+        }} />
+      ) : (
+        <div style={{
+          position: 'absolute', bottom: 5, left: '50%', transform: 'translateX(-50%)',
+          width: 12, height: 6, borderRadius: '0 0 12px 12px',
+          borderTop: 'none', borderLeft: `2px solid ${ORANGE}`, borderRight: `2px solid ${ORANGE}`, borderBottom: `2px solid ${ORANGE}`,
+        }} />
+      )}
     </div>
   )
 }
