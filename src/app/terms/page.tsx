@@ -41,7 +41,7 @@ AI output may be incomplete, delayed, or incorrect and does not constitute legal
           },
           {
             title: 'Payment Terms',
-            body: `We offer several plans, published with current pricing at webcrew.app/#pricing — from a one-time website to the full AI Front Office (website, 24/7 AI reception, appointment booking, call transcripts and summaries, lead alerts, weekly Google Business Profile posts, and automatic review replies) at $0 setup fee and a 2-week free trial before any subscription billing starts. Some plans are not yet available and are shown as "coming soon."
+            body: `We offer several plans, published with current pricing at webcrew.app/#pricing — from a one-time website to the full AI Front Office (website, 24/7 AI reception, appointment booking, call transcripts and summaries, lead alerts, weekly Google Business Profile posts, and automatic review replies) at $0 setup fee and a 30-day free trial before any subscription billing starts. Some plans are not yet available and are shown as "coming soon."
 Custom/Enterprise services (multi-location, e-commerce, CRM integrations): only as confirmed in writing by an authorized WebCrew team member.
 
 Monthly fees are billed in advance and plans may be cancelled at any time. Late payments may result in service suspension. During an expressly offered founding-customer program, the AI receptionist may propose only system-authorized pilot prices, usage limits, and scope; the final plan is confirmed during onboarding. All fees are non-refundable except as described in our satisfaction guarantee.`,

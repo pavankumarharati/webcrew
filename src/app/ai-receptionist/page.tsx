@@ -2,7 +2,7 @@ import FeatureLanding, { FeatureContent } from '@/components/feature-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Small Business | WebCrew',
-  description: 'A real AI receptionist that answers every call 24/7, qualifies the caller, and books the appointment — not a voicemail replacement. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A real AI receptionist that answers every call 24/7, qualifies the caller, and books the appointment — not a voicemail replacement. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/ai-receptionist' },
   keywords: ['AI receptionist for small business', 'AI answering service', 'virtual receptionist for local business', '24/7 AI phone answering'],
 }
@@ -25,7 +25,7 @@ const F: FeatureContent = {
     'Call transcript and summary sent to you after every call',
     'Missed-call text-back and automatic day-3/day-10 follow-up',
     'Weekly Google Business Profile posts and review replies',
-    'One flat price — $0 setup, 2-week free trial, then $299/mo',
+    'One flat price — $0 setup, 30-day free trial, then $297/mo',
   ],
   faq: [
     ['Is this a chatbot or an actual phone call?', 'An actual phone call. Callers dial your real business number and have a live voice conversation — there’s no chat widget or text-only fallback for the phone line itself.'],

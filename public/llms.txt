@@ -13,7 +13,7 @@ WebCrew deploys a full AI front office for local businesses: a cinematic, lead-g
 5. **Weekly Report** — emails a Google Search Console traffic summary every Monday
 
 ## Pricing
-$0 setup fee, 2-week free trial, then a flat $299/month — the website, AI reception, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.
+$0 setup fee, 30-day free trial, then a flat $297/month — the website, AI reception, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.
 - No contracts. Cancel anytime.
 - Every plan starts with a free demo website built overnight, no card required.
 

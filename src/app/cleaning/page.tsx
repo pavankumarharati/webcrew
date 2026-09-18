@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Cleaning Companies | WebCrew',
-  description: 'A 24/7 AI receptionist that handles recurring bookings and reschedules without tying up your team — plus a website built overnight. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A 24/7 AI receptionist that handles recurring bookings and reschedules without tying up your team — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/cleaning' },
   keywords: ['AI receptionist for cleaning companies', 'cleaning service AI answering service', 'cleaning company missed call recovery', 'recurring booking AI scheduling'],
 }

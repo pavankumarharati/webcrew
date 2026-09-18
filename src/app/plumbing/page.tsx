@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Plumbing Companies | WebCrew',
-  description: 'A 24/7 AI receptionist that prioritizes burst pipes, no water, and sewage backups over routine calls — plus a website built overnight. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A 24/7 AI receptionist that prioritizes burst pipes, no water, and sewage backups over routine calls — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/plumbing' },
   keywords: ['plumber AI answering service', 'AI receptionist for plumbing companies', 'emergency plumbing call answering', 'plumbing missed call recovery'],
 }

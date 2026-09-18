@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Auto Service Shops | WebCrew',
-  description: 'A 24/7 AI receptionist that handles drop-off scheduling and "is my car ready" calls without pulling a tech off a bay — plus a website built overnight. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A 24/7 AI receptionist that handles drop-off scheduling and "is my car ready" calls without pulling a tech off a bay — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/auto-services' },
   keywords: ['AI receptionist for auto repair shops', 'auto service AI answering service', 'auto shop missed call recovery', 'auto repair appointment scheduling AI'],
 }

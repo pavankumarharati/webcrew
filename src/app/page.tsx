@@ -52,7 +52,7 @@ const HOME_SCHEMA = {
         'Automatic lead follow-up (day 3, day 10) so a warm lead never goes cold',
         'Weekly Google Business Profile posts (52 a year) and auto-replies to every Google review',
         'Monthly traffic and ranking report, 97+ PageSpeed, SSL, mobile-perfect out of the box',
-        'One flat price — $0 setup, 2-week free trial, then $299/mo, everything above included',
+        'One flat price — $0 setup, 30-day free trial, then $297/mo, everything above included',
       ].map((text, i) => ({
         '@type': 'ListItem',
         position: i + 1,
@@ -108,7 +108,7 @@ const HOME_SCHEMA = {
           name: 'What does WebCrew cost?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: '$0 setup fee and a 2-week free trial. After that it is a flat $299/month — the website, AI receptionist, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.',
+            text: '$0 setup fee and a 30-day free trial. After that it is a flat $297/month — the website, AI receptionist, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.',
           },
         },
         {

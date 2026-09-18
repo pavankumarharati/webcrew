@@ -24,7 +24,7 @@ export default function AffiliateTerms() {
           },
           {
             title: 'Commission Structure',
-            body: `Approved affiliates earn 30% of the recurring revenue collected from each client they refer who subscribes to the AI Front Office plan (currently $299/month) — that's $89.70/month per active referred client.
+            body: `Approved affiliates earn 30% of the recurring revenue collected from each client they refer who subscribes to the AI Front Office plan (currently $297/month) — that's $89.10/month per active referred client.
 
 Commission is recurring for the lifetime of that client's subscription, for as long as they remain an active, paying customer. There is no commission on setup fees or one-time charges. Commission is calculated on amounts actually collected, not list price — a discounted or refunded payment earns a proportionally lower or zero commission.`,
           },

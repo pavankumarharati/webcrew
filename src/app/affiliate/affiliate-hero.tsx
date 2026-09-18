@@ -8,8 +8,8 @@ if (typeof window !== 'undefined') { gsap.registerPlugin(ScrollTrigger) }
 
 const STEPS = [
   { icon: Link2, title: 'Get your link', body: 'Apply below — once approved, you get a unique referral link to share however you promote.' },
-  { icon: Users, title: 'They subscribe', body: 'A local business you refer signs up for the AI Front Office plan at $299/mo.' },
-  { icon: Wallet, title: 'You earn, monthly', body: '30% of what they pay — $89.70/mo per active client — for as long as they stay subscribed.' },
+  { icon: Users, title: 'They subscribe', body: 'A local business you refer signs up for the AI Front Office plan at $297/mo.' },
+  { icon: Wallet, title: 'You earn, monthly', body: '30% of what they pay — $89.10/mo per active client — for as long as they stay subscribed.' },
 ]
 
 export default function AffiliateHero() {
@@ -76,7 +76,7 @@ export default function AffiliateHero() {
             </h1>
           </div>
           <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontSize: '1.05rem', maxWidth: '520px', margin: '0 auto 32px' }}>
-            No cap, no clawback games. A client you refer pays $299/mo — you earn $89.70/mo for as long as they stay a customer.
+            No cap, no clawback games. A client you refer pays $297/mo — you earn $89.10/mo for as long as they stay a customer.
           </p>
           <a
             href="#apply"
@@ -144,7 +144,7 @@ export default function AffiliateHero() {
                 $448.50/mo
               </span>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>
-                5 × $89.70 — paid every month they stay
+                5 × $89.10 — paid every month they stay
               </span>
             </div>
           </div>

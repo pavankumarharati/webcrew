@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Check, Mail } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { PLAN_LIST, priceLabel, type PlanDef } from '@/lib/plans'
 import BudgetSlider from './budget-slider'
 import CountdownBanner from './countdown-banner'
@@ -13,57 +13,9 @@ if (typeof window !== "undefined") { gsap.registerPlugin(ScrollTrigger) }
 // visual-only, doesn't belong in the shared plan data.
 const PLAN_COLOR: Record<PlanDef['key'], string> = {
   website_only: '#0EA5E9', website_hosted: '#6366F1', ai_front_office: '#00C26F',
-  ai_reception_only: '#F59E0B', everything: '#EC4899', marketing_only: '#EC4899',
+  ai_reception_only: '#F59E0B',
 }
 const POPULAR_KEY: PlanDef['key'] = 'ai_front_office'
-
-function WaitlistCapture({ plan }: { plan: PlanDef }) {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email.trim()) return
-    setStatus('sending')
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? 'https://api.webcrew.app'}/waitlist`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), planKey: plan.key }),
-      })
-      setStatus(res.ok ? 'sent' : 'error')
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  if (status === 'sent') {
-    return <p style={{ fontSize: '0.78rem', color: PLAN_COLOR[plan.key], fontWeight: 600, textAlign: 'center', marginBottom: 22 }}>You're on the list — we'll email you the moment it's ready.</p>
-  }
-
-  return (
-    <form onSubmit={submit} style={{ display: 'flex', gap: 6, marginBottom: 22 }}>
-      <input
-        type="email" required placeholder="you@business.com" value={email}
-        onChange={e => setEmail(e.target.value)}
-        style={{
-          flex: 1, minWidth: 0, background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-          borderRadius: 8, padding: '10px 12px', fontSize: '0.78rem', color: 'var(--color-text)', outline: 'none',
-        }}
-      />
-      <button
-        type="submit" disabled={status === 'sending'}
-        style={{
-          flexShrink: 0, display: 'flex', alignItems: 'center', gap: 5,
-          background: 'transparent', border: `1px solid ${PLAN_COLOR[plan.key]}50`, color: PLAN_COLOR[plan.key],
-          borderRadius: 8, padding: '10px 14px', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer',
-        }}
-      >
-        <Mail size={12} /> {status === 'sending' ? '…' : 'Notify me'}
-      </button>
-    </form>
-  )
-}
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -121,7 +73,7 @@ export default function Pricing() {
             </h2>
           </div>
           <p style={{ color: 'var(--color-muted)', fontSize: '1.05rem', maxWidth: '560px', margin: '20px auto 0', lineHeight: 1.65 }}>
-            Setup is normally $499 — it's $0 today. Every plan starts with a 2-week free trial, full access, no card required.
+            Setup usually costs $499–$999+ — it's $0 today. Every plan starts with a 30-day free trial, full access — card required, no charge until the trial ends.
           </p>
 
           {/* Social proof pill */}
@@ -132,7 +84,7 @@ export default function Pricing() {
           }}>
             <span className="live-dot" />
             <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text)' }}>
-              $0 setup (normally $499) + a free trial for every new customer during the founding window.
+              $0 setup (usually $499–$999+) + a free trial for every new customer during the founding window.
             </span>
           </div>
         </div>
@@ -146,9 +98,9 @@ export default function Pricing() {
         }} className="price-journey">
           {[
             { step: '1', label: 'Demo site', price: '$0', note: 'built overnight, no card' },
-            { step: '2', label: 'Setup', price: '$0', note: 'normally $499 · free today' },
-            { step: '3', label: 'Free trial', price: '2 weeks', note: 'or through Sep 25, whichever is sooner' },
-            { step: '4', label: 'AI team', price: '$299/mo', note: 'after your trial ends' },
+            { step: '2', label: 'Setup', price: '$0', note: 'usually $499–$999+ · free today' },
+            { step: '3', label: 'Free trial', price: '30 days', note: 'card required, no charge yet' },
+            { step: '4', label: 'AI team', price: '$297/mo', note: 'after your trial ends' },
           ].map((s, i) => (
             <div key={s.step} style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{
@@ -171,7 +123,7 @@ export default function Pricing() {
           ref={cardsRef}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, minmax(0,1fr))',
+            gridTemplateColumns: 'repeat(4, minmax(0,1fr))',
             gap: '20px',
             alignItems: 'stretch',
             maxWidth: '1180px',
@@ -199,11 +151,8 @@ export default function Pricing() {
                 position: 'relative',
                 boxShadow: popular ? `0 0 60px ${color}12` : 'none',
                 transition: 'transform 0.3s, box-shadow 0.3s',
-                opacity: plan.available ? 1 : 0.62,
-                filter: plan.available ? 'none' : 'grayscale(0.3)',
               }}
               onMouseEnter={e => {
-                if (!plan.available) return
                 const el = e.currentTarget
                 el.style.transform = 'translateY(-6px)'
                 el.style.boxShadow = `0 20px 60px ${color}20`
@@ -226,18 +175,6 @@ export default function Pricing() {
                 </div>
               )}
 
-              {!plan.available && (
-                <div style={{
-                  position: 'absolute', top: '-13px', left: '50%', transform: 'translateX(-50%)',
-                  background: 'rgba(156,163,175,0.18)', border: '1px solid rgba(156,163,175,0.3)',
-                  color: '#9CA3AF', fontWeight: 700, fontSize: '0.62rem',
-                  letterSpacing: '0.12em', textTransform: 'uppercase',
-                  padding: '5px 16px', borderRadius: '100px', whiteSpace: 'nowrap',
-                }}>
-                  Coming Soon
-                </div>
-              )}
-
               {popular && (
                 <div style={{ position: 'absolute', top: 0, left: '20%', right: '20%', height: 1, background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
               )}
@@ -246,7 +183,7 @@ export default function Pricing() {
               <div style={{
                 fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.2em',
                 textTransform: 'uppercase', color, marginBottom: 12,
-                marginTop: popular || !plan.available ? 8 : 0,
+                marginTop: popular ? 8 : 0,
               }}>
                 {plan.name}
               </div>
@@ -269,28 +206,24 @@ export default function Pricing() {
               </p>
 
               {/* CTA */}
-              {!plan.available ? (
-                <WaitlistCapture plan={plan} />
-              ) : (
-                <a
-                  href="#contact"
-                  onClick={e => {
-                    e.preventDefault()
-                    window.dispatchEvent(new CustomEvent('wc:tab', { detail: { tab: 'demo' } }))
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                  className={popular ? 'btn-primary' : 'btn-ghost'}
-                  style={{
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 7,
-                    textDecoration: 'none', marginBottom: 22,
-                    fontSize: '0.85rem', padding: '13px 20px',
-                    ...(popular ? {} : { borderColor: `${color}40`, color }),
-                    ...(popular ? { background: `linear-gradient(135deg, ${color}, #0EA5E9)` } : {}),
-                  }}
-                >
-                  Get Started <ArrowRight size={14} />
-                </a>
-              )}
+              <a
+                href="#contact"
+                onClick={e => {
+                  e.preventDefault()
+                  window.dispatchEvent(new CustomEvent('wc:tab', { detail: { tab: 'demo' } }))
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className={popular ? 'btn-primary' : 'btn-ghost'}
+                style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 7,
+                  textDecoration: 'none', marginBottom: 22,
+                  fontSize: '0.85rem', padding: '13px 20px',
+                  ...(popular ? {} : { borderColor: `${color}40`, color }),
+                  ...(popular ? { background: `linear-gradient(135deg, ${color}, #0EA5E9)` } : {}),
+                }}
+              >
+                Get Started <ArrowRight size={14} />
+              </a>
 
               {/* Feature list */}
               <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 16, flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -324,8 +257,8 @@ export default function Pricing() {
           <span style={{ fontSize: '0.84rem', color: 'var(--color-muted)' }}>
             All plans include a{' '}
             <strong style={{ color: 'var(--color-text)' }}>FREE demo website built overnight</strong>
-            {', '}<strong style={{ color: 'var(--color-text)' }}>$0 setup</strong> (normally $499),
-            {' '}and a <strong style={{ color: 'var(--color-text)' }}>2-week free trial</strong> — no card required.
+            {', '}<strong style={{ color: 'var(--color-text)' }}>$0 setup</strong> (usually $499–$999+),
+            {' '}and a <strong style={{ color: 'var(--color-text)' }}>30-day free trial</strong> — card required, no charge until the trial ends.
             {' '}<a href="#contact" style={{ color: 'var(--color-accent)', fontWeight: 600, textDecoration: 'none' }}>Get started free →</a>
           </span>
         </div>

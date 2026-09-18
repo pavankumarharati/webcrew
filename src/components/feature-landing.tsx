@@ -35,7 +35,7 @@ export default function FeatureLanding({ f }: { f: FeatureContent }) {
             <a className="wcn-cta" href={ctaHref}><span>See it live for my business</span><ArrowRight size={16} strokeWidth={2.5} /></a>
             <a className="wcn-call" href={`tel:${AI_RECEPTION_PHONE}`}><PhoneCall size={14} /> Call the live AI: <strong>(918) 255-5151</strong></a>
           </div>
-          <small>$0 setup fee · 2-week free trial · card required, no charge until trial ends</small>
+          <small>$0 setup fee · 30-day free trial · card required, no charge until trial ends</small>
         </section>
 
         <section className="wcn-triage">

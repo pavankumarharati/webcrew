@@ -2,7 +2,7 @@ import FeatureLanding, { FeatureContent } from '@/components/feature-landing'
 
 export const metadata = {
   title: 'Google Business Profile Management, Done Automatically | WebCrew',
-  description: 'Weekly Google Business Profile posts and AI-written review replies, done automatically — included in every WebCrew plan. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'Weekly Google Business Profile posts and AI-written review replies, done automatically — included in every WebCrew plan. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/google-business-profile-management' },
   keywords: ['Google Business Profile management', 'automated GBP posts', 'AI review reply service', 'Google Business Profile posting service'],
 }
@@ -25,10 +25,10 @@ const F: FeatureContent = {
     'AI receptionist answers every call 24/7',
     'Custom website built overnight, on your own domain',
     'Weekly traffic report from Google Search Console',
-    'One flat price — $0 setup, 2-week free trial, then $299/mo',
+    'One flat price — $0 setup, 30-day free trial, then $297/mo',
   ],
   faq: [
-    ['Is this a standalone product I can buy separately?', 'No — it’s included in every WebCrew plan alongside the AI receptionist, website, and lead alerts, at one flat $299/mo. There’s no separate GBP-only tier.'],
+    ['Is this a standalone product I can buy separately?', 'No — it’s included in every WebCrew plan alongside the AI receptionist, website, and lead alerts, at one flat $297/mo. There’s no separate GBP-only tier.'],
     ['Do I need to give you my Google account password?', 'No. Google Business Profile access is granted through Google’s own manager-access flow — WebCrew never asks for or stores your Google password.'],
     ['Can I review a post before it goes live?', 'Posts publish automatically on the weekly schedule. If you want a specific promotion or announcement featured, you can tell us and it gets worked into that week’s post.'],
     ['What happens with a negative review?', 'It still gets a reply — professional and de-escalating, not defensive — and if it needs your direct attention, you’re notified separately from the automatic reply.'],

@@ -22,7 +22,7 @@ const PAID_ITEMS = [
   { label: 'Auto-reply to Google reviews', tier: '$49/mo' },
   { label: 'Weekly traffic + ranking report', tier: '$49/mo' },
   { label: 'AI Reception — 24/7 call answering + booking', tier: '$199/mo' },
-  { label: 'Full AI Front Office (site + reception + booking + lead nurture)', tier: '$299/mo' },
+  { label: 'Full AI Front Office (site + reception + booking + lead nurture)', tier: '$297/mo' },
 ]
 
 export default function AfterYouJoin() {

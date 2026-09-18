@@ -34,7 +34,7 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
             <a className="wcn-cta" href={ctaHref}><span>See it for my {n.adj} business</span><ArrowRight size={16} strokeWidth={2.5} /></a>
             <a className="wcn-call" href={`tel:${AI_RECEPTION_PHONE}`}><PhoneCall size={14} /> Call the live AI: <strong>(918) 255-5151</strong></a>
           </div>
-          <small>$0 setup fee · 2-week free trial · card required, no charge until trial ends</small>
+          <small>$0 setup fee · 30-day free trial · card required, no charge until trial ends</small>
         </section>
 
         <section className="wcn-triage">
@@ -55,7 +55,7 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
             <li><CheckCircle2 /><span>Call transcript + summary sent to you after every call</span></li>
             <li><CheckCircle2 /><span>Missed-call text-back and automatic day-3/day-10 follow-up</span></li>
             <li><CheckCircle2 /><span>Weekly Google Business Profile posts and review replies</span></li>
-            <li><CheckCircle2 /><span>One flat price — $0 setup, 2-week free trial, then $299/mo</span></li>
+            <li><CheckCircle2 /><span>One flat price — $0 setup, 30-day free trial, then $297/mo</span></li>
           </ul>
         </section>
 

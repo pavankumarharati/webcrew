@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for HVAC Companies | WebCrew',
-  description: 'A 24/7 AI receptionist trained on no-heat, no-AC, and gas-smell triage — plus a website built overnight. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A 24/7 AI receptionist trained on no-heat, no-AC, and gas-smell triage — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/hvac' },
   keywords: ['HVAC AI receptionist', 'AI answering service for HVAC companies', 'HVAC after hours emergency call answering', 'HVAC missed call recovery'],
 }

@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Spas | WebCrew',
-  description: 'A 24/7 AI receptionist that books treatments around real room and practitioner availability — plus a website built overnight. $0 setup, 2-week free trial, $299/mo flat.',
+  description: 'A 24/7 AI receptionist that books treatments around real room and practitioner availability — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
   alternates: { canonical: 'https://webcrew.app/spas' },
   keywords: ['AI receptionist for spas', 'day spa AI answering service', 'spa appointment booking AI', 'spa missed call recovery'],
 }

@@ -5,7 +5,7 @@
 // changes. The resolver here is read-only display math for the slider; the
 // real charge is always computed server-side by Sofia/checkout.
 
-export type PlanKey = 'website_only' | 'website_hosted' | 'ai_front_office' | 'ai_reception_only' | 'everything' | 'marketing_only'
+export type PlanKey = 'website_only' | 'website_hosted' | 'ai_front_office' | 'ai_reception_only'
 
 export interface PlanDef {
   key: PlanKey
@@ -29,10 +29,10 @@ export const PLAN_CATALOG: Record<PlanKey, PlanDef> = {
     key: 'website_hosted', name: 'Website, hosted + maintained', price: 4900, floor: 2900, ladder: [4900, 2900],
     billing: 'subscription', available: true,
     tagline: 'Your site, kept live and working for you — no AI reception.',
-    features: ['Everything in Website only', 'Hosting, SSL, performance maintenance', 'Weekly Google Business Profile posts', 'Reply to every Google review automatically', 'Weekly traffic + ranking report'],
+    features: ['Everything in Website only', 'Hosting, SSL, performance maintenance', 'Weekly traffic + ranking report'],
   },
   ai_front_office: {
-    key: 'ai_front_office', name: 'AI Front Office', price: 29900, floor: 17900, ladder: [29900, 22900, 17900],
+    key: 'ai_front_office', name: 'AI Front Office', price: 29700, floor: 17900, ladder: [29700, 22900, 17900],
     billing: 'subscription', available: true,
     tagline: 'Website + AI receptionist that answers every call, books appointments, and runs your front office end to end.',
     features: ['Everything in hosted website', 'AI Reception — answers calls 24/7', 'Appointment booking via AI (auto-confirms)', 'Call transcripts + summary after every call', 'Instant lead SMS + email alerts', 'Lead nurture, follow-ups, revenue recovery'],
@@ -42,16 +42,6 @@ export const PLAN_CATALOG: Record<PlanKey, PlanDef> = {
     billing: 'subscription', available: true,
     tagline: 'Already have a website? Just add 24/7 AI phone reception.',
     features: ['AI Reception — answers calls 24/7', 'Appointment booking via AI (auto-confirms)', 'Call transcripts + summary after every call', 'Instant lead SMS + email alerts', 'No website included'],
-  },
-  everything: {
-    key: 'everything', name: 'Everything + Marketing', price: 49900, billing: 'subscription', available: false,
-    tagline: 'Website + AI Reception + Lead Gen + Marketing, all in one.',
-    features: ['Everything in AI Front Office', 'Lead generation campaigns', 'Paid ads management (Google + Meta)', 'Full marketing automation'],
-  },
-  marketing_only: {
-    key: 'marketing_only', name: 'Marketing only', price: 24900, billing: 'subscription', available: false,
-    tagline: 'Just the marketing engine — bring your own site and reception.',
-    features: ['Lead generation campaigns', 'Paid ads management (Google + Meta)', 'Social + content automation'],
   },
 }
 
