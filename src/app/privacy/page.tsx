@@ -38,6 +38,16 @@ Call information may include your telephone number, audio, transcript, name, ema
 AI-generated responses can be incomplete or incorrect. Do not rely on the receptionist for legal, medical, financial, emergency, or other professional advice. You may ask for human follow-up, and you may request correction or deletion of eligible information by emailing hello@webcrew.app.`,
           },
           {
+            title: 'Google Calendar and Google User Data',
+            body: `If you are a WebCrew customer, you can connect your Google Calendar so your AI receptionist can book appointments for you. We request one Google permission: "See, create, change, and delete events on all your calendars" (https://www.googleapis.com/auth/calendar.events), plus your email address to show which account is connected.
+
+What we do with it: we check your primary calendar for the times you are already busy (start and end times only) so we never double-book, and we create, reschedule, and cancel only the appointments that your receptionist itself booked. We do not read, copy, or store the titles, descriptions, attendees, or other details of your other events.
+
+How we protect it: your Google access token is stored encrypted and used only to run your receptionist. You can disconnect at any time from your WebCrew dashboard (Receptionist setup), which deletes the stored token and revokes our access with Google, or from your Google Account permissions page.
+
+We do not sell Google user data, use it for advertising, or use it to train generalized AI models. We do not allow humans to read it except where you ask for support, where required for security or abuse investigation, or where required by law. WebCrew's use and transfer of information received from Google APIs to any other app will adhere to the Google API Services User Data Policy, including the Limited Use requirements.`,
+          },
+          {
             title: 'How We Use Your Information',
             body: `We use the information we collect to:
 • Build and deliver your demo website
