@@ -50,12 +50,12 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
         <section className="wcn-included">
           <h2>Same flat plan as every WebCrew client.</h2>
           <ul>
-            <li><CheckCircle2 /><span>AI receptionist answers every call 24/7 — trained on {n.adj} triage language, not generic scripts</span></li>
-            <li><CheckCircle2 /><span>Custom website built overnight, on your own domain</span></li>
+            <li><CheckCircle2 /><span>AI receptionist answers your calls 24/7 — trained on {n.adj} triage language, not generic scripts</span></li>
+            <li><CheckCircle2 /><span>Custom website live within about a day, on your own domain</span></li>
             <li><CheckCircle2 /><span>Call transcript + summary sent to you after every call</span></li>
             <li><CheckCircle2 /><span>Missed-call text-back and automatic day-3/day-10 follow-up</span></li>
             <li><CheckCircle2 /><span>Weekly Google Business Profile posts and review replies</span></li>
-            <li><CheckCircle2 /><span>One flat price — $0 setup, 30-day free trial, then $297/mo</span></li>
+            <li><CheckCircle2 /><span>Founding rate — $0 setup, 30-day free trial, then $99/mo locked for life (first 10 clients)</span></li>
           </ul>
         </section>
 

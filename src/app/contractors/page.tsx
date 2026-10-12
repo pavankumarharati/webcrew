@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Contractors | WebCrew',
-  description: 'A 24/7 AI receptionist that captures the project details you need before a walk-through — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
+  description: 'A 24/7 AI receptionist that captures the project details you need before a walk-through — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/contractors' },
   keywords: ['AI receptionist for contractors', 'general contractor AI answering service', 'contractor missed call recovery', 'contractor lead qualification AI'],
 }

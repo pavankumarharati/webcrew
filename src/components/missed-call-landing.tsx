@@ -13,24 +13,24 @@ const ORANGE = '#ff6b1a'
 const AI_RECEPTION_PHONE = '+19182555151'
 
 const solutionCards = [
-  { icon: PhoneCall, title: 'Answers every call', body: 'Customers get an immediate response—even after hours, on weekends, or while you are busy.' },
+  { icon: PhoneCall, title: 'Answers your calls', body: 'Customers get an immediate response—even after hours, on weekends, or while you are busy. If anything fails, the call rings your phone instead of dropping.' },
   { icon: UserCheck, title: 'Qualifies the lead', body: 'WebCrew learns what they need, captures the important details, and filters real opportunities.' },
-  { icon: CalendarCheck, title: 'Books the customer', body: 'When they are ready to schedule, WebCrew helps turn the conversation into an appointment.' },
+  { icon: CalendarCheck, title: 'Books the customer', body: 'When they are ready to schedule, WebCrew books them into your Google Calendar (we connect it with you) and texts or emails a confirmation.' },
   { icon: MessageSquareText, title: 'Follows up', body: 'No more leads disappearing because nobody remembered to call them back.' },
   { icon: BellRing, title: 'Keeps you informed', body: 'Know who called, what they wanted, and exactly what happened next.' },
 ]
 
 const included = [
-  'Custom website in your style of choice, built and deployed automatically — on your own domain, yours to keep',
+  'Custom website in your style of choice, built and deployed automatically — live within about a day; we connect your own domain on request',
   'Exact Google Maps location embedded — pulled straight from your business listing',
-  'AI receptionist that answers every call 24/7, in a voice tuned to your business',
-  'Automatic appointment booking with confirmation',
-  'Call transcript + summary sent after every call',
-  'Instant SMS + email alert the moment a lead comes in',
-  'Missed-call text-back — a caller who can\'t reach you still gets a reply in seconds',
-  'Automatic lead follow-up (day 3, day 10) so a warm lead never goes cold',
-  'Monthly traffic + ranking report, 97+ PageSpeed, SSL, mobile-perfect out of the box',
-  'One flat price — $0 setup, 30-day free trial, then $297/mo, everything above included',
+  'AI receptionist that answers your calls 24/7, in a voice tuned to your business, with a fallback that rings your phone if anything fails',
+  'Appointment booking into your Google Calendar, with confirmation and reminders (we connect the calendar with you)',
+  'Transcript + summary of every real customer call (we skip wrong numbers, hang-ups and robocalls)',
+  'Instant alert to you by SMS + email the moment the AI captures a lead',
+  'Missed-call text-back for callers who agreed to receive texts (the AI asks on the call; we never text anyone who hasn\'t opted in)',
+  'Automatic follow-up at day 3 and day 10 for leads who haven\'t booked yet, plus review requests after visits (needs your Google review link)',
+  'Monthly report: calls handled, after-hours calls, leads captured, appointments booked, and follow-ups sent, SSL and a mobile-friendly site out of the box',
+  'Founding rate — $0 setup, 30-day free trial, then $99/mo, locked for life (first 10 clients; $199/mo after), everything above included',
 ]
 
 const styleOptions = [
@@ -52,13 +52,13 @@ const industries = ['Contractors', 'Plumbers', 'Electricians', 'HVAC', 'Roofers'
 const industryPages: Record<string, string> = { Contractors: '/contractors', Plumbers: '/plumbing', Electricians: '/electricians', HVAC: '/hvac', Roofers: '/roofing', Cleaning: '/cleaning', 'Auto services': '/auto-services', Salons: '/salons', Spas: '/spas', 'Home services': '/home-services' }
 
 const faqs = [
-  ['What is WebCrew?', 'WebCrew is an AI front office for local businesses. It answers every inbound call 24/7, qualifies leads, books appointments, sends you a summary after every call, and follows up automatically — plus a custom website (pick your style) built and deployed automatically. One flat monthly plan.'],
-  ['Do I need to do anything besides fill out the form?', 'No. You pick a style, tell us about your business, and the build, deploy, and AI Reception setup all happen automatically — no calls, no back-and-forth, no manual steps on our side.'],
+  ['What is WebCrew?', 'WebCrew is an AI front office for local businesses. It answers your inbound calls 24/7, qualifies leads, books appointments into your calendar, sends you a summary of every real customer call, and follows up with leads who haven’t booked — plus a custom website (pick your style) built and deployed automatically. One flat monthly plan.'],
+  ['Do I need to do anything besides fill out the form?', 'Very little. You pick a style and tell us about your business, and the build, deploy, and AI Reception setup happen automatically. To book appointments we also help you connect your Google Calendar, and to get review requests out you add your Google review link.'],
   ['Will WebCrew replace my phone number?', 'No. We work with your existing business flow and configure how calls should be answered, routed, summarized, and followed up.'],
   ['Can it answer after hours and on weekends?', 'Yes. WebCrew is designed to respond 24/7, so callers are not pushed into voicemail when your team is unavailable.'],
   ['How does WebCrew know what to say?', 'We learn your services, hours, service area, common questions, booking preferences, and escalation rules before you go live.'],
-  ['How fast does WebCrew build a website?', 'Most clients wake up to a text with their live site link the morning after submitting the form — the AI pipeline builds and deploys a complete custom website in about 6 hours with no human involvement, averaging 97/100 on Google PageSpeed.'],
-  ['What does WebCrew cost?', '$0 setup fee and a 30-day free trial — a card is required to start the trial, but nothing is charged until it ends. After that it is a flat $297/month for the website and AI receptionist, no add-ons or tiers.'],
+  ['How fast does WebCrew build a website?', 'Most sites are live within about a day of submitting the form. The AI pipeline builds and deploys a complete custom website with no manual steps on our side.'],
+  ['What does WebCrew cost?', '$0 setup fee and a 30-day free trial — a card is required to start the trial, but nothing is charged until it ends. Our first 10 clients get a founding rate of $99/month, locked for as long as they stay. After the first 10 the price is $199/month. Either way it covers the website and AI receptionist, with no add-ons.'],
   ['Can I see it work before committing?', 'Yes. Call the live AI Reception line at (918) 255-5151 to test it yourself, or request a walkthrough tailored to your business.'],
   ['Can I add WebCrew’s AI to my current website without switching?', 'Yes. If you already have a site you like, you don’t have to replace it. Choose "Already have a website?" in the form and we’ll add a talking AI chat and voice assistant to your existing site with one script tag — it answers visitors, qualifies them, and books appointments, without touching your current design, host, or domain.'],
 ]
@@ -138,7 +138,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
 
   return (
     <div className="wc2-page">
-      <div className="wc2-topbar"><span className="wc2-pulse" />Available 24/7 · Answers instantly · Never forgets to follow up</div>
+      <div className="wc2-topbar"><span className="wc2-pulse" />Available 24/7 · Answers instantly · Follows up so leads don’t go cold</div>
       <nav className="wc2-nav">
         <a href="#top" className="wc2-logo" aria-label="WebCrew home"><BrandMark size={32} className="wc2-logo-pop" />WebCrew</a>
         <div className="wc2-navlinks">{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</div>
@@ -221,7 +221,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
         <section className="wc2-section wc2-explainer" data-avatar-caption="Here's what an AI front office actually is, in plain terms.">
           <div className="wc2-explainer-inner">
             <h2>What is an AI front office?</h2>
-            <p>An AI front office is a system that answers your business&rsquo;s calls, texts, and website inquiries the way a trained receptionist would — greeting the caller, understanding what they need, checking availability, and booking the appointment, without a human standing by around the clock. WebCrew builds one specifically for your business: it learns your services, hours, service area, and booking rules before it ever answers a call, so it sounds like your business instead of a generic voice assistant. Every call gets a transcript and summary sent to you afterward, every lead gets an instant SMS or email alert, and every missed conversation gets an automatic follow-up on day 3 and day 10. It doesn&rsquo;t replace your team — it makes sure no call, text, or website visitor is ever the one that got away because nobody was free to answer.</p>
+            <p>An AI front office is a system that answers your business&rsquo;s calls and website visitors the way a trained receptionist would — greeting the caller, understanding what they need, checking availability, and booking the appointment once your calendar is connected, without a human standing by around the clock. WebCrew builds one specifically for your business: it learns your services, hours, service area, and booking rules before it ever answers a call, so it sounds like your business instead of a generic voice assistant. Every call gets a transcript and summary sent to you afterward, every lead the AI captures triggers an instant alert to you, and leads who haven&rsquo;t booked get an automatic follow-up on day 3 and day 10. It doesn&rsquo;t replace your team — it makes sure no call, text, or website visitor is ever the one that got away because nobody was free to answer.</p>
           </div>
         </section>
 

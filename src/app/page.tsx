@@ -14,7 +14,7 @@ const HOME_SCHEMA = {
       '@id': 'https://webcrew.app/#webpage',
       url: 'https://webcrew.app',
       name: 'WebCrew — AI Agency for Local Businesses | Calls, Google, Reviews',
-      description: 'WebCrew builds your website overnight and runs 5 AI agents: AI reception (24/7 calls), GBP posts, review replies, lead alerts, weekly traffic reports.',
+      description: 'WebCrew builds your website and runs your AI front office: AI reception (24/7 calls), appointment booking, lead alerts, follow-ups, and Google review requests.',
       isPartOf: { '@id': 'https://webcrew.app/#website' },
       about: { '@id': 'https://webcrew.app/#service' },
       publisher: { '@id': 'https://webcrew.app/#organization' },
@@ -45,16 +45,16 @@ const HOME_SCHEMA = {
       description: 'The complete list of what every WebCrew local-business client gets, included in one flat monthly price.',
       numberOfItems: 10,
       itemListElement: [
-        'Custom website, built overnight, on your own domain — yours to keep',
-        'AI receptionist that answers every call 24/7, in a voice tuned to your business',
-        'Automatic appointment booking with confirmation',
-        'Call transcript and summary sent after every call',
-        'Instant SMS and email alert the moment a lead comes in',
-        'Missed-call text-back — a caller who can\'t reach you still gets a reply in seconds',
-        'Automatic lead follow-up (day 3, day 10) so a warm lead never goes cold',
-        'Weekly Google Business Profile posts (52 a year) and auto-replies to every Google review',
-        'Monthly traffic and ranking report, 97+ PageSpeed, SSL, mobile-perfect out of the box',
-        'One flat price — $0 setup, 30-day free trial, then $297/mo, everything above included',
+        'Custom website, live within about a day; we connect your own domain on request',
+        'AI receptionist that answers your calls 24/7, in a voice tuned to your business, with a fallback that rings your phone if anything fails',
+        'Appointment booking into your Google Calendar, with confirmation and reminders',
+        'Transcript and summary of every real customer call',
+        'Instant SMS and email alert the moment the AI captures a lead',
+        'Missed-call text-back for callers who agreed to receive texts',
+        'Automatic follow-up at day 3 and day 10 for leads who haven\'t booked yet',
+        'Google review requests after each visit, sent to every customer alike',
+        'Monthly report of calls, leads, bookings and follow-ups; SSL and a mobile-friendly site',
+        'Founding rate — $0 setup, 30-day free trial, then $99/mo, locked for life (first 10 clients; $199/mo after), everything above included',
       ].map((text, i) => ({
         '@type': 'ListItem',
         position: i + 1,
@@ -70,7 +70,7 @@ const HOME_SCHEMA = {
           name: 'What is WebCrew?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'WebCrew is an AI front office for local businesses in the United States. It answers every inbound call 24/7, qualifies leads, books appointments, sends you a summary after every call, and follows up automatically — plus a custom website built overnight, weekly Google Business Profile posts, and automatic review replies, all in one flat monthly plan.',
+            text: 'WebCrew is an AI front office for local businesses in the United States. It answers your inbound calls 24/7, qualifies leads, books appointments into your calendar, sends you a summary of every real customer call, follows up with leads who haven’t booked, and requests Google reviews after visits — plus a custom website, all in one monthly plan.',
           },
         },
         {
@@ -110,7 +110,7 @@ const HOME_SCHEMA = {
           name: 'What does WebCrew cost?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: '$0 setup fee and a 30-day free trial. After that it is a flat $297/month — the website, AI receptionist, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.',
+            text: '$0 setup fee and a 30-day free trial. Our first 10 clients pay a founding rate of $99/month, locked for as long as they stay; after that it is $199/month. The website, AI receptionist, booking, lead alerts, follow-ups, and review requests are all included, no add-ons.',
           },
         },
         {

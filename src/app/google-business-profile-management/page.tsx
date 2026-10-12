@@ -1,41 +1,42 @@
 import FeatureLanding, { FeatureContent } from '@/components/feature-landing'
 
 export const metadata = {
-  title: 'Google Business Profile Management, Done Automatically | WebCrew',
-  description: 'Weekly Google Business Profile posts and AI-written review replies, done automatically — included in every WebCrew plan. $0 setup, 30-day free trial, $297/mo flat.',
+  title: 'Get More Google Reviews Automatically | WebCrew',
+  description: 'WebCrew asks every customer for a Google review after their visit, with a direct link to your review page. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/google-business-profile-management' },
-  keywords: ['Google Business Profile management', 'automated GBP posts', 'AI review reply service', 'Google Business Profile posting service'],
+  keywords: ['get more Google reviews', 'automated review requests', 'Google review request service', 'local business reviews'],
 }
 
 const F: FeatureContent = {
   slug: 'google-business-profile-management',
-  pill: 'Google Business Profile',
-  headline: <>A Google Business Profile<br />that posts itself.<br /><em>And replies to every review.</em></>,
-  sub: 'Most local businesses claim their Google Business Profile once and never touch it again. WebCrew keeps yours active automatically — a real weekly post and a reply to every new review, using your actual services and reviews, no login required from you.',
-  sectionEyebrow: 'Fully automatic, every week',
-  sectionTitle: 'It runs on its own schedule — you don’t have to remember it exists.',
+  pill: 'Google reviews',
+  headline: <>More Google reviews,<br />without you<br /><em>having to ask.</em></>,
+  sub: 'Most happy customers never leave a review because nobody asks. After each visit WebCrew sends the customer a short thank-you with a direct link to your Google review page. Every customer gets the same request, whatever they might say.',
+  sectionEyebrow: 'Automatic, after every visit',
+  sectionTitle: 'The ask happens on its own, a few hours after the appointment.',
   points: [
-    { title: 'A real post, every week', body: 'Written from your actual services and business details, not a generic filler post — published to your live Google Business Profile automatically.' },
-    { title: 'Every new review gets a reply', body: 'AI-written responses go out within hours of a new review landing, in a tone that matches your business — not a copy-pasted "thank you."' },
-    { title: 'No dashboard to babysit', body: 'This runs in the background alongside your AI receptionist and website. You don’t log in, approve posts, or manage a queue — it just happens.' },
+    { title: 'Asked at the right moment', body: 'A thank-you with your Google review link goes out about three hours after the appointment, when the visit is fresh.' },
+    { title: 'No review gating', body: 'Everyone gets the same request. We never screen out unhappy customers, because Google doesn’t allow it and it’s the wrong way to build trust.' },
+    { title: 'Win back past customers', body: 'Customers who haven’t returned in about two months get a friendly nudge to book again.' },
   ],
   included: [
-    'Weekly Google Business Profile posts, written from your real services',
-    'AI-written replies to every new Google review, posted within hours',
-    'AI receptionist answers every call 24/7',
-    'Custom website built overnight, on your own domain',
-    'Weekly traffic report from Google Search Console',
-    'One flat price — $0 setup, 30-day free trial, then $297/mo',
+    'Review request after each appointment booked through your AI receptionist',
+    'Direct link to your Google review page (you add it once in your portal)',
+    'Win-back message for customers who haven’t returned in about 60 days',
+    'AI receptionist answers your calls 24/7',
+    'Custom website, live within about a day',
+    'Monthly report of calls, leads, bookings and follow-ups',
+    'Founding rate — $0 setup, 30-day free trial, then $99/mo locked for life (first 10 clients)',
   ],
   faq: [
-    ['Is this a standalone product I can buy separately?', 'No — it’s included in every WebCrew plan alongside the AI receptionist, website, and lead alerts, at one flat $297/mo. There’s no separate GBP-only tier.'],
-    ['Do I need to give you my Google account password?', 'No. Google Business Profile access is granted through Google’s own manager-access flow — WebCrew never asks for or stores your Google password.'],
-    ['Can I review a post before it goes live?', 'Posts publish automatically on the weekly schedule. If you want a specific promotion or announcement featured, you can tell us and it gets worked into that week’s post.'],
-    ['What happens with a negative review?', 'It still gets a reply — professional and de-escalating, not defensive — and if it needs your direct attention, you’re notified separately from the automatic reply.'],
-    ['Does this work if I already have an existing Google Business Profile?', 'Yes. Most clients already have a profile from before — WebCrew connects to the existing one rather than creating a new one.'],
+    ['Is this a standalone product I can buy separately?', 'No — it’s included in every WebCrew plan alongside the AI receptionist, website, and lead alerts. There’s no separate reviews-only tier.'],
+    ['Does it work for every customer?', 'It works for customers who booked through your AI receptionist. Requests go by email, and by text only for customers who agreed to receive texts.'],
+    ['Will it post replies to my Google reviews for me?', 'No. WebCrew doesn’t post to your Google profile or reply to reviews on your behalf.'],
+    ['Do you filter out unhappy customers?', 'No. Every customer gets the same request. Google prohibits review gating, and so do we.'],
+    ['What do I need to set up?', 'Paste your Google review link into your WebCrew portal once. Without it, review requests are skipped.'],
   ],
-  finalTitle: 'Stop letting your Google profile go stale.',
-  finalBody: 'Same setup as every WebCrew client — tell us about your business, WebCrew builds your AI front office overnight, Google Business Profile included.',
+  finalTitle: 'Turn happy customers into Google reviews.',
+  finalBody: 'Same setup as every WebCrew client — tell us about your business and WebCrew builds your AI front office, review requests included.',
 }
 
 export default function GBPManagementPage() {
@@ -53,7 +54,7 @@ export default function GBPManagementPage() {
               provider: { '@id': 'https://webcrew.app/#organization' },
               serviceType: 'Local SEO / Google Business Profile Management',
               category: 'Local Business Marketing Services',
-              description: 'WebCrew automatically publishes weekly Google Business Profile posts and AI-written replies to new reviews, included in every plan.',
+              description: 'WebCrew asks every customer for a Google review after their visit, with a direct link to your review page, included in every plan.',
               areaServed: { '@type': 'Country', name: 'United States' },
             },
             {

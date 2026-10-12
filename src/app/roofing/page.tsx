@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Roofing Companies | WebCrew',
-  description: 'A 24/7 AI receptionist that prioritizes active leaks and storm damage over routine quotes — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
+  description: 'A 24/7 AI receptionist that prioritizes active leaks and storm damage over routine quotes — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/roofing' },
   keywords: ['roofing company AI website', 'AI answering service for roofers', 'storm damage call answering', 'roofing missed call recovery'],
 }
@@ -21,7 +21,7 @@ const N: NicheContent = {
     { title: 'Captures what your estimator needs', body: 'Roof age, storm date, insurance involvement, photos requested — collected up front so your first callback is a scheduling call, not a discovery call.' },
   ],
   faq: [
-    ['Can it handle a flood of calls right after a storm hits?', 'Yes — WebCrew answers every call in parallel, it doesn’t queue callers or send overflow to voicemail the way a single receptionist would.'],
+    ['Can it handle a flood of calls right after a storm hits?', 'Yes — WebCrew answers your calls in parallel, it doesn’t queue callers or send overflow to voicemail the way a single receptionist would.'],
     ['Does it know the difference between an active leak and a routine quote?', 'Yes, once configured on your business — active-damage language gets flagged for faster follow-up, routine requests get queued normally.'],
     ['Can it ask about insurance claims?', 'Yes, that’s one of the intake questions configured during setup if that’s part of your process.'],
     ['How fast can I go live?', 'Most roofing clients wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],

@@ -100,7 +100,7 @@ export default function Pricing() {
             { step: '1', label: 'Demo site', price: '$0', note: 'built overnight, no card' },
             { step: '2', label: 'Setup', price: '$0', note: 'usually $499–$999+ · free today' },
             { step: '3', label: 'Free trial', price: '30 days', note: 'card required, no charge yet' },
-            { step: '4', label: 'AI team', price: '$297/mo', note: 'after your trial ends' },
+            { step: '4', label: 'AI team', price: '$99/mo', note: 'founding rate, locked for life — first 10 clients' },
           ].map((s, i) => (
             <div key={s.step} style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{
@@ -256,7 +256,7 @@ export default function Pricing() {
         }}>
           <span style={{ fontSize: '0.84rem', color: 'var(--color-muted)' }}>
             All plans include a{' '}
-            <strong style={{ color: 'var(--color-text)' }}>FREE demo website built overnight</strong>
+            <strong style={{ color: 'var(--color-text)' }}>FREE demo website live within about a day</strong>
             {', '}<strong style={{ color: 'var(--color-text)' }}>$0 setup</strong> (usually $499–$999+),
             {' '}and a <strong style={{ color: 'var(--color-text)' }}>30-day free trial</strong> — card required, no charge until the trial ends.
             {' '}<a href="#contact" style={{ color: 'var(--color-accent)', fontWeight: 600, textDecoration: 'none' }}>Get started free →</a>

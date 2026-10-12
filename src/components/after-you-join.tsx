@@ -7,7 +7,7 @@ import { ArrowRight, Check, Minus } from 'lucide-react'
 if (typeof window !== 'undefined') { gsap.registerPlugin(ScrollTrigger) }
 
 const FREE_ITEMS = [
-  'Custom website built overnight — real brand, real photos, real copy',
+  'Custom website live within about a day — real brand, real photos, real copy',
   'Hosted on yourname.webcrew.app — fast, worldwide, always on',
   'Mobile-perfect · SSL · PageSpeed 90+',
   'Contact form — leads emailed to you instantly',
@@ -22,7 +22,7 @@ const PAID_ITEMS = [
   { label: 'Auto-reply to Google reviews', tier: '$49/mo' },
   { label: 'Weekly traffic + ranking report', tier: '$49/mo' },
   { label: 'AI Reception — 24/7 call answering + booking', tier: '$199/mo' },
-  { label: 'Full AI Front Office (site + reception + booking + lead nurture)', tier: '$297/mo' },
+  { label: 'Full AI Front Office (site + reception + booking + lead nurture)', tier: '$99/mo founding rate' },
 ]
 
 export default function AfterYouJoin() {

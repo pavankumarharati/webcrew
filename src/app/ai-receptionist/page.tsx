@@ -2,7 +2,7 @@ import FeatureLanding, { FeatureContent } from '@/components/feature-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Small Business | WebCrew',
-  description: 'A real AI receptionist that answers every call 24/7, qualifies the caller, and books the appointment — not a voicemail replacement. $0 setup, 30-day free trial, $297/mo flat.',
+  description: 'A real AI receptionist that answers your calls 24/7, qualifies the caller, and books the appointment — not a voicemail replacement. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/ai-receptionist' },
   keywords: ['AI receptionist for small business', 'AI answering service', 'virtual receptionist for local business', '24/7 AI phone answering'],
 }
@@ -20,12 +20,12 @@ const F: FeatureContent = {
     { title: 'Books the appointment, notifies you instantly', body: 'It checks real availability and books directly on your calendar, then texts you a call summary and transcript the moment the call ends.' },
   ],
   included: [
-    'AI receptionist answers every call 24/7, trained on your services and escalation rules',
-    'Custom website built overnight, on your own domain',
+    'AI receptionist answers your calls 24/7, trained on your services and escalation rules',
+    'Custom website live within about a day, on your own domain',
     'Call transcript and summary sent to you after every call',
     'Missed-call text-back and automatic day-3/day-10 follow-up',
     'Weekly Google Business Profile posts and review replies',
-    'One flat price — $0 setup, 30-day free trial, then $297/mo',
+    'Founding rate — $0 setup, 30-day free trial, then $99/mo locked for life (first 10 clients)',
   ],
   faq: [
     ['Is this a chatbot or an actual phone call?', 'An actual phone call. Callers dial your real business number and have a live voice conversation — there’s no chat widget or text-only fallback for the phone line itself.'],
@@ -53,7 +53,7 @@ export default function AIReceptionistPage() {
               provider: { '@id': 'https://webcrew.app/#organization' },
               serviceType: 'AI Answering Service',
               category: 'Business Communication Services',
-              description: 'WebCrew’s AI receptionist answers every business call 24/7 using Gemini Live voice AI, qualifies the caller, and books the appointment.',
+              description: 'WebCrew’s AI receptionist answers your business calls 24/7 using Gemini Live voice AI, qualifies the caller, and books the appointment.',
               areaServed: { '@type': 'Country', name: 'United States' },
             },
             {

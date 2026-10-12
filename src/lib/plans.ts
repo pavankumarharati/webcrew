@@ -29,10 +29,10 @@ export const PLAN_CATALOG: Record<PlanKey, PlanDef> = {
     key: 'website_hosted', name: 'Website, hosted + maintained', price: 4900, floor: 2900, ladder: [4900, 2900],
     billing: 'subscription', available: true,
     tagline: 'Your site, kept live and working for you — no AI reception.',
-    features: ['Everything in Website only', 'Hosting, SSL, performance maintenance', 'Weekly traffic + ranking report'],
+    features: ['Everything in Website only', 'Hosting, SSL, performance maintenance', 'Hosting and upkeep'],
   },
   ai_front_office: {
-    key: 'ai_front_office', name: 'AI Front Office', price: 29700, floor: 17900, ladder: [29700, 22900, 17900],
+    key: 'ai_front_office', name: 'AI Front Office', price: 9900, floor: 9900, ladder: [9900],
     billing: 'subscription', available: true,
     tagline: 'Website + AI receptionist that answers every call, books appointments, and runs your front office end to end.',
     features: ['Everything in hosted website', 'AI Reception — answers calls 24/7', 'Appointment booking via AI (auto-confirms)', 'Call transcripts + summary after every call', 'Instant lead SMS + email alerts', 'Lead nurture, follow-ups, revenue recovery'],

@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist for Salons | WebCrew',
-  description: 'A 24/7 AI receptionist that books by stylist and service, and fills the slots no-shows leave behind — plus a website built overnight. $0 setup, 30-day free trial, $297/mo flat.',
+  description: 'A 24/7 AI receptionist that books by stylist and service, and fills the slots no-shows leave behind — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/salons' },
   keywords: ['AI receptionist for salons', 'salon AI answering service', 'salon no-show booking AI', 'salon appointment scheduling AI'],
 }

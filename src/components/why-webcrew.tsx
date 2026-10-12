@@ -26,7 +26,7 @@ const REASONS = [
     color: '#8B5CF6',
     title: 'You miss calls. AI never does.',
     pain: '62% of calls to small businesses go unanswered. Every unanswered call is a lost job — often $500–$2,000.',
-    solution: 'Your AI receptionist answers every call, 24/7 — books appointments, answers FAQs, sends you a summary.',
+    solution: 'Your AI receptionist answers your calls, 24/7 — books appointments, answers FAQs, sends you a summary.',
   },
   {
     icon: TrendingUp,
@@ -47,7 +47,7 @@ const REASONS = [
     color: '#10B981',
     title: 'One subscription. Eight AI employees.',
     pain: 'Hiring: Web designer $4k/mo. SEO agency $1.5k/mo. Receptionist $3k/mo. Social manager $2.5k/mo.',
-    solution: 'WebCrew replaces all of them for $49–$297/mo. AI doesn\'t call in sick. It doesn\'t take weekends off.',
+    solution: 'WebCrew replaces all of them for $99/mo. AI doesn\'t call in sick. It doesn\'t take weekends off.',
   },
 ]
 
