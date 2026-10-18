@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { POSTS } from '@/content/blog'
 import { execSync } from 'node:child_process'
 
 export const dynamic = 'force-static'
@@ -34,6 +35,8 @@ const ROUTES: { path: string; sources: string[] }[] = [
   ),
   { path: '/ai-receptionist', sources: ['src/app/ai-receptionist'] },
   { path: '/google-business-profile-management', sources: ['src/app/google-business-profile-management'] },
+  { path: '/blog', sources: ['src/app/blog', 'src/content/blog'] },
+  ...POSTS.map(p => ({ path: `/blog/${p.slug}`, sources: [`src/content/blog/${p.slug}.ts`, 'src/app/blog'] })),
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

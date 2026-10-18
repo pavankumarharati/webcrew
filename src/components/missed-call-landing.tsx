@@ -132,7 +132,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
   }
 
   const links = [
-    ['Styles', '#styles'], ['The problem', '#problem'], ['How it works', '#how-it-works'], ['What’s included', '#included'], ['Who it’s for', '#industries'], ['FAQ', '#faq'],
+    ['Styles', '#styles'], ['The problem', '#problem'], ['How it works', '#how-it-works'], ['What’s included', '#included'], ['Who it’s for', '#industries'], ['FAQ', '#faq'], ['Blog', '/blog'],
     ...(showPricing ? [['Pricing', '#pricing']] : []),
   ]
 
@@ -307,7 +307,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
         </div></section>
       </main>
 
-      <footer className="wc2-footer"><a href="#top" className="wc2-logo"><BrandMark size={32} />WebCrew</a><p>AI front office for local businesses.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@webcrew.app">Contact</a></div></footer>
+      <footer className="wc2-footer"><a href="#top" className="wc2-logo"><BrandMark size={32} />WebCrew</a><p>AI front office for local businesses.</p><div><a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@webcrew.app">Contact</a></div></footer>
 
       <style>{`
         :root{--wc-navy:#0d172b;--wc-navy2:#172238;--wc-orange:${ORANGE};--wc-bg:#f6f7f9;--wc-ink:#10182b;--wc-muted:#667085;--wc-line:#e5e8ee}
