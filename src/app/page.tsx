@@ -1,9 +1,8 @@
 import IntroSplash from '@/components/intro-splash'
 import MissedCallLanding from '@/components/missed-call-landing'
 import WebsitePreviewLanding from '@/components/website-preview-landing'
-import TieredLanding from '@/components/tiered-landing'
 import Pricing from '@/components/pricing'
-import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING, SHOW_TIERED_LANDING } from '@/lib/features'
+import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING } from '@/lib/features'
 
 // Homepage-only structured data. Scoped here (not root layout) so it doesn't
 // render on /privacy, /terms, or any future non-homepage route.
@@ -135,8 +134,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_SCHEMA) }}
       />
       <IntroSplash />
-      {SHOW_TIERED_LANDING ? <TieredLanding /> : SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
-      {!SHOW_TIERED_LANDING && !SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
+      {SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
+      {!SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
     </>
   )
 }
