@@ -16,10 +16,10 @@ const INCLUDED = [
   'Free website if you want one',
 ]
 
-const TIERS = [
+const TIERS: { name: string; price: string; was?: string; per: string; badge: string; lede: string; limits: string[]; cta: string; featured: boolean; hidden?: boolean }[] = [
   {
-    name: 'Founding 10', price: '$99', per: '/mo', badge: 'First 10 clients only',
-    lede: 'Locked for life while you stay. Built for one-location owners who want in early.',
+    name: 'Founding 10', price: '$99', was: '$149', per: '/mo', badge: 'First 10 clients only',
+    lede: 'Regular price $149/mo. The first 10 clients pay $99, locked for life while they stay.',
     limits: ['250 AI minutes a month', '300 texts a month', '1,000 website chats a month'],
     cta: 'Claim a founding spot', featured: true,
   },
@@ -28,6 +28,7 @@ const TIERS = [
     lede: 'Same product, double the minutes, for busy single-location businesses.',
     limits: ['500 AI minutes a month', '300 texts a month', '1,000 website chats a month'],
     cta: 'Start my free trial', featured: false,
+    hidden: true, // shown once the 10 founding spots are filled (then hide Founding 10)
   },
   {
     name: 'Custom', price: 'Quote', per: '', badge: 'Multi-location or high volume',
@@ -39,18 +40,18 @@ const TIERS = [
 
 export default function TierPricing({ ctaHref = "#lead-form" }: { ctaHref?: string }) {
   return (
-    <section className="wct" id="pricing" data-avatar-caption="Three plans, no surprises. Over your minutes, calls just ring your cell.">
+    <section className="wct" id="pricing" data-avatar-caption="One price, no surprises. Over your minutes, calls just ring your cell.">
       <style>{CSS}</style>
       <div className="wct-in">
         <div className="wct-eyebrow">Pricing</div>
-        <h2>One product. <em>Three simple plans.</em></h2>
+        <h2>One product. <em>Two simple plans.</em></h2>
         <p className="wct-sub">$0 setup. 30-day free trial on every plan (card needed to start, nothing charged until it ends). No contracts, cancel anytime.</p>
         <div className="wct-grid">
-          {TIERS.map(t => (
+          {TIERS.filter(t => !t.hidden).map(t => (
             <div key={t.name} className={`wct-card${t.featured ? ' on' : ''}`}>
               <div className="wct-badge">{t.badge}</div>
               <h3>{t.name}</h3>
-              <div className="wct-price"><b>{t.price}</b><span>{t.per}</span></div>
+              <div className="wct-price">{t.was && <s>{t.was}</s>}<b>{t.price}</b><span>{t.per}</span></div>
               <p className="wct-lede">{t.lede}</p>
               <ul className="wct-limits">{t.limits.map(l => <li key={l}>{l}</li>)}</ul>
               <a className="wct-cta" href={ctaHref}>{t.cta}</a>
@@ -74,7 +75,7 @@ const CSS = `
 .wct h2{font-family:var(--font-display),system-ui;font-size:clamp(30px,4vw,46px);letter-spacing:-.035em;line-height:1.08;margin:10px 0 12px;color:#0d172b}
 .wct h2 em{font-style:normal;color:#ff6b1a}
 .wct-sub{color:#5b6475;font-size:17px;line-height:1.6;max-width:680px;margin:0 0 34px}
-.wct-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.wct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:820px;gap:18px;align-items:stretch}
 .wct-card{border:1px solid #e4e7ec;border-radius:20px;padding:26px 24px;display:flex;flex-direction:column;background:#fff}
 .wct-card.on{border:2px solid #ff6b1a;box-shadow:0 18px 50px rgba(255,107,26,.14);background:linear-gradient(180deg,#fff7f2,#fff 40%)}
 .wct-badge{align-self:flex-start;font-size:12px;font-weight:700;color:#0d172b;background:#f2f4f7;border-radius:999px;padding:5px 11px}
@@ -83,6 +84,7 @@ const CSS = `
 .wct-price{display:flex;align-items:baseline;gap:4px;margin-bottom:8px}
 .wct-price b{font-family:var(--font-display),system-ui;font-size:46px;letter-spacing:-.04em;color:#0d172b;line-height:1}
 .wct-price span{color:#5b6475;font-size:15px}
+.wct-price s{color:#98a2b3;font-size:24px;font-weight:600;margin-right:6px}
 .wct-lede{color:#5b6475;font-size:15px;line-height:1.55;margin:0 0 16px}
 .wct-limits{list-style:none;padding:14px 0 0;margin:0 0 22px;border-top:1px solid #eef0f4;display:grid;gap:8px;flex:1}
 .wct-limits li{font-size:15px;color:#0d172b;font-weight:600}
