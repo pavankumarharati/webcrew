@@ -21,7 +21,7 @@ const PAID_ITEMS = [
   { label: 'Weekly Google Business Profile posts', tier: '$49/mo' },
   { label: 'Auto-reply to Google reviews', tier: '$49/mo' },
   { label: 'Weekly traffic + ranking report', tier: '$49/mo' },
-  { label: 'AI Reception — 24/7 call answering + booking', tier: '$199/mo' },
+  { label: 'AI Reception — 24/7 call answering + booking', tier: '$99/mo founding · $149/mo after' },
   { label: 'Full AI Front Office (site + reception + booking + lead nurture)', tier: '$99/mo founding rate' },
 ]
 

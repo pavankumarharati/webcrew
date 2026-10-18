@@ -50,7 +50,7 @@ const faqs = [
   ['Do you touch my actual website?', "No. Your current site stays exactly as it is — untouched, unchanged. What you're seeing here is a preview of an AI SalesPerson we can add to it, or a fresh site if you'd rather start over."],
   ['Is the chat bubble in the preview actually AI, or a demo script?', "It's the real thing — live Google Gemini running against what we just read from your site. Ask it about your own services or hours and it'll answer correctly."],
   ['What happens if I claim it?', "We add this AI SalesPerson to your existing website with one line of code — no rebuild, no downtime, nothing to migrate. If you'd rather have a brand new site instead, we build that overnight too."],
-  ['What does this cost?', "$0 setup fee and a 30-day free trial. After that it's a flat $297/month — no add-ons, no tiers. Need something outside that — multiple locations, e-commerce, custom integrations — we quote that separately."],
+  ['What does this cost?', "$0 setup fee and a 30-day free trial. Our first 10 clients get a founding rate of $99/month (250 AI minutes), locked for life; after that it's $149/month (500 AI minutes). No add-ons, no surprise charges: over the limit, calls ring your cell. Need something outside that — multiple locations, e-commerce, custom integrations — we quote that separately."],
   ['How is this different from a chatbot plugin?', "A chatbot plugin answers FAQs from a script. This is a full AI front office: it talks, qualifies, checks your real calendar, books real appointments, and follows up automatically if someone doesn't convert."],
 ]
 
@@ -211,44 +211,74 @@ export default function WebsitePreviewLanding() {
       {menuOpen && <div className="wpl-mobile-nav">{links.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<a href="#url-form" onClick={() => setMenuOpen(false)}>Try it free →</a></div>}
 
       <main id="top">
-        <section className="wpl-hero" id="url-form">
-          <div className="wpl-pill"><Zap size={14} /> Paste a URL. Watch your AI SalesPerson come alive.</div>
-          <h1>Your website<br />doesn&rsquo;t sell.<br /><em>It just sits there.</em></h1>
-          <p>Paste your existing website below. We&rsquo;ll read it, understand your business, and show you a live, talking AI SalesPerson built from it — in under 90 seconds. Nothing on your real site changes.</p>
+        <section className={`wpl-hero${stage === 'idle' ? ' has-visual' : ''}`} id="url-form">
+          <div className="wpl-hero-grid">
+            <div className="wpl-hero-copy">
+              <div className="wpl-pill"><Zap size={14} /> Paste a URL. Watch your AI SalesPerson come alive.</div>
+              <h1>Your website<br />doesn&rsquo;t sell.<br /><em>It just sits there.</em></h1>
+              <p>Paste your existing website below. We&rsquo;ll read it, understand your business, and show you a live, talking AI SalesPerson built from it — in under 90 seconds. Nothing on your real site changes.</p>
 
-          {stage === 'idle' || stage === 'failed' ? (
-            <form className="wpl-url-form" onSubmit={startPreview}>
-              <input
-                type="text" required value={urlInput} onChange={e => setUrlInput(e.target.value)}
-                placeholder="yourbusiness.com" aria-label="Your website URL"
-              />
-              <button type="submit"><span>See my AI SalesPerson</span><ArrowRight size={17} strokeWidth={2.5} /></button>
-            </form>
-          ) : null}
+              {stage === 'idle' || stage === 'failed' ? (
+                <form className="wpl-url-form" onSubmit={startPreview}>
+                  <input
+                    type="text" required value={urlInput} onChange={e => setUrlInput(e.target.value)}
+                    placeholder="yourbusiness.com" aria-label="Your website URL"
+                  />
+                  <button type="submit"><span>See my AI SalesPerson</span><ArrowRight size={17} strokeWidth={2.5} /></button>
+                </form>
+              ) : null}
 
-          {stage === 'failed' && errorMsg && <p className="wpl-error"><X size={14} /> {errorMsg}</p>}
+              {stage === 'failed' && errorMsg && <p className="wpl-error"><X size={14} /> {errorMsg}</p>}
 
-          {showProgress && (
-            <div className="wpl-progress">
-              <div className="wpl-progress-stages">
-                {STAGE_ORDER.map((s) => {
-                  const idx = STAGE_ORDER.indexOf(s)
-                  const currentIdx = STAGE_ORDER.indexOf(stage)
-                  const done = idx < currentIdx || stage === 'ready'
-                  const active = s === stage
-                  return (
-                    <div key={s} className={`wpl-progress-step${done ? ' done' : ''}${active ? ' active' : ''}`}>
-                      <span>{done ? <Check size={13} /> : active ? <Loader2 size={13} className="wpl-spin" /> : idx + 1}</span>
-                      {STAGE_COPY[s as Exclude<Stage, 'idle' | 'failed'>]}
-                    </div>
-                  )
-                })}
-              </div>
-              <div className="wpl-progress-bar"><div style={{ width: `${progressPct}%` }} /></div>
+              {showProgress && (
+                <div className="wpl-progress">
+                  <div className="wpl-progress-stages">
+                    {STAGE_ORDER.map((s) => {
+                      const idx = STAGE_ORDER.indexOf(s)
+                      const currentIdx = STAGE_ORDER.indexOf(stage)
+                      const done = idx < currentIdx || stage === 'ready'
+                      const active = s === stage
+                      return (
+                        <div key={s} className={`wpl-progress-step${done ? ' done' : ''}${active ? ' active' : ''}`}>
+                          <span>{done ? <Check size={13} /> : active ? <Loader2 size={13} className="wpl-spin" /> : idx + 1}</span>
+                          {STAGE_COPY[s as Exclude<Stage, 'idle' | 'failed'>]}
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <div className="wpl-progress-bar"><div style={{ width: `${progressPct}%` }} /></div>
+                </div>
+              )}
+
+              <div className="wpl-trust-row"><span><CheckCircle2 /> Free, no card required</span><span><CheckCircle2 /> Your real site is never touched</span><span><CheckCircle2 /> Talk to it live, right now</span></div>
             </div>
-          )}
 
-          <div className="wpl-trust-row"><span><CheckCircle2 /> Free, no card required</span><span><CheckCircle2 /> Your real site is never touched</span><span><CheckCircle2 /> Talk to it live, right now</span></div>
+            {stage === 'idle' && (
+              <div className="wpl-hero-visual" aria-hidden="true">
+                <div className="wpl-mock-browser">
+                  <div className="wpl-mock-bar"><span /><span /><span /><em>yourbusiness.com</em></div>
+                  <div className="wpl-mock-nav"><b>Your Business</b><div><span>Home</span><span>Services</span><span>About</span><span>Contact</span></div></div>
+                  <div className="wpl-mock-banner">
+                    <small>OPEN NOW</small>
+                    <h4>Quality service,<br />every time.</h4>
+                    <p>Fast, reliable, and affordable — right in your neighborhood.</p>
+                    <div className="wpl-mock-btns"><span className="primary">Book Now</span><span>Our Services</span></div>
+                  </div>
+                  <div className="wpl-mock-cards"><div /><div /><div /><div /></div>
+                </div>
+                <div className="wpl-mock-widget">
+                  <div className="wpl-mock-widget-top"><i />AI on site</div>
+                  <div className="wpl-mock-widget-name"><span className="wpl-mock-avatar" />Hi! I&rsquo;m your AI SalesPerson 👋</div>
+                  <ul>
+                    <li><Check size={11} /> Answers questions</li>
+                    <li><Check size={11} /> Checks availability</li>
+                    <li><Check size={11} /> Books appointments</li>
+                  </ul>
+                  <div className="wpl-mock-widget-input">Type a message…<Zap size={12} /></div>
+                </div>
+              </div>
+            )}
+          </div>
         </section>
 
         {showPreview && (
@@ -325,8 +355,24 @@ export default function WebsitePreviewLanding() {
         .wpl-nav{height:72px;max-width:1220px;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}.wpl-logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--wc-ink);font-size:18px;font-weight:800}.wpl-navlinks{display:flex;gap:30px}.wpl-navlinks a,.wpl-footer a{color:var(--wc-muted);text-decoration:none;font-size:13px;font-weight:600}.wpl-navlinks a:hover{color:var(--wc-orange)}.wpl-menu,.wpl-mobile-nav{display:none}
         .wpl-cta{min-height:40px;padding:0 17px;border-radius:9px;background:var(--wc-orange);color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-display);font-size:13px;font-weight:800;box-shadow:0 10px 28px rgba(255,107,26,.22);transition:.2s}.wpl-cta:hover{transform:translateY(-2px);background:#ed5d0b}
         .wpl-mobile-nav{position:absolute;z-index:20;top:102px;left:16px;right:16px;padding:18px;background:#fff;border:1px solid var(--wc-line);border-radius:12px;box-shadow:0 20px 40px rgba(15,23,42,.15);flex-direction:column}.wpl-mobile-nav a{padding:12px;color:var(--wc-ink);font-weight:700;text-decoration:none}
-        .wpl-hero{max-width:760px;margin:auto;padding:64px 24px 90px;text-align:center}.wpl-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #ffd6be;background:#fff4ed;border-radius:99px;color:#a84308;text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:800;margin-bottom:22px}.wpl-pill.dark{color:#fff;border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.07)}
-        .wpl-hero h1{font-size:clamp(38px,6vw,60px);line-height:1.04;letter-spacing:-.05em;margin:0 0 20px}.wpl-hero>p{font-size:16px;line-height:1.7;color:var(--wc-muted);max-width:560px;margin:0 auto 34px}
+        .wpl-hero{max-width:1160px;margin:auto;padding:64px 24px 90px}.wpl-hero-grid{display:grid;grid-template-columns:1fr}
+        .wpl-hero:not(.has-visual) .wpl-hero-grid{max-width:760px;margin:auto;text-align:center}
+        .wpl-hero.has-visual .wpl-hero-grid{grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;text-align:left}
+        .wpl-hero.has-visual .wpl-trust-row{justify-content:flex-start}.wpl-hero.has-visual .wpl-hero-copy>p{margin:0 0 34px}
+        .wpl-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #ffd6be;background:#fff4ed;border-radius:99px;color:#a84308;text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:800;margin-bottom:22px}.wpl-pill.dark{color:#fff;border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.07)}
+        .wpl-hero h1{font-size:clamp(38px,6vw,60px);line-height:1.04;letter-spacing:-.05em;margin:0 0 20px}.wpl-hero-copy>p{font-size:16px;line-height:1.7;color:var(--wc-muted);max-width:560px;margin:0 auto 34px}
+        .wpl-hero-visual{position:relative}
+        .wpl-mock-browser{background:#fff;border:1px solid var(--wc-line);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px -20px rgba(13,23,43,.18)}
+        .wpl-mock-bar{height:32px;background:#f3f4f6;display:flex;align-items:center;gap:6px;padding:0 12px}.wpl-mock-bar span{width:8px;height:8px;border-radius:50%;background:#d7dbe3}.wpl-mock-bar em{flex:1;text-align:center;font-style:normal;font-size:10px;color:#98a2b3}
+        .wpl-mock-nav{height:46px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--wc-line)}.wpl-mock-nav b{font-size:12px;color:var(--wc-ink)}.wpl-mock-nav div{display:flex;gap:12px;font-size:9px;color:#98a2b3;font-weight:600}
+        .wpl-mock-banner{padding:24px 20px;background:linear-gradient(135deg,var(--wc-navy),var(--wc-navy2));color:#fff}.wpl-mock-banner small{display:inline-block;background:rgba(255,255,255,.1);color:#9fe8c0;font-size:8px;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:99px;margin-bottom:10px}.wpl-mock-banner h4{margin:0 0 8px;font-size:18px;line-height:1.25;font-family:var(--font-display)}.wpl-mock-banner p{margin:0 0 14px;font-size:10px;color:#c3cadb;max-width:220px;line-height:1.5}
+        .wpl-mock-btns{display:flex;gap:8px}.wpl-mock-btns span{font-size:9px;font-weight:800;padding:7px 12px;border-radius:99px}.wpl-mock-btns .primary{background:var(--wc-orange);color:#fff}.wpl-mock-btns span:not(.primary){border:1px solid rgba(255,255,255,.3);color:#fff}
+        .wpl-mock-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 18px 18px}.wpl-mock-cards div{height:34px;background:var(--wc-bg);border-radius:8px}
+        .wpl-mock-widget{position:absolute;top:-18px;right:-18px;width:172px;background:#fff;border:1px solid var(--wc-line);border-radius:13px;padding:12px;box-shadow:0 20px 44px rgba(13,23,43,.22)}
+        .wpl-mock-widget-top{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:800;color:#18a874;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}.wpl-mock-widget-top i{width:6px;height:6px;border-radius:50%;background:#18a874;display:inline-block}
+        .wpl-mock-widget-name{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;color:var(--wc-ink);margin-bottom:8px}.wpl-mock-avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--wc-orange),#ffb37a);flex:0 0 22px}
+        .wpl-mock-widget ul{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:5px}.wpl-mock-widget li{display:flex;align-items:center;gap:6px;font-size:9px;color:#475467}.wpl-mock-widget li svg{color:#18a874;flex:0 0 auto}
+        .wpl-mock-widget-input{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--wc-bg);border:1px solid var(--wc-line);border-radius:7px;padding:7px 8px;font-size:9px;color:#98a2b3}.wpl-mock-widget-input svg{color:var(--wc-orange);flex:0 0 auto}
         .wpl-url-form{display:flex;gap:10px;max-width:520px;margin:0 auto}.wpl-url-form input{flex:1;height:56px;padding:0 18px;border:2px solid var(--wc-line);border-radius:12px;font-size:15px;background:#fff;color:var(--wc-ink)}.wpl-url-form input:focus{outline:none;border-color:var(--wc-orange)}.wpl-url-form button{height:56px;padding:0 22px;border:0;border-radius:12px;background:var(--wc-orange);color:#fff;font-family:var(--font-display);font-weight:800;font-size:14px;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;box-shadow:0 10px 28px rgba(255,107,26,.22)}.wpl-url-form button:hover{background:#ed5d0b}
         .wpl-error{display:flex;align-items:center;justify-content:center;gap:6px;color:#b42318;font-size:13px;margin-top:16px}
         .wpl-progress{max-width:520px;margin:0 auto}.wpl-progress-stages{display:grid;gap:10px;margin-bottom:16px;text-align:left}.wpl-progress-step{display:flex;align-items:center;gap:12px;font-size:13px;color:#98a2b3;font-weight:600}.wpl-progress-step.done{color:#079455}.wpl-progress-step.active{color:var(--wc-ink)}.wpl-progress-step span{width:24px;height:24px;border-radius:50%;background:var(--wc-line);color:#98a2b3;display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 24px}.wpl-progress-step.done span{background:#edfdf7;color:#079455}.wpl-progress-step.active span{background:#fff4ed;color:var(--wc-orange)}.wpl-spin{animation:wpl-spin 1s linear infinite}@keyframes wpl-spin{to{transform:rotate(360deg)}}
@@ -352,6 +398,7 @@ export default function WebsitePreviewLanding() {
         .wpl-sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--wc-navy);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:20px;box-shadow:0 -10px 30px rgba(0,0,0,.15);flex-wrap:wrap}.wpl-sticky-cta span{font-size:13px;color:#c4cad5}.wpl-sticky-cta strong{color:#fff}.wpl-sticky-cta a{display:inline-flex;align-items:center;gap:7px;background:var(--wc-orange);color:#fff;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:800;font-size:13px;font-family:var(--font-display)}.wpl-sticky-cta button{background:none;border:0;color:#8490a5;cursor:pointer;padding:6px}
         .wpl-sticky-pill{position:fixed;right:24px;bottom:24px;z-index:30;display:flex;align-items:center;gap:8px;background:var(--wc-orange);color:#fff;border:0;padding:12px 18px;border-radius:99px;font-weight:800;font-size:12px;font-family:var(--font-display);cursor:pointer;box-shadow:0 14px 34px rgba(255,107,26,.3)}
         @media(prefers-reduced-motion:reduce){.wpl-page *{transition:none!important}.wpl-spin{animation:none}}
+        @media(max-width:960px){.wpl-hero-visual{display:none}.wpl-hero.has-visual .wpl-hero-grid{grid-template-columns:1fr;max-width:760px;margin:auto;text-align:center}.wpl-hero.has-visual .wpl-trust-row{justify-content:center}}
         @media(max-width:900px){.wpl-navlinks,.wpl-nav>.wpl-cta{display:none}.wpl-menu{display:grid;place-items:center;border:0;background:none;color:var(--wc-ink)}.wpl-mobile-nav{display:flex}.wpl-card-grid{grid-template-columns:repeat(2,1fr)}.wpl-card-grid article:last-child{grid-column:span 2}.wpl-dark-inner{grid-template-columns:1fr;gap:40px;padding:80px 24px}.wpl-final-grid{grid-template-columns:1fr;gap:35px}}
         @media(max-width:600px){.wpl-topbar{font-size:9px}.wpl-nav{height:64px}.wpl-hero{padding:40px 20px 70px}.wpl-url-form{flex-direction:column}.wpl-card-grid{grid-template-columns:1fr}.wpl-card-grid article:last-child{grid-column:auto}.wpl-section{padding:70px 20px}.wpl-iframe-wrap iframe{height:520px}.wpl-final{padding:70px 20px}.wpl-field-grid{grid-template-columns:1fr}.wpl-claim-form{padding:20px}.wpl-footer{padding:28px 20px;align-items:flex-start;flex-wrap:wrap}.wpl-footer>div{width:100%;margin:0}.wpl-sticky-cta{flex-direction:column;text-align:center}}
       `}</style>

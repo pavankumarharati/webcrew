@@ -1,8 +1,9 @@
 import IntroSplash from '@/components/intro-splash'
 import MissedCallLanding from '@/components/missed-call-landing'
 import WebsitePreviewLanding from '@/components/website-preview-landing'
+import TieredLanding from '@/components/tiered-landing'
 import Pricing from '@/components/pricing'
-import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING } from '@/lib/features'
+import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING, SHOW_TIERED_LANDING } from '@/lib/features'
 
 // Homepage-only structured data. Scoped here (not root layout) so it doesn't
 // render on /privacy, /terms, or any future non-homepage route.
@@ -54,7 +55,7 @@ const HOME_SCHEMA = {
         'Automatic follow-up at day 3 and day 10 for leads who haven\'t booked yet',
         'Google review requests after each visit, sent to every customer alike',
         'Monthly report of calls, leads, bookings and follow-ups; SSL and a mobile-friendly site',
-        'Founding rate — $0 setup, 30-day free trial, then $99/mo, locked for life (first 10 clients; $199/mo after), everything above included',
+        'Founding rate — $0 setup, 30-day free trial, then $99/mo, locked for life (first 10 clients; $149/mo after), 250 AI minutes a month included; over that, calls ring your cell so no customer is missed',
       ].map((text, i) => ({
         '@type': 'ListItem',
         position: i + 1,
@@ -110,7 +111,7 @@ const HOME_SCHEMA = {
           name: 'What does WebCrew cost?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: '$0 setup fee and a 30-day free trial. Our first 10 clients pay a founding rate of $99/month, locked for as long as they stay; after that it is $199/month. The website, AI receptionist, booking, lead alerts, follow-ups, and review requests are all included, no add-ons.',
+            text: '$0 setup fee and a 30-day free trial. Our first 10 clients pay a founding rate of $99/month (250 AI minutes), locked for as long as they stay; after that it is $149/month (500 AI minutes). The website, AI receptionist, booking, lead alerts, follow-ups, and review requests are all included, no add-ons. If you use all your minutes, calls ring your cell, so there are never surprise charges. Multiple locations or heavy call volume: custom quote.',
           },
         },
         {
@@ -134,8 +135,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_SCHEMA) }}
       />
       <IntroSplash />
-      {SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
-      {!SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
+      {SHOW_TIERED_LANDING ? <TieredLanding /> : SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
+      {!SHOW_TIERED_LANDING && !SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
     </>
   )
 }
