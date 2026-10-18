@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A five-minute calculation, using your own numbers, that shows what unanswered calls cost a home service business every month.',
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'missed call smartphone',
   keywords: ['missed calls cost', 'missed call revenue', 'unanswered calls small business', 'lost leads from missed calls'],
   body: `
 ## Why your own numbers beat any statistic

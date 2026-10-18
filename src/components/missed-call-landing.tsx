@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import TierPricing from '@/components/tier-pricing'
 import {
   ArrowRight, BellRing, CalendarCheck, Check, CheckCircle2, ChevronDown,
   Clock3, Globe, Headphones, Menu, MessageSquareText, PhoneCall, ShieldCheck,
@@ -133,7 +134,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
 
   const links = [
     ['Styles', '#styles'], ['The problem', '#problem'], ['How it works', '#how-it-works'], ['What’s included', '#included'], ['Who it’s for', '#industries'], ['FAQ', '#faq'], ['Blog', '/blog'],
-    ...(showPricing ? [['Pricing', '#pricing']] : []),
+    ['Pricing', '#pricing'],
   ]
 
   return (
@@ -273,9 +274,10 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
           <div className="wc2-proof-placeholder"><ShieldCheck /><div><h3>Verified customer stories are being prepared.</h3><p>Results will appear here after customer approval and verification.</p></div><span>Proof-first policy</span></div>
         </section>
 
+        <TierPricing />
         <section className="wc2-section wc2-faq" id="faq" data-avatar-caption="Got questions? I can probably answer them faster than reading."><Eyebrow>FAQ</Eyebrow><h2>Everything practical. <em>Answered.</em></h2><div className="wc2-faq-list">{faqs.map(([q, a], i) => <button key={q} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span><b>{q}</b><p style={{ display: openFaq === i ? 'block' : 'none' }}>{a}</p></span><ChevronDown className={openFaq === i ? 'open' : ''} /></button>)}</div></section>
 
-        <section className="wc2-final" id="contact" data-avatar-caption="Ready? Tell me about your business and I'll take it from here."><div className="wc2-final-glow" /><div className="wc2-final-grid"><div className="wc2-final-copy"><div className="wc2-pill dark"><Sparkles size={14} /> $0 setup fee · 30-day trial</div><h2>Tell us where calls are <em>slipping through.</em></h2><p>Share the pressure points in your business. WebCrew will use them to prepare the right call-answering and follow-up workflow for you.</p><div className="wc2-form-benefits"><span><CheckCircle2 /> $0 setup fee — everything included, one flat plan</span><span><CheckCircle2 /> 30-day free trial, full access — card required, no charge until trial ends</span><span><CheckCircle2 /> Personalized front-office walkthrough</span><span><CheckCircle2 /> Clear missed-revenue diagnosis</span><span><CheckCircle2 /> Human review before automation begins</span></div></div>
+        <section className="wc2-final" id="contact" data-avatar-caption="Ready? Tell me about your business and I'll take it from here."><div className="wc2-final-glow" /><div className="wc2-final-grid"><div className="wc2-final-copy"><div className="wc2-pill dark"><Sparkles size={14} /> $0 setup fee · 30-day trial</div><h2>Tell us where calls are <em>slipping through.</em></h2><p>Share the pressure points in your business. WebCrew will use them to prepare the right call-answering and follow-up workflow for you.</p><div className="wc2-form-benefits"><span><CheckCircle2 /> $0 setup fee — everything included, no add-ons</span><span><CheckCircle2 /> 30-day free trial, full access — card required, no charge until trial ends</span><span><CheckCircle2 /> Personalized front-office walkthrough</span><span><CheckCircle2 /> Clear missed-revenue diagnosis</span><span><CheckCircle2 /> Human review before automation begins</span></div></div>
           {leadState === 'sent' ? <div className="wc2-lead-success" id="lead-form"><CheckCircle2 /><h3>You’re in. Your demo is being built.</h3><p>We’ll send your demo link, then you can start the 30-day free trial whenever you’re ready. {lead.smsConsent ? 'Watch for a confirmation text from WebCrew.' : 'We’ll respond by email or phone without enrolling you in SMS.'}</p><a href="#top">Back to the top</a></div> :
           <form className="wc2-lead-form" id="lead-form" onSubmit={submitLead}>
             <div className="wc2-form-head"><div><b>{lead.keepExistingSite ? 'Add AI to my website' : 'Get my free demo + 30-day trial'}</b><small>Usually takes under 2 minutes</small></div><span>Founding 10</span></div>

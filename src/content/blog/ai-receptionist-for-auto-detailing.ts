@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How detailers use an AI receptionist to answer calls mid-job, collect vehicle details, quote packages they publish, and book appointments.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'car detailing',
   keywords: ['AI receptionist for auto detailing', 'mobile detailing booking', 'detailing business phone answering'],
   body: `
 ## Detailers cannot answer with a buffer in their hands

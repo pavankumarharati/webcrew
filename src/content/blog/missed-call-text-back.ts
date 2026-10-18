@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Missed call text back can rescue callers who hang up, but texting without consent can cost you. Here is how to do it the right way.',
   date: '2026-10-18',
   category: 'Follow-up & reviews',
+  imageQuery: 'texting smartphone',
   keywords: ['missed call text back', 'auto text missed calls', 'TCPA texting rules small business', 'SMS consent'],
   body: `
 ## What missed call text back is

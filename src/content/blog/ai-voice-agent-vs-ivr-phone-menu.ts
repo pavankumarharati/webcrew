@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Phone menus (IVR) route calls. AI voice agents actually handle them. Here is the difference, and why it matters for a small service business.',
   date: '2026-10-18',
   category: 'Phone basics',
+  imageQuery: 'phone keypad',
   keywords: ['AI voice agent vs IVR', 'IVR alternative', 'phone menu small business', 'conversational AI phone'],
   body: `
 ## What an IVR is

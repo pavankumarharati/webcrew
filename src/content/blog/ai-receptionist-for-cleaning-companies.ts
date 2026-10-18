@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How house and commercial cleaning companies use an AI receptionist to capture quote details, book first cleans, and keep recurring clients happy.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'house cleaning service',
   keywords: ['AI receptionist for cleaning business', 'cleaning company answering service', 'house cleaning booking'],
   body: `
 ## Cleaning calls are quote calls

@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Practical ways small businesses can cut spam calls, including fake "Google listing" robocalls, without making real customers jump through hoops.',
   date: '2026-10-18',
   category: 'Phone basics',
+  imageQuery: 'spam call phone',
   keywords: ['stop spam calls business', 'Google listing robocall', 'block robocalls small business', 'spam call filter'],
   body: `
 ## The "verify your Google listing" call

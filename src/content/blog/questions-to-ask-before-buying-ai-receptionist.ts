@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A buyer checklist for local business owners: pricing, overage, booking, texting rules, honesty, and what happens when you cancel.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
+  imageQuery: 'checklist notebook',
   keywords: ['choose AI receptionist', 'AI receptionist checklist', 'best AI receptionist questions', 'AI answering service buying guide'],
   body: `
 ## Use this before any demo

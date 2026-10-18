@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Per minute, per call, per customer, or flat monthly: how AI receptionist pricing works, what the published plans cost, and how to avoid surprise bills.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
+  imageQuery: 'calculator invoice desk',
   keywords: ['AI receptionist pricing', 'AI receptionist cost', 'AI answering service cost', 'virtual receptionist price'],
   body: `
 ## The four pricing models

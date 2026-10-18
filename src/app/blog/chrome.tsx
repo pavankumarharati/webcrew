@@ -4,7 +4,7 @@ export function BlogNav() {
   return (
     <nav className="bp-nav">
       <a href="/" className="bp-logo"><BrandMark size={30} />WebCrew</a>
-      <div className="bp-nav-links"><a href="/blog">Blog</a><a href="/#how-it-works">How it works</a><a href="/#faq">FAQ</a><a className="bp-cta" href="/#lead-form">Get a free demo</a></div>
+      <div className="bp-nav-links"><a href="/blog">Blog</a><a href="/pricing">Pricing</a><a href="/#how-it-works">How it works</a><a href="/#faq">FAQ</a><a className="bp-cta" href="/#lead-form">Get a free demo</a></div>
     </nav>
   )
 }
@@ -20,5 +20,5 @@ export function BlogCta() {
 }
 
 export function BlogFooter() {
-  return <footer className="bp-foot">© WebCrew · AI front desk for local businesses · <a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></footer>
+  return <footer className="bp-foot">© WebCrew · AI front desk for local businesses · <a href="/blog">Blog</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></footer>
 }

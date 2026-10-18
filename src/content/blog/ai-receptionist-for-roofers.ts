@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'After a storm, roofing phones ring nonstop. Here is how an AI receptionist answers every call, qualifies leads, and books inspections.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'roofer working roof',
   keywords: ['AI receptionist for roofers', 'roofing answering service', 'roofing lead intake', 'storm damage calls'],
   body: `
 ## The storm problem

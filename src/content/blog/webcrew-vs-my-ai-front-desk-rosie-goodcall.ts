@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How four AI receptionist options compare on price, booking, website, follow-ups and reviews for a local service business. Updated October 2026.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
+  imageQuery: 'comparing options laptop',
   keywords: ['My AI Front Desk alternative', 'Rosie alternative', 'Goodcall alternative', 'best AI receptionist for small business'],
   body: `
 ## How to read this comparison

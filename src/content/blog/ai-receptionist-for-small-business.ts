@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'What an AI receptionist actually does on a real call, what it can and cannot handle, and how to tell if your business is ready for one.',
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'small business owner answering phone',
   keywords: ['AI receptionist', 'AI receptionist for small business', 'virtual receptionist AI', 'AI phone answering'],
   body: `
 ## The short version

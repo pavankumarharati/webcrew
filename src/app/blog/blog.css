@@ -31,3 +31,7 @@
 @media(max-width:640px){.bp-nav-links a:not(.bp-cta){display:none}.bp-body p,.bp-body li{font-size:16px}}
 .bp-body ul{list-style:disc}.bp-body ol{list-style:decimal}.bp-body li::marker{color:#c24e0d}.bp-toc ol{list-style:decimal}
 .bp-faq h2{font-size:26px;letter-spacing:-.02em;margin:40px 0 12px}
+.bp-card-img{width:calc(100% + 40px);margin:-20px -20px 6px;aspect-ratio:1200/627;height:auto;object-fit:cover;border-radius:14px 14px 0 0;display:block;background:#f2f4f7}
+.bp-card{overflow:hidden}
+.bp-figure{margin:22px 0 26px}.bp-figure img{width:100%;height:auto;aspect-ratio:1200/627;object-fit:cover;border-radius:16px;display:block;background:#f2f4f7}
+.bp-figure figcaption{font-size:12px;color:#98a2b3;margin-top:8px}.bp-figure figcaption a{color:#98a2b3}

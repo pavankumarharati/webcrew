@@ -35,6 +35,7 @@ const ROUTES: { path: string; sources: string[] }[] = [
   ),
   { path: '/ai-receptionist', sources: ['src/app/ai-receptionist'] },
   { path: '/google-business-profile-management', sources: ['src/app/google-business-profile-management'] },
+  { path: '/pricing', sources: ['src/app/pricing', 'src/components/tier-pricing.tsx'] },
   { path: '/blog', sources: ['src/app/blog', 'src/content/blog'] },
   ...POSTS.map(p => ({ path: `/blog/${p.slug}`, sources: [`src/content/blog/${p.slug}.ts`, 'src/app/blog'] })),
 ]

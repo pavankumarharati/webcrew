@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'An honest side-by-side of the three ways small businesses handle calls they cannot pick up, including cost, coverage, and what callers experience.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
+  imageQuery: 'call center headset',
   keywords: ['AI receptionist vs answering service', 'answering service alternative', 'virtual receptionist comparison', 'voicemail vs answering service'],
   body: `
 ## Three ways to handle the calls you cannot answer

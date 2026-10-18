@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A simple call script for HVAC companies: greeting, triage questions, booking, and the close, for a human CSR or an AI receptionist.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'hvac technician air conditioner',
   keywords: ['HVAC phone script', 'HVAC CSR script', 'HVAC booking script', 'HVAC call handling'],
   body: `
 ## Why a script helps

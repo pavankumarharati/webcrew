@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Turn a website that just sits there into one that answers questions, captures leads and books jobs, with one line of code and no redesign.',
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'website on laptop',
   keywords: ['AI chat for website', 'AI assistant for small business website', 'website chatbot local business', 'talking website'],
   body: `
 ## A website that only sits there

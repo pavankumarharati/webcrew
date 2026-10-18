@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A plain monthly check to see if your AI receptionist is paying for itself, using numbers from your own dashboard, not vendor claims.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
+  imageQuery: 'business growth chart',
   keywords: ['AI receptionist ROI', 'is an AI receptionist worth it', 'answering service ROI', 'measure call answering ROI'],
   body: `
 ## The only ROI that matters is yours

@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'The simple, rule-following way to get more Google reviews for a local business: ask at the right time, make it easy, and never filter.',
   date: '2026-10-18',
   category: 'Follow-up & reviews',
+  imageQuery: 'five star review',
   keywords: ['how to get more Google reviews', 'Google review request', 'review gating', 'ask customers for reviews'],
   body: `
 ## Why reviews matter so much for local businesses

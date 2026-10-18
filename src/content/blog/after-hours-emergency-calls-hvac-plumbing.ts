@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How to handle no-heat, no-AC and leak calls at night without burning out, and how an AI receptionist triages emergencies.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'night phone call',
   keywords: ['after hours answering service HVAC', 'emergency plumbing calls after hours', 'HVAC after hours calls', 'on-call answering'],
   body: `
 ## Night calls are often the most valuable calls

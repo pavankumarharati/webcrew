@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: "What happens to your customers' calls when an AI answers, what to ask any vendor about data and recordings, and the honest limits of compliance claims.",
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'data security lock',
   keywords: ['is AI receptionist safe', 'AI phone answering privacy', 'call recording AI', 'AI receptionist data security'],
   body: `
 ## Your customers trust you with their details

@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How an AI receptionist answers electrician calls, flags safety issues like sparking or burning smells, and books panel, EV charger and repair jobs.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'electrician wiring panel',
   keywords: ['AI receptionist for electricians', 'electrician answering service', 'electrical contractor call answering'],
   body: `
 ## Safety comes first

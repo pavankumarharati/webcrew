@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A follow-up plan you can actually stick to: what to send, when to send it, and when to stop, plus how to automate it.',
   date: '2026-10-18',
   category: 'Follow-up & reviews',
+  imageQuery: 'customer follow up email',
   keywords: ['lead follow up system', 'follow up with leads', 'customer follow up small business', 'win back old customers'],
   body: `
 ## Most leads need more than one touch

@@ -2,6 +2,7 @@ import './blog.css'
 import { POSTS, CATEGORIES } from '@/content/blog'
 import { BlogNav, BlogCta, BlogFooter } from './chrome'
 import { slugify } from '@/lib/blog/render'
+import { blogImage } from '@/lib/blog/images'
 
 export const metadata = {
   title: 'AI Receptionist & Phone Answering Guides for Local Businesses | WebCrew Blog',
@@ -27,7 +28,7 @@ export default function BlogHub() {
             <section key={cat} id={slugify(cat)}>
               <h2>{cat}</h2>
               <div className="bp-cards">{posts.map(p => (
-                <a key={p.slug} className="bp-card" href={`/blog/${p.slug}`}><b>{p.title}</b><span>{p.description}</span><small>{p.date}</small></a>
+                <a key={p.slug} className="bp-card" href={`/blog/${p.slug}`}>{blogImage(p.slug) && <img className="bp-card-img" src={blogImage(p.slug)!.src} alt={blogImage(p.slug)!.alt} loading="lazy" width={1200} height={627} />}<b>{p.title}</b><span>{p.description}</span><small>{p.date}</small></a>
               ))}</div>
             </section>
           )

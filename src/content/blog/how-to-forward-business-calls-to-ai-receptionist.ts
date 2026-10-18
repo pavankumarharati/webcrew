@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Step-by-step call forwarding for AT&T, Verizon, T-Mobile and most business phone apps, including "forward only when I do not answer."',
   date: '2026-10-18',
   category: 'Phone basics',
+  imageQuery: 'smartphone settings hand',
   keywords: ['forward business calls', 'conditional call forwarding', 'call forwarding codes', 'forward calls when no answer'],
   body: `
 ## You keep your number

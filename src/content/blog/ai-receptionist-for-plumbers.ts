@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How plumbing companies use an AI receptionist to catch calls while under a sink, triage leaks, and book jobs straight into the calendar.',
   date: '2026-10-18',
   category: 'By trade',
+  imageQuery: 'plumber repairing sink',
   keywords: ['AI receptionist for plumbers', 'plumbing answering service', 'plumber missed calls', 'plumbing call answering'],
   body: `
 ## Plumbing calls do not wait

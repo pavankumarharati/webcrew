@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'A no-jargon explanation of voice AI: how it hears a caller, decides what to say, and takes actions like booking, with the honest limits.',
   date: '2026-10-18',
   category: 'Phone basics',
+  imageQuery: 'voice assistant sound wave',
   keywords: ['what is voice AI', 'how does voice AI work', 'conversational AI phone', 'AI voice agent explained'],
   body: `
 ## The simple answer

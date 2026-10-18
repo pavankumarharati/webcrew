@@ -6,6 +6,8 @@ export interface BlogPost {
   description: string        // meta description, <= 160 chars
   date: string               // YYYY-MM-DD
   category: BlogCategory
+  /** Stock-photo search used by scripts/blog-images.mjs (Pexels, then Pixabay). */
+  imageQuery?: string
   keywords: string[]
   /** Markdown-lite: ## / ### headings, paragraphs, - and 1. lists, | tables, > callouts, **bold**, [link](url). */
   body: string

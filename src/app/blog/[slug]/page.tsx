@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { POSTS } from '@/content/blog'
 import { Markdown, headings } from '@/lib/blog/render'
 import { BlogNav, BlogCta, BlogFooter } from '../chrome'
+import { blogImage } from '@/lib/blog/images'
 
 export const dynamicParams = false
 export function generateStaticParams() { return POSTS.map(p => ({ slug: p.slug })) }
@@ -12,10 +13,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = POSTS.find(x => x.slug === slug)
   if (!p) return {}
   const url = `https://webcrew.app/blog/${p.slug}`
+  const img = blogImage(p.slug)
   return {
     title: `${p.title} | WebCrew`, description: p.description, keywords: p.keywords,
     alternates: { canonical: url },
-    openGraph: { type: 'article', url, title: p.title, description: p.description, publishedTime: p.date },
+    openGraph: { type: 'article', url, title: p.title, description: p.description, publishedTime: p.date, ...(img ? { images: [{ url: `https://webcrew.app${img.src}`, width: 1200, height: 627, alt: img.alt }] } : {}) },
+    ...(img ? { twitter: { card: 'summary_large_image', images: [`https://webcrew.app${img.src}`] } } : {}),
   }
 }
 
@@ -23,6 +26,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params
   const p = POSTS.find(x => x.slug === slug)
   if (!p) notFound()
+  const img = blogImage(p.slug)
   const toc = headings(p.body)
   const words = p.body.split(/\s+/).length
   const related = POSTS.filter(x => x.slug !== p.slug && x.category === p.category).slice(0, 3)
@@ -33,7 +37,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       { '@type': 'BlogPosting', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.date,
         author: { '@type': 'Organization', name: 'WebCrew', url: 'https://webcrew.app' },
         publisher: { '@type': 'Organization', name: 'WebCrew', logo: { '@type': 'ImageObject', url: 'https://webcrew.app/logo.png' } },
-        mainEntityOfPage: `https://webcrew.app/blog/${p.slug}`, keywords: p.keywords.join(', ') },
+        mainEntityOfPage: `https://webcrew.app/blog/${p.slug}`, ...(img ? { image: `https://webcrew.app${img.src}` } : {}), keywords: p.keywords.join(', ') },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Blog', item: 'https://webcrew.app/blog' },
         { '@type': 'ListItem', position: 2, name: p.title, item: `https://webcrew.app/blog/${p.slug}` } ] },
@@ -48,13 +52,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="bp-meta"><a href="/blog">Blog</a> · {p.category} · {p.date} · {Math.max(3, Math.round(words / 220))} min read</div>
         <h1>{p.title}</h1>
         <p className="bp-lede">{p.description}</p>
+        {img && <figure className="bp-figure"><img src={img.src} alt={img.alt} width={1200} height={627} fetchPriority="high" /><figcaption>Photo: <a href={img.creditUrl} rel="nofollow noopener" target="_blank">{img.credit}</a> on {img.source}</figcaption></figure>}
         {toc.length > 2 && <nav className="bp-toc"><b>In this guide</b><ol>{toc.map(h => <li key={h.id}><a href={`#${h.id}`}>{h.text}</a></li>)}</ol></nav>}
         <div className="bp-body"><Markdown body={p.body} /></div>
         {p.faq?.length ? <section className="bp-faq"><h2>Questions owners ask</h2>{p.faq.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</section> : null}
         <BlogCta />
       </article>
       <section className="bp-related"><h2 style={{ fontSize: 20 }}>Keep reading</h2><div className="bp-cards">
-        {[...related, ...more].map(r => <a key={r.slug} className="bp-card" href={`/blog/${r.slug}`}><b>{r.title}</b><span>{r.description}</span></a>)}
+        {[...related, ...more].map(r => <a key={r.slug} className="bp-card" href={`/blog/${r.slug}`}>{blogImage(r.slug) && <img className="bp-card-img" src={blogImage(r.slug)!.src} alt={blogImage(r.slug)!.alt} loading="lazy" width={1200} height={627} />}<b>{r.title}</b><span>{r.description}</span></a>)}
       </div></section>
       <BlogFooter />
     </div>

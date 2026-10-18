@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Google Voice is a good cheap business number. Here is what it does well, where small service businesses outgrow it, and how to add an AI receptionist on top.',
   date: '2026-10-18',
   category: 'Phone basics',
+  imageQuery: 'business phone desk',
   keywords: ['Google Voice for business', 'Google Voice alternative', 'Google Voice small business', 'business phone number'],
   body: `
 ## What Google Voice is good at

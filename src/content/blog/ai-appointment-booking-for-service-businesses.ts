@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'How AI phone booking works with Google Calendar, how it avoids double-booking, and how customers confirm, reschedule or cancel by text.',
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'calendar planner',
   keywords: ['AI appointment booking', 'AI phone scheduling', 'book appointments by phone automatically', 'Google Calendar AI receptionist'],
   body: `
 ## Why booking on the first call matters

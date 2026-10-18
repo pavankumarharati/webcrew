@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description: 'Homeowners call more than one company. The one that answers and books first usually gets the job. How to be first without being glued to your phone.',
   date: '2026-10-18',
   category: 'Guides',
+  imageQuery: 'contractor phone truck',
   keywords: ['speed to lead', 'contractor lead response time', 'respond to leads faster', 'home service lead follow up'],
   body: `
 ## How homeowners actually hire
