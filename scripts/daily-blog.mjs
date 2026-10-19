@@ -63,19 +63,37 @@ function existingPosts() {
   })
 }
 
+// Fallback chain: 3.x flash models all serve from AI Studio; a 503/429 "high demand"
+// on one usually clears on another or after a short wait (2026-10-19 run lost the day
+// to three straight 503s on 3.8-flash).
+const MODELS = [MODEL, 'gemini-3.7-flash', 'gemini-3.5-flash'].filter((m, i, a) => a.indexOf(m) === i)
+const RETRYABLE = new Set([429, 500, 503, 504])
+
 async function gemini(prompt, schema) {
   if (!KEY) throw new Error('GEMINI_API_KEY is not set')
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.7, maxOutputTokens: 12000, responseMimeType: 'application/json', ...(schema ? { responseSchema: schema } : {}) },
-    }),
-  })
-  const j = await r.json()
-  if (!r.ok) throw new Error(`Gemini ${r.status}: ${JSON.stringify(j).slice(0, 300)}`)
-  const text = (j.candidates?.[0]?.content?.parts ?? []).map(p => p.text ?? '').join('')
-  return JSON.parse(text)
+  let last
+  for (const [i, model] of MODELS.entries()) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 12000, responseMimeType: 'application/json', ...(schema ? { responseSchema: schema } : {}) },
+        }),
+      })
+      const j = await r.json().catch(() => ({}))
+      if (r.ok) {
+        const text = (j.candidates?.[0]?.content?.parts ?? []).map(p => p.text ?? '').join('')
+        if (i > 0) console.log(`[daily-blog] used fallback model ${model}`)
+        return JSON.parse(text)
+      }
+      last = new Error(`Gemini ${model} ${r.status}: ${JSON.stringify(j).slice(0, 200)}`)
+      if (!RETRYABLE.has(r.status)) throw last
+      console.log(`[daily-blog] ${model} ${r.status}, retrying`)
+      await new Promise(res => setTimeout(res, 15000 * (attempt + 1)))
+    }
+  }
+  throw last
 }
 
 const slugify = s => s.toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 70).replace(/-$/, '')
