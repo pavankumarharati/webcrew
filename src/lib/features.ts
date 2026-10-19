@@ -18,3 +18,11 @@ export const SHOW_PUBLIC_PRICING =
  */
 export const SHOW_NEW_LANDING =
   process.env.NEXT_PUBLIC_NEW_LANDING === 'true'
+
+/**
+ * Three-tier landing (tiered-landing.tsx): Tier 1 website build is live, Tiers
+ * 2 and 3 are "coming soon" + waitlist. Takes precedence over SHOW_NEW_LANDING.
+ * Rollback = unset NEXT_PUBLIC_TIERED_LANDING and redeploy.
+ */
+export const SHOW_TIERED_LANDING =
+  process.env.NEXT_PUBLIC_TIERED_LANDING === 'true'

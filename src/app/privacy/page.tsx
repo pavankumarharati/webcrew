@@ -21,7 +21,7 @@ export default function Privacy() {
         {[
           {
             title: 'Who We Are',
-            body: 'WebCrew ("we", "us", "our") operates webcrew.app, an AI-powered website agency that builds and deploys websites for local businesses. Our contact email is hello@webcrew.app.',
+            body: 'WebCrew ("we", "us", "our") is a product/DBA of Mind Solutions Inc. and operates webcrew.app, an AI-powered website agency that builds and deploys websites for local businesses. Our contact email is hello@webcrew.app.',
           },
           {
             title: 'Information We Collect',

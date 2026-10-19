@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   ArrowRight, BellRing, CalendarCheck, Check, CheckCircle2, ChevronDown,
-  Loader2, Menu, MessageSquareText, PhoneCall, Sparkles, UserCheck, X, Zap,
+  Loader2, Menu, MessageSquareText, PhoneCall, Plus, Sparkles, UserCheck, X, Zap,
 } from 'lucide-react'
 import BrandMark from './brand-mark'
 import { getReferralCode } from '@/lib/referral'
@@ -21,10 +21,36 @@ const RECEPTION_URL = process.env.NEXT_PUBLIC_RECEPTION_URL ?? 'https://ai-recep
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 const AI_RECEPTION_PHONE = '+19182555151'
 
-type Stage = 'idle' | 'reading' | 'understanding' | 'building' | 'ready' | 'failed'
+type Stage = 'idle' | 'reading' | 'needs_input' | 'understanding' | 'building' | 'ready' | 'failed'
+
+/** Mirrors pipeline/src/reception/preview-clarify.ts ClarifyQuestion. */
+type ClarifyQuestion = {
+  key: string
+  label: string
+  kind: 'text' | 'list' | 'choice'
+  options?: Array<{ value: string; label: string }>
+  hint?: string
+  why: string
+}
+
+/** Mirrors pipeline/src/reception/preview-sources.ts. FB/IG are never fetched — the owner pastes About text. */
+type SourceType = 'website' | 'facebook' | 'instagram' | 'text'
+type SourceDraft = { type: SourceType; url: string; text: string }
+const MAX_SOURCES = 4
+const SOURCE_TABS: Array<{ type: SourceType; label: string }> = [
+  { type: 'website', label: 'My website' },
+  { type: 'facebook', label: 'Facebook Page' },
+  { type: 'instagram', label: 'Instagram' },
+  { type: 'text', label: 'Describe my business' },
+]
+const emptySource = (type: SourceType): SourceDraft => ({ type, url: '', text: '' })
+function sourceFilled(s: SourceDraft): boolean {
+  return s.type === 'website' ? !!s.url.trim() : !!s.text.trim()
+}
 
 const STAGE_COPY: Record<Exclude<Stage, 'idle'>, string> = {
-  reading: 'Reading your website…',
+  reading: 'Reading your business info…',
+  needs_input: 'A few quick questions',
   understanding: 'Understanding your business…',
   building: 'Building your AI SalesPerson…',
   ready: 'Ready!',
@@ -57,13 +83,21 @@ const faqs = [
 export default function WebsitePreviewLanding() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(0)
-  const [urlInput, setUrlInput] = useState('')
+  const [sources, setSources] = useState<SourceDraft[]>([emptySource('website')])
+  const urlInput = sources.find(s => s.type === 'website')?.url.trim() ?? ''
+  const hasWebsite = sources.some(s => s.type === 'website')
+  // Chosen BEFORE the demo so the demo matches it. No website → new site only.
+  const [experience, setExperience] = useState<'upgrade' | 'new'>('upgrade')
+  const effectiveExperience: 'upgrade' | 'new' = hasWebsite ? experience : 'new'
   const [stage, setStage] = useState<Stage>('idle')
   const [progressPct, setProgressPct] = useState(0)
   const [previewId, setPreviewId] = useState<string | null>(null)
   const [configId, setConfigId] = useState<string | null>(null)
   const [businessName, setBusinessName] = useState<string>('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [questions, setQuestions] = useState<ClarifyQuestion[]>([])
+  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [answering, setAnswering] = useState(false)
   const [ctaDismissed, setCtaDismissed] = useState(false)
 
   const [claim, setClaim] = useState({
@@ -111,7 +145,11 @@ export default function WebsitePreviewLanding() {
         if (!res.ok) throw new Error(data.error || 'Something went wrong.')
         setStage(data.stage)
         setProgressPct(data.progressPct ?? 0)
-        if (data.stage === 'ready') {
+        if (data.stage === 'needs_input') {
+          setQuestions(Array.isArray(data.questions) ? data.questions : [])
+          if (data.businessName) setBusinessName(data.businessName)
+          if (pollRef.current) clearInterval(pollRef.current)
+        } else if (data.stage === 'ready') {
           setConfigId(data.configId ?? null)
           if (data.businessName) setBusinessName(data.businessName)
           if (pollRef.current) clearInterval(pollRef.current)
@@ -129,7 +167,8 @@ export default function WebsitePreviewLanding() {
 
   async function startPreview(e: React.FormEvent) {
     e.preventDefault()
-    if (!urlInput.trim()) return
+    const filled = sources.filter(sourceFilled)
+    if (filled.length === 0) return
     setErrorMsg('')
     setStage('reading')
     setProgressPct(5)
@@ -138,11 +177,18 @@ export default function WebsitePreviewLanding() {
       const res = await fetch(`${RECEPTION_URL}/preview/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: urlInput.trim(), turnstileToken }),
+        body: JSON.stringify({
+          sources: filled.map(s => s.type === 'website'
+            ? { type: s.type, url: s.url.trim() }
+            : { type: s.type, url: s.url.trim() || undefined, text: s.text.trim() }),
+          experience: effectiveExperience,
+          turnstileToken,
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Something went wrong.')
       setPreviewId(data.previewId)
+      setClaim(c => ({ ...c, mode: effectiveExperience === 'new' ? 'new' : 'existing' }))
       pollStatus(data.previewId)
     } catch (e: any) {
       setErrorMsg(e.message || 'Something went wrong. Please try again.')
@@ -150,10 +196,56 @@ export default function WebsitePreviewLanding() {
     }
   }
 
+  async function submitAnswers(skipAll = false) {
+    if (!previewId) return
+    setAnswering(true)
+    setErrorMsg('')
+    try {
+      const res = await fetch(`${RECEPTION_URL}/preview/answer/${previewId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: skipAll ? {} : answers }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.')
+      setQuestions([])
+      setStage('understanding')
+      setProgressPct(55)
+      pollStatus(previewId)
+    } catch (e: any) {
+      setErrorMsg(e.message || 'Something went wrong. Please try again.')
+    } finally {
+      setAnswering(false)
+    }
+  }
+
+  function updateSource(i: number, patch: Partial<SourceDraft>) {
+    setSources(prev => prev.map((s, j) => j === i ? { ...s, ...patch } : s))
+  }
+  function addSource() {
+    setSources(prev => {
+      if (prev.length >= MAX_SOURCES) return prev
+      // Next unused type; only one website allowed.
+      const used = new Set(prev.map(s => s.type))
+      const next = SOURCE_TABS.find(t => !used.has(t.type))?.type ?? 'text'
+      return [...prev, emptySource(next)]
+    })
+  }
+  function removeSource(i: number) {
+    setSources(prev => prev.length > 1 ? prev.filter((_, j) => j !== i) : prev)
+  }
+
+  function setAnswer(key: string, value: string) {
+    setAnswers(prev => ({ ...prev, [key]: value }))
+  }
+
   function resetPreview() {
     if (pollRef.current) clearInterval(pollRef.current)
     setStage('idle'); setProgressPct(0); setPreviewId(null); setConfigId(null); setBusinessName(''); setErrorMsg(''); setCtaDismissed(false)
+    setQuestions([]); setAnswers({})
   }
+
+  const sourcesSummary = sources.filter(sourceFilled).map(s => s.type === 'website' ? s.url.trim() : s.type === 'text' ? 'description' : s.type).join(' + ')
 
   async function submitClaim(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -170,7 +262,7 @@ export default function WebsitePreviewLanding() {
           businessNiche: claim.mode === 'new' ? (claim.niche || 'Other local business') : 'AI SalesPerson preview claim',
           phone: claim.phone,
           email: claim.email,
-          currentWebsite: urlInput.trim(),
+          currentWebsite: urlInput || undefined,
           interestOnly: claim.mode === 'existing',
           templateStyle: claim.mode === 'new' ? claim.style : undefined,
           city: claim.mode === 'new' ? claim.city : undefined,
@@ -178,8 +270,8 @@ export default function WebsitePreviewLanding() {
           previewConfigId: configId ?? undefined,
           service: 'AI SalesPerson preview claim',
           message: claim.mode === 'new'
-            ? `Saw their "paste your URL" AI SalesPerson preview for ${urlInput.trim()} and asked for a brand-new site instead (style: ${claim.style}).`
-            : `Claimed their "paste your URL" AI SalesPerson preview for ${urlInput.trim()} — add AI to existing site, no rebuild.`,
+            ? `Saw their AI SalesPerson preview (${sourcesSummary}) and asked for a brand-new site instead (style: ${claim.style}).`
+            : `Claimed their AI SalesPerson preview (${sourcesSummary}) — add AI to existing site, no rebuild.`,
           smsConsent: claim.smsConsent,
           consentTimestamp: claim.smsConsent ? new Date().toISOString() : undefined,
           consentLanguage: claim.smsConsent ? consentLanguage : undefined,
@@ -196,7 +288,7 @@ export default function WebsitePreviewLanding() {
   }
 
   const links = [['How it works', '#how-it-works'], ['FAQ', '#faq']]
-  const showProgress = stage !== 'idle' && stage !== 'failed'
+  const showProgress = stage !== 'idle' && stage !== 'failed' && stage !== 'needs_input'
   const showPreview = stage === 'ready' && configId && previewId
 
   return (
@@ -214,21 +306,110 @@ export default function WebsitePreviewLanding() {
         <section className={`wpl-hero${stage === 'idle' ? ' has-visual' : ''}`} id="url-form">
           <div className="wpl-hero-grid">
             <div className="wpl-hero-copy">
-              <div className="wpl-pill"><Zap size={14} /> Paste a URL. Watch your AI SalesPerson come alive.</div>
-              <h1>Your website<br />doesn&rsquo;t sell.<br /><em>It just sits there.</em></h1>
-              <p>Paste your existing website below. We&rsquo;ll read it, understand your business, and show you a live, talking AI SalesPerson built from it — in under 90 seconds. Nothing on your real site changes.</p>
+              <div className="wpl-pill"><Zap size={14} /> Website, Facebook, Instagram — or just tell us about it.</div>
+              <h1>Turn your website into an <em>AI SalesPerson.</em><span className="wpl-h1-alt">Or get a brand-new website that grows your business.</span></h1>
+              <p>No website? No problem. Start from your website, your Facebook or Instagram page, or a few sentences about your business. We&rsquo;ll show you a live, talking AI SalesPerson built from it. Nothing on your real pages changes.</p>
 
               {stage === 'idle' || stage === 'failed' ? (
-                <form className="wpl-url-form" onSubmit={startPreview}>
-                  <input
-                    type="text" required value={urlInput} onChange={e => setUrlInput(e.target.value)}
-                    placeholder="yourbusiness.com" aria-label="Your website URL"
-                  />
-                  <button type="submit"><span>See my AI SalesPerson</span><ArrowRight size={17} strokeWidth={2.5} /></button>
+                <form className="wpl-sources" onSubmit={startPreview}>
+                  <p className="wpl-sources-q">How does your business show up online?</p>
+                  {sources.map((src, i) => (
+                    <div className="wpl-source" key={i}>
+                      <div className="wpl-source-tabs" role="radiogroup" aria-label={`Source ${i + 1} type`}>
+                        {SOURCE_TABS.map(t => {
+                          const taken = t.type === 'website' && src.type !== 'website' && sources.some(s => s.type === 'website')
+                          return (
+                            <button
+                              type="button" key={t.type} role="radio" aria-checked={src.type === t.type} disabled={taken}
+                              className={src.type === t.type ? 'on' : ''}
+                              onClick={() => updateSource(i, { type: t.type, url: '' })}
+                            >{t.label}</button>
+                          )
+                        })}
+                        {sources.length > 1 && (
+                          <button type="button" className="wpl-source-remove" aria-label={`Remove source ${i + 1}`} onClick={() => removeSource(i)}><X size={14} /></button>
+                        )}
+                      </div>
+                      {src.type === 'website' ? (
+                        <input type="text" value={src.url} onChange={e => updateSource(i, { url: e.target.value })} placeholder="yourbusiness.com" aria-label="Your website URL" />
+                      ) : (
+                        <>
+                          {src.type !== 'text' && (
+                            <input type="text" value={src.url} onChange={e => updateSource(i, { url: e.target.value })}
+                              placeholder={src.type === 'facebook' ? 'facebook.com/yourpage (optional)' : 'instagram.com/yourprofile (optional)'}
+                              aria-label={`${src.type === 'facebook' ? 'Facebook' : 'Instagram'} link (optional)`} />
+                          )}
+                          <textarea rows={4} value={src.text} onChange={e => updateSource(i, { text: e.target.value })}
+                            aria-label={src.type === 'text' ? 'Describe your business' : 'Paste your About text'}
+                            placeholder={src.type === 'text'
+                              ? 'What you do, where you work, your hours, and the number customers call. E.g. "Family HVAC shop in Tracy, CA. AC repair and furnace installs. Mon–Fri 8–5. (209) 555-0100."'
+                              : `Paste the About section from your ${src.type === 'facebook' ? 'Facebook Page' : 'Instagram profile'}: services, area, hours, phone.`} />
+                          {src.type !== 'text' && <small className="wpl-source-note">We don&rsquo;t log in to or read your profile. We only use what you paste here.</small>}
+                        </>
+                      )}
+                    </div>
+                  ))}
+                  <p className="wpl-sources-q">What would you like to see?</p>
+                  <div className="wpl-experience" role="radiogroup" aria-label="What would you like to see?">
+                    {hasWebsite && (
+                      <button type="button" role="radio" aria-checked={effectiveExperience === 'upgrade'} className={effectiveExperience === 'upgrade' ? 'on' : ''} onClick={() => setExperience('upgrade')}>
+                        <b>Keep my website, add AI</b>
+                        <span>Your site, brand and domain stay the same. We add AI chat + voice that answers, qualifies and books.</span>
+                      </button>
+                    )}
+                    <button type="button" role="radio" aria-checked={effectiveExperience === 'new'} className={effectiveExperience === 'new' ? 'on' : ''} onClick={() => setExperience('new')}>
+                      <b>{hasWebsite ? 'Build me a new AI-ready website' : 'Build me an AI-ready website'}</b>
+                      <span>A modern site built from your info{hasWebsite ? ', keeping your name and branding' : ''}, with AI chat + voice built in.</span>
+                    </button>
+                  </div>
+                  <small className="wpl-source-note">Either way, AI phone answering can be added to your business number.</small>
+                  <div className="wpl-sources-actions">
+                    {sources.length < MAX_SOURCES && (
+                      <button type="button" className="wpl-source-add" onClick={addSource}><Plus size={15} /> Add another source</button>
+                    )}
+                    <button type="submit" className="wpl-source-go" disabled={!sources.some(sourceFilled)}><span>See my AI SalesPerson</span><ArrowRight size={17} strokeWidth={2.5} /></button>
+                  </div>
                 </form>
               ) : null}
 
               {stage === 'failed' && errorMsg && <p className="wpl-error"><X size={14} /> {errorMsg}</p>}
+
+              {stage === 'needs_input' && (
+                <form className="wpl-questions" onSubmit={e => { e.preventDefault(); submitAnswers() }}>
+                  <p className="wpl-questions-intro">
+                    We read {businessName ? <b>{businessName}</b> : 'your site'}, but couldn&rsquo;t confirm a few things. Your AI only says what you confirm &mdash; skip anything you&rsquo;re not sure about and it won&rsquo;t mention it.
+                  </p>
+                  {questions.map(q => (
+                    <fieldset key={q.key} className="wpl-q">
+                      <legend>{q.label}</legend>
+                      <small>{q.why}</small>
+                      {q.kind === 'choice' ? (
+                        <div className="wpl-q-options" role="radiogroup" aria-label={q.label}>
+                          {q.options?.map(o => (
+                            <button
+                              type="button" key={o.value} role="radio" aria-checked={answers[q.key] === o.value}
+                              className={answers[q.key] === o.value ? 'on' : ''}
+                              onClick={() => setAnswer(q.key, answers[q.key] === o.value ? '' : o.value)}
+                            >{o.label}</button>
+                          ))}
+                        </div>
+                      ) : q.kind === 'list' ? (
+                        <textarea rows={2} value={answers[q.key] ?? ''} onChange={e => setAnswer(q.key, e.target.value)} placeholder={q.hint ? `e.g. ${q.hint}` : 'Separate with commas'} />
+                      ) : (
+                        <input type={q.key === 'phone' ? 'tel' : 'text'} value={answers[q.key] ?? ''} onChange={e => setAnswer(q.key, e.target.value)} placeholder={q.hint} />
+                      )}
+                      {q.key === 'hours' && answers.hours === 'other' && (
+                        <input type="text" value={answers.hours_other ?? ''} onChange={e => setAnswer('hours_other', e.target.value)} placeholder="e.g. Tue–Sat 7am–3pm" aria-label="Your hours" />
+                      )}
+                    </fieldset>
+                  ))}
+                  {errorMsg && <p className="wpl-error"><X size={14} /> {errorMsg}</p>}
+                  <div className="wpl-q-actions">
+                    <button type="submit" disabled={answering}>{answering ? <Loader2 size={16} className="wpl-spin" /> : null}<span>Build my preview</span><ArrowRight size={17} strokeWidth={2.5} /></button>
+                    <button type="button" className="wpl-q-skip" disabled={answering} onClick={() => submitAnswers(true)}>Skip all</button>
+                  </div>
+                </form>
+              )}
 
               {showProgress && (
                 <div className="wpl-progress">
@@ -313,7 +494,7 @@ export default function WebsitePreviewLanding() {
           <form className="wpl-claim-form" onSubmit={submitClaim}>
             <div className="wpl-form-head"><b>Claim this AI SalesPerson</b><small>Takes under a minute</small></div>
             <div className="wpl-mode-toggle">
-              <button type="button" className={claim.mode === 'existing' ? 'active' : ''} onClick={() => setClaim({ ...claim, mode: 'existing' })}>Add AI to my current site</button>
+              {urlInput && <button type="button" className={claim.mode === 'existing' ? 'active' : ''} onClick={() => setClaim({ ...claim, mode: 'existing' })}>Add AI to my current site</button>}
               <button type="button" className={claim.mode === 'new' ? 'active' : ''} onClick={() => setClaim({ ...claim, mode: 'new' })}>Build me a brand-new site</button>
             </div>
             <div className="wpl-field-grid"><label><span>Your name *</span><input required autoComplete="name" value={claim.name} onChange={e => setClaim({ ...claim, name: e.target.value })} placeholder="Jordan Smith" /></label><label><span>Business name *</span><input required autoComplete="organization" value={claim.business} onChange={e => setClaim({ ...claim, business: e.target.value })} placeholder="Smith Plumbing" /></label></div>
@@ -375,6 +556,9 @@ export default function WebsitePreviewLanding() {
         .wpl-mock-widget-input{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--wc-bg);border:1px solid var(--wc-line);border-radius:7px;padding:7px 8px;font-size:9px;color:#98a2b3}.wpl-mock-widget-input svg{color:var(--wc-orange);flex:0 0 auto}
         .wpl-url-form{display:flex;gap:10px;max-width:520px;margin:0 auto}.wpl-url-form input{flex:1;height:56px;padding:0 18px;border:2px solid var(--wc-line);border-radius:12px;font-size:15px;background:#fff;color:var(--wc-ink)}.wpl-url-form input:focus{outline:none;border-color:var(--wc-orange)}.wpl-url-form button{height:56px;padding:0 22px;border:0;border-radius:12px;background:var(--wc-orange);color:#fff;font-family:var(--font-display);font-weight:800;font-size:14px;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;box-shadow:0 10px 28px rgba(255,107,26,.22)}.wpl-url-form button:hover{background:#ed5d0b}
         .wpl-error{display:flex;align-items:center;justify-content:center;gap:6px;color:#b42318;font-size:13px;margin-top:16px}
+        .wpl-h1-alt{display:block;font-size:.42em;line-height:1.25;margin-top:14px;color:#475467;font-weight:700;letter-spacing:0}.wpl-experience{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.wpl-experience button{text-align:left;border:2px solid var(--wc-line);background:#fff;border-radius:14px;padding:14px;font:inherit;cursor:pointer;display:grid;gap:4px}.wpl-experience button b{font-size:15px;color:var(--wc-ink)}.wpl-experience button span{font-size:13px;color:#667085;line-height:1.4}.wpl-experience button.on{border-color:var(--wc-orange);background:#fff8f3}
+        .wpl-sources{max-width:560px;margin:0 auto;display:grid;gap:12px;text-align:left}.wpl-sources-q{margin:0;font-weight:700;font-size:15px;color:var(--wc-ink)}.wpl-source{display:grid;gap:8px;background:#fff;border:1px solid var(--wc-line);border-radius:14px;padding:12px}.wpl-source-tabs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.wpl-source-tabs button{border:1px solid var(--wc-line);background:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:13px;font-weight:600;color:#344054;cursor:pointer}.wpl-source-tabs button.on{border-color:var(--wc-orange);background:#fff4ed;color:var(--wc-ink)}.wpl-source-tabs button:disabled{opacity:.4;cursor:not-allowed}.wpl-source-tabs .wpl-source-remove{margin-left:auto;border:0;padding:6px;display:grid;place-items:center;color:#667085}.wpl-source input,.wpl-source textarea{width:100%;box-sizing:border-box;border:2px solid var(--wc-line);border-radius:10px;padding:12px 14px;font:inherit;font-size:15px;color:var(--wc-ink);background:#fff}.wpl-source input:focus,.wpl-source textarea:focus{outline:none;border-color:var(--wc-orange)}.wpl-source textarea{resize:vertical}.wpl-source-note{color:#667085;font-size:12px}.wpl-sources-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}.wpl-source-add{display:inline-flex;align-items:center;gap:6px;border:1px dashed #c4cad6;background:none;border-radius:999px;padding:10px 14px;font:inherit;font-size:13.5px;font-weight:700;color:#344054;cursor:pointer}.wpl-source-go{height:52px;padding:0 22px;border:0;border-radius:12px;background:var(--wc-orange);color:#fff;font-family:var(--font-display);font-weight:800;font-size:14px;display:flex;align-items:center;gap:9px;cursor:pointer;box-shadow:0 10px 28px rgba(255,107,26,.22);margin-left:auto}.wpl-source-go:disabled{opacity:.5;cursor:default}
+        .wpl-questions{max-width:560px;margin:0 auto;display:grid;gap:14px;text-align:left}.wpl-questions-intro{font-size:14px;color:#475467;margin:0}.wpl-q{border:1px solid var(--wc-line);border-radius:14px;padding:14px 16px;margin:0;background:#fff;display:grid;gap:8px;min-width:0}.wpl-q legend{font-weight:700;font-size:15px;color:var(--wc-ink);padding:0}.wpl-q small{color:#667085;font-size:12.5px}.wpl-q input,.wpl-q textarea{width:100%;box-sizing:border-box;border:1px solid var(--wc-line);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;color:var(--wc-ink);background:#fff}.wpl-q-options{display:flex;flex-wrap:wrap;gap:8px}.wpl-q-options button{border:1px solid var(--wc-line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;font-weight:600;color:#344054;cursor:pointer}.wpl-q-options button.on{border-color:var(--wc-orange);background:#fff4ed;color:var(--wc-ink)}.wpl-q-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.wpl-q-actions button[type=submit]{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;background:var(--wc-orange);color:#fff;font:inherit;font-weight:700;cursor:pointer}.wpl-q-actions button:disabled{opacity:.6;cursor:default}.wpl-q-skip{border:0;background:none;color:#667085;font:inherit;font-weight:600;text-decoration:underline;cursor:pointer}
         .wpl-progress{max-width:520px;margin:0 auto}.wpl-progress-stages{display:grid;gap:10px;margin-bottom:16px;text-align:left}.wpl-progress-step{display:flex;align-items:center;gap:12px;font-size:13px;color:#98a2b3;font-weight:600}.wpl-progress-step.done{color:#079455}.wpl-progress-step.active{color:var(--wc-ink)}.wpl-progress-step span{width:24px;height:24px;border-radius:50%;background:var(--wc-line);color:#98a2b3;display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 24px}.wpl-progress-step.done span{background:#edfdf7;color:#079455}.wpl-progress-step.active span{background:#fff4ed;color:var(--wc-orange)}.wpl-spin{animation:wpl-spin 1s linear infinite}@keyframes wpl-spin{to{transform:rotate(360deg)}}
         .wpl-progress-bar{height:6px;border-radius:99px;background:var(--wc-line);overflow:hidden}.wpl-progress-bar>div{height:100%;background:var(--wc-orange);transition:width .4s ease}
         .wpl-trust-row{display:flex;gap:20px;margin-top:34px;flex-wrap:wrap;justify-content:center}.wpl-trust-row span{display:flex;align-items:center;gap:5px;font-size:11px;color:#475467;font-weight:600}.wpl-trust-row svg{width:14px;color:#18a874}

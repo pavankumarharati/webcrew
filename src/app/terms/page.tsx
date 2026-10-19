@@ -21,7 +21,7 @@ export default function Terms() {
         {[
           {
             title: 'Acceptance of Terms',
-            body: 'By accessing webcrew.app or engaging our services, you agree to these Terms of Service. If you do not agree, do not use our services.',
+            body: 'WebCrew is a product/DBA of Mind Solutions Inc. By accessing webcrew.app or engaging our services, you agree to these Terms of Service. If you do not agree, do not use our services.',
           },
           {
             title: 'Services',

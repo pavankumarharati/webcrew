@@ -125,7 +125,7 @@ export default function Footer() {
           flexWrap: 'wrap', gap: 16,
         }}>
           <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.78rem' }}>
-            © {year} WebCrew · AI-powered websites for local businesses
+            © {year} WebCrew · AI-powered websites for local businesses · WebCrew is a product/DBA of Mind Solutions Inc.
           </p>
           <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.72rem' }}>
             Built with Next.js · Deployed on Cloudflare Pages · 99.9% uptime
