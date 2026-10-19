@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Roofing Companies | WebCrew',
+  title: 'AI Receptionist & Answering Service for Roofers | WebCrew',
   description: 'A 24/7 AI receptionist that prioritizes active leaks and storm damage over routine quotes — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/roofing' },
-  keywords: ['roofing company AI website', 'AI answering service for roofers', 'storm damage call answering', 'roofing missed call recovery'],
+  keywords: ['roofing answering service', 'virtual receptionist for roofers', 'roofing company call answering', 'storm damage call handling', 'roofing company AI website', 'AI answering service for roofers', 'storm damage call answering', 'roofing missed call recovery'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Handles the call spike after a storm', body: 'When everyone in the neighborhood calls at once, none of them hit voicemail. Every caller gets answered and qualified in the order they called.' },
     { title: 'Captures what your estimator needs', body: 'Roof age, storm date, insurance involvement, photos requested — collected up front so your first callback is a scheduling call, not a discovery call.' },
   ],
+  answer: "An AI receptionist for roofing companies answers every call 24/7, including storm-season spikes, separates active leaks from routine quote requests, collects the address and damage details, and books inspections into your Google Calendar. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["roofing answering service", "virtual receptionist for roofers", "roofing company call answering", "storm damage call handling"],
   faq: [
     ['Can it handle a flood of calls right after a storm hits?', 'Yes — WebCrew answers your calls in parallel, it doesn’t queue callers or send overflow to voicemail the way a single receptionist would.'],
     ['Does it know the difference between an active leak and a routine quote?', 'Yes, once configured on your business — active-damage language gets flagged for faster follow-up, routine requests get queued normally.'],
     ['Can it ask about insurance claims?', 'Yes, that’s one of the intake questions configured during setup if that’s part of your process.'],
-    ['How fast can I go live?', 'Most roofing clients wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

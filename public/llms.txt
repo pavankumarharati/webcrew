@@ -1,53 +1,86 @@
 # WebCrew
 
-> WebCrew is an AI agency for local businesses in the United States. We build your website, answer your calls 24/7, manage your Google Business Profile, reply to reviews, and send you weekly traffic reports — all done for you. No setup fee, cancel anytime.
+> WebCrew is an AI receptionist and AI front desk for local service businesses in the United States (HVAC, plumbing, roofing, electrical, cleaning, contractors, salons, spas, auto services). It answers phone calls and website chats 24/7, books jobs into the owner's Google Calendar, follows up with leads, and asks happy customers for Google reviews. Setup is $0 and every plan starts with a 30-day free trial.
 
-## What We Do
-WebCrew deploys a full AI front office for local businesses: a cinematic, lead-generating website built overnight (free demo), plus 5 AI agents that run continuously after launch. No templates, no DIY, no human bottleneck — everything is done for you by AI overnight.
+## What WebCrew does
+- **AI receptionist (phone):** answers your business line 24/7 with a natural voice. It answers questions from your own business info (services, hours, service area), takes the caller's name, number and what they need, and flags urgent calls.
+- **Emergency handling:** urgent calls (no heat, active leak, power out) are flagged and can be transferred to the owner's cell.
+- **Appointment booking:** with Google Calendar connected, it books, reschedules and cancels appointments. Customers can reply C / R / X by text to confirm, reschedule or cancel.
+- **Call summaries:** the owner gets a summary after every real customer call.
+- **Missed-call text back:** texts callers who agreed to receive texts.
+- **Lead follow-up:** day-3 and day-10 follow-ups for leads that did not book.
+- **Review requests:** sends customers the business's Google review link after a visit. No review gating.
+- **Website:** a free preview of a new website, or an AI assistant added to the owner's existing website that can talk and chat with visitors.
+- **Monthly report:** calls handled, after-hours calls, leads, bookings and follow-ups.
 
-## The 5 AI Agents
-1. **AI Reception** — answers every inbound call 24/7 using Gemini Live voice AI, trained on your services, hours, and pricing
-2. **Revenue Alert** — sends instant SMS to the owner every time a new lead submits the contact form
-3. **GBP Post Agent** — writes and publishes a Google Business Profile post every week
-4. **Review Reply Agent** — writes and posts AI replies to every new Google review within hours
-5. **Weekly Report** — emails a Google Search Console traffic summary every Monday
+## Pricing (October 2026)
+- **Founding 10:** $99/month, locked for life, for the first 10 clients. 250 AI minutes, 300 texts, 1,000 website chats a month.
+- **Standard:** $149/month after the founding spots fill. 500 AI minutes, 300 texts, 1,000 website chats a month.
+- **Custom:** quote for multiple locations or high call volume.
+- $0 setup. 30-day free trial. No contract, cancel anytime.
+- No overage charges: if minutes run out, calls ring the owner's cell until the month resets.
+- Full details: https://webcrew.app/pricing
 
-## Pricing
-$0 setup fee, 30-day free trial, then a flat $297/month — the website, AI reception, booking, lead alerts, weekly Google Business Profile posts, and review replies are all included, no add-ons or tiers.
-- No contracts. Cancel anytime.
-- Every plan starts with a free demo website built overnight, no card required.
+## How it works
+1. The owner tells us about the business (or pastes their website). We build a free preview.
+2. The owner test-calls the AI and reviews everything.
+3. The owner forwards their existing business number to the AI (they keep their number).
+4. The AI answers from then on. Nothing goes live until the owner approves it.
 
-## Key Facts
-- Early access — onboarding founding clients directly
-- Average build time: 6 hours (no human involvement)
-- Average PageSpeed score: 97/100
-- 25+ niches: HVAC, Roofing, Dental, Med Spa, Salon, Barbershop, Cleaning, Landscaping, Junk Removal, Remodeling, Auto Detailing, Restaurant, Law Firm, Daycare, Plumbing, Pressure Washing, Epoxy Flooring, Foundation Repair, Septic Services, Tree Services, Skin Clinic, IV Therapy, Nail Studio, Real Estate
-- Technology: Gemini Live (AI calls), Cloudflare Pages (hosting), Next.js (sites), Twilio (SMS), Google Business Profile API (GBP posts), Firecrawl (brand scraping), fal.ai Flux Pro (AI imagery)
-- United States only
+## Key facts
+- Founded 2026. United States only. English.
+- Voice AI: Google Gemini (native audio). Calendar: Google Calendar. Phone and texts: Twilio.
+- Early stage: onboarding founding clients now. WebCrew does not publish customer counts or results yet.
+- WebCrew does not claim HIPAA or SOC 2 compliance.
+- Try the live demo line: +1 (918) 255-5151.
 
-## How It Works
-1. Submit the form at webcrew.app with your business name, niche, and city
-2. WebCrew AI scans your brand, builds a custom website overnight, and deploys it live
-3. Wake up to a text with your live site link — free demo, no card required
-4. If you love it, subscribe. All 5 AI agents activate from day one.
+## Main pages
+- https://webcrew.app — Product overview and free preview
+- https://webcrew.app/pricing — Plans and what is included
+- https://webcrew.app/about — About WebCrew
+- https://webcrew.app/ai-receptionist — How the 24/7 AI receptionist works
+- https://webcrew.app/hvac — AI receptionist for HVAC companies (no-heat, no-AC, gas smell triage)
+- https://webcrew.app/plumbing — AI receptionist for plumbers (burst pipe, leak, no water triage)
+- https://webcrew.app/roofing — AI receptionist for roofing companies (storm damage, leaks)
+- https://webcrew.app/electricians — AI receptionist / virtual receptionist for electricians
+- https://webcrew.app/contractors — AI receptionist for contractors and remodelers
+- https://webcrew.app/cleaning — AI receptionist for cleaning companies
+- https://webcrew.app/auto-services — AI receptionist for auto service and detailing shops
+- https://webcrew.app/salons — AI receptionist for salons, barbers, tattoo and piercing shops
+- https://webcrew.app/spas — AI receptionist for spas and massage businesses
+- https://webcrew.app/home-services — AI receptionist for home service businesses
+- https://webcrew.app/blog — Guides for local service business owners
 
-## Pages
-- https://webcrew.app — Main site with product details, demo experience, and contact form
-- https://webcrew.app/hvac — AI receptionist and website for HVAC companies, no-heat/no-AC/gas-smell call triage
-- https://webcrew.app/roofing — AI receptionist and website for roofing companies, storm damage and leak call triage
-- https://webcrew.app/plumbing — AI receptionist and website for plumbing companies, burst pipe and emergency call triage
-- https://webcrew.app/electricians — AI receptionist and website for electricians, power outage and safety call triage
-- https://webcrew.app/contractors — AI receptionist and website for contractors, project-scope qualification before walk-throughs
-- https://webcrew.app/cleaning — AI receptionist and website for cleaning companies, recurring booking and reschedule handling
-- https://webcrew.app/auto-services — AI receptionist and website for auto service shops, drop-off scheduling and status calls
-- https://webcrew.app/salons — AI receptionist and website for salons, stylist-specific booking and cancellation recovery
-- https://webcrew.app/spas — AI receptionist and website for spas, treatment booking against room/practitioner availability
-- https://webcrew.app/home-services — AI receptionist and website for general home service businesses
-- https://webcrew.app/ai-receptionist — Deep dive on the AI receptionist itself: how the 24/7 voice AI answering works, independent of any one industry
-- https://webcrew.app/google-business-profile-management — Deep dive on the automatic weekly Google Business Profile posting and review-reply agents
-- https://webcrew.app/privacy — Privacy policy including SMS consent and carrier clause
-- https://webcrew.app/terms — Terms of service
+## Guides
+- https://webcrew.app/blog/best-ai-receptionist-for-hvac-and-plumbing — Best AI Receptionist for HVAC and Plumbing Companies (2026 Buyer's Guide)
+- https://webcrew.app/blog/add-ai-assistant-to-your-website — How to Add an AI Assistant to Your Existing Website (No Rebuild)
+- https://webcrew.app/blog/after-hours-emergency-calls-hvac-plumbing — After-Hours Emergency Calls: How HVAC and Plumbing Companies Can Answer Every One
+- https://webcrew.app/blog/ai-appointment-booking-for-service-businesses — AI Appointment Booking: How an AI Receptionist Books Jobs Into Your Calendar
+- https://webcrew.app/blog/ai-receptionist-for-auto-detailing — AI Receptionist for Auto Detailing and Mobile Detailers
+- https://webcrew.app/blog/ai-receptionist-for-cleaning-companies — AI Receptionist for Cleaning Companies: Quote Requests, Bookings and Recurring Clients
+- https://webcrew.app/blog/ai-receptionist-for-electricians — AI Receptionist for Electricians: Safety-First Call Handling and Booking
+- https://webcrew.app/blog/ai-receptionist-for-plumbers — AI Receptionist for Plumbers: Answer Every Leak, Clog and Water Heater Call
+- https://webcrew.app/blog/ai-receptionist-for-roofers — AI Receptionist for Roofing Companies: Handle Storm-Season Call Spikes
+- https://webcrew.app/blog/ai-receptionist-for-small-business — What Is an AI Receptionist? A Plain-English Guide for Local Service Businesses
+- https://webcrew.app/blog/ai-receptionist-pricing — AI Receptionist Pricing in 2026: What You Actually Pay (and the Fees to Watch)
+- https://webcrew.app/blog/ai-receptionist-roi — How to Measure the ROI of an AI Receptionist (A Simple Monthly Check)
+- https://webcrew.app/blog/ai-receptionist-vs-answering-service — AI Receptionist vs. Answering Service vs. Voicemail: Which Is Right for You?
+- https://webcrew.app/blog/ai-voice-agent-vs-ivr-phone-menu — AI Voice Agent vs. "Press 1" Phone Menus: Why Small Businesses Are Switching
+- https://webcrew.app/blog/google-voice-for-business-limits — Google Voice for Business: When It Is Enough and When You Need More
+- https://webcrew.app/blog/how-to-forward-business-calls-to-ai-receptionist — How to Forward Your Business Number to an AI Receptionist (Keep Your Number)
+- https://webcrew.app/blog/how-to-get-more-google-reviews — How to Get More Google Reviews (Without Breaking Google's Rules)
+- https://webcrew.app/blog/hvac-phone-script-for-booking-more-jobs — An HVAC Phone Script That Books More Jobs (Use It for Your Team or Your AI)
+- https://webcrew.app/blog/is-ai-phone-answering-safe — Is AI Phone Answering Safe? Privacy, Recordings and the Questions to Ask
+- https://webcrew.app/blog/lead-follow-up-system-local-business — A Simple Lead Follow-Up System for Local Service Businesses
+- https://webcrew.app/blog/missed-call-text-back — Missed Call Text Back: How It Works and the Texting Rules You Must Follow
+- https://webcrew.app/blog/missed-calls-cost-home-service-business — How Much Are Missed Calls Really Costing Your Business? A Simple Way to Work It Out
+- https://webcrew.app/blog/questions-to-ask-before-buying-ai-receptionist — 12 Questions to Ask Before You Buy an AI Receptionist
+- https://webcrew.app/blog/speed-to-lead-contractors — Speed to Lead for Contractors: Why the First Business to Answer Usually Wins
+- https://webcrew.app/blog/stop-spam-robocalls-business-line — How to Stop Spam and Robocalls on Your Business Line (Without Blocking Customers)
+- https://webcrew.app/blog/webcrew-vs-my-ai-front-desk-rosie-goodcall — WebCrew vs. My AI Front Desk vs. Rosie vs. Goodcall: An Honest Comparison
+- https://webcrew.app/blog/what-is-voice-ai — What Is Voice AI? How It Works on a Phone Call, Explained Simply
 
 ## Contact
 - Email: hello@webcrew.app
-- Website: https://webcrew.app
+- Phone (AI demo line): +1 (918) 255-5151
+- LinkedIn: https://www.linkedin.com/company/146264124

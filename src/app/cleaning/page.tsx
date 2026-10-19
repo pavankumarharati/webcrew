@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Cleaning Companies | WebCrew',
+  title: 'AI Receptionist & Answering Service for Cleaning Companies | WebCrew',
   description: 'A 24/7 AI receptionist that handles recurring bookings and reschedules without tying up your team — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/cleaning' },
-  keywords: ['AI receptionist for cleaning companies', 'cleaning service AI answering service', 'cleaning company missed call recovery', 'recurring booking AI scheduling'],
+  keywords: ['cleaning company answering service', 'virtual receptionist for cleaners', 'maid service call answering', 'AI receptionist for cleaning companies', 'cleaning service AI answering service', 'cleaning company missed call recovery', 'recurring booking AI scheduling'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Books new clients around your real schedule', body: 'Frequency, home size, access instructions, add-ons — captured up front, so first-time bookings come in ready to schedule, not half-answered.' },
     { title: 'Cuts down no-shows and last-minute cancellations', body: 'A missed call from a client trying to cancel or move a visit still gets a fast reply instead of a wasted trip.' },
   ],
+  answer: "An AI receptionist for cleaning companies answers every call 24/7, collects home size, cleaning type and preferred day for quotes, and books, reschedules or cancels visits in your Google Calendar. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["cleaning company answering service", "virtual receptionist for cleaners", "maid service call answering"],
   faq: [
     ['Can it manage recurring appointments, not just one-time bookings?', 'Yes — configured to your actual scheduling system and recurrence patterns during setup.'],
     ['Can clients reschedule through it directly?', 'Yes, that’s one of the core flows — it checks availability and confirms the new time.'],
     ['Does it know my service area and pricing structure?', 'Yes, all configured before it goes live based on your actual business.'],
-    ['How fast can I go live?', 'Most cleaning businesses wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

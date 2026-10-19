@@ -49,3 +49,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=webcrew --commit-dirty=true
+      - name: Ping IndexNow
+        if: success() && steps.write.outputs.changed == 'true'
+        continue-on-error: true
+        run: sleep 30 && node scripts/indexnow.mjs

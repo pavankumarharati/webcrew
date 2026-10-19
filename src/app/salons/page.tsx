@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Salons | WebCrew',
+  title: 'AI Receptionist for Salons, Barbers & Tattoo Shops | WebCrew',
   description: 'A 24/7 AI receptionist that books by stylist and service, and fills the slots no-shows leave behind — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/salons' },
-  keywords: ['AI receptionist for salons', 'salon AI answering service', 'salon no-show booking AI', 'salon appointment scheduling AI'],
+  keywords: ['salon answering service', 'virtual receptionist for salons', 'AI receptionist for tattoo and piercing shops', 'barbershop call answering', 'AI receptionist for salons', 'salon AI answering service', 'salon no-show booking AI', 'salon appointment scheduling AI'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Catches cancellations while your desk is with a client', body: 'Front desk can’t always step away mid-service. WebCrew answers the call, handles the reschedule, and lets you try to fill the opening.' },
     { title: 'Turns a missed call into a booked walk-in slot', body: 'A caller who can’t get through usually books somewhere else. WebCrew keeps that appointment on your books instead.' },
   ],
+  answer: "An AI receptionist for salons, barbershops, and tattoo and piercing studios answers every call 24/7, books by artist or stylist and service, and handles reschedules and cancellations while you are with a client. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["salon answering service", "virtual receptionist for salons", "AI receptionist for tattoo and piercing shops", "barbershop call answering"],
   faq: [
     ['Can it book with a specific stylist?', 'Yes — configured against your actual stylists, services, and availability during setup.'],
     ['Can it handle color and specialty-service bookings that take longer?', 'Yes, appointment length and service type are part of the booking configuration.'],
     ['Will it try to describe or recommend services?', 'It can share your service menu and pricing if configured — style and technique recommendations stay with your team.'],
-    ['How fast can I go live?', 'Most salons wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

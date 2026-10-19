@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Contractors | WebCrew',
+  title: 'AI Receptionist & Answering Service for Contractors | WebCrew',
   description: 'A 24/7 AI receptionist that captures the project details you need before a walk-through — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/contractors' },
-  keywords: ['AI receptionist for contractors', 'general contractor AI answering service', 'contractor missed call recovery', 'contractor lead qualification AI'],
+  keywords: ['contractor answering service', 'virtual receptionist for contractors', 'remodeler call answering', 'carpenter answering service', 'AI receptionist for contractors', 'general contractor AI answering service', 'contractor missed call recovery', 'contractor lead qualification AI'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Filters the tire-kickers from the real jobs', body: 'Not every call is a job worth driving to. WebCrew qualifies before it books, so your calendar fills with leads worth your time.' },
     { title: 'Never lets a callback slip', body: 'Between job sites, supply runs, and client calls, someone always slips through. WebCrew makes sure it isn’t the next signed contract.' },
   ],
+  answer: "An AI receptionist for contractors and remodelers answers every call 24/7, asks about project type, scope, timeline and budget range before you drive out, and books estimates into your Google Calendar. You keep your number and get a summary after each call. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["contractor answering service", "virtual receptionist for contractors", "remodeler call answering", "carpenter answering service"],
   faq: [
     ['Can it handle different project types differently?', 'Yes — configured on your actual service list, so a kitchen remodel call and a fence repair call get qualified with the right questions for each.'],
     ['Will it try to quote a price on the phone?', 'No. It captures scope and details so you can quote accurately — pricing decisions stay with you.'],
     ['Can it schedule the walk-through directly on my calendar?', 'Yes, appointment booking is built in and syncs to how you already schedule.'],
-    ['How fast can I go live?', 'Most contractors wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Plumbing Companies | WebCrew',
+  title: 'AI Receptionist & Answering Service for Plumbers | WebCrew',
   description: 'A 24/7 AI receptionist that prioritizes burst pipes, no water, and sewage backups over routine calls — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/plumbing' },
-  keywords: ['plumber AI answering service', 'AI receptionist for plumbing companies', 'emergency plumbing call answering', 'plumbing missed call recovery'],
+  keywords: ['plumbing answering service', 'virtual receptionist for plumbers', '24/7 plumbing call answering', 'plumber call center alternative', 'plumber AI answering service', 'AI receptionist for plumbing companies', 'emergency plumbing call answering', 'plumbing missed call recovery'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,14 @@ const N: NicheContent = {
     { title: 'Collects what your plumber needs before rolling', body: 'Where the water’s coming from, whether the main shutoff is off, how long it’s been running — captured before dispatch, not radioed in on the way.' },
     { title: 'Never sends an emergency to voicemail', body: 'A call at 3am gets answered at 3am, qualified, and you get the summary the moment you’re up — not a guess at what happened overnight.' },
   ],
+  answer: "An AI receptionist for plumbers answers every call 24/7, tells a burst pipe or sewage backup apart from a routine drain job, flags emergencies to your cell, and books regular work into your Google Calendar. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["plumbing answering service", "virtual receptionist for plumbers", "24/7 plumbing call answering", "plumber call center alternative"],
+  cities: ["Allen", "Arlington", "Birmingham", "Clearwater", "Columbus", "Coral Springs", "Denver", "Duluth", "Hialeah", "Hollywood", "Indianapolis", "Jersey City", "Los Angeles", "Minneapolis", "Norfolk", "Oklahoma City", "Paterson", "Philadelphia", "Port St. Lucie", "San Diego", "San Jose", "Springfield", "St. Petersburg", "Toledo"],
   faq: [
     ['Can it tell a burst pipe from a slow drain question?', 'Yes — configured on your service list and escalation rules before going live, including exactly what counts as urgent for your business.'],
     ['Can it walk someone through shutting off their water?', 'It can relay your standard shutoff instructions if you want that configured — the goal is to reduce damage while help is on the way, not replace your judgment on the job.'],
     ['Does it replace my on-call rotation?', 'No — it answers, qualifies, and captures the details your on-call plumber needs. You stay in control of who gets dispatched.'],
-    ['How fast can I go live?', 'Most plumbing clients wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

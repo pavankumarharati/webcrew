@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Home Service Businesses | WebCrew',
+  title: 'AI Receptionist & Answering Service for Home Services | WebCrew',
   description: 'A 24/7 AI receptionist for local home service businesses — answers your calls, qualifies the job, and books the appointment. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/home-services' },
-  keywords: ['AI receptionist for home service businesses', 'home services AI answering service', 'local business missed call recovery'],
+  keywords: ['home services answering service', 'virtual receptionist for home services', '24/7 call answering for contractors', 'AI receptionist for home service businesses', 'home services AI answering service', 'local business missed call recovery'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Captures what you need before you call back', body: 'Job type, location, timing, and details — collected up front, so your callback is a scheduling call, not a discovery call.' },
     { title: 'Follows up so a warm lead doesn’t go cold', body: 'Automatic day-3 and day-10 follow-up means a customer who didn’t book right away doesn’t just disappear.' },
   ],
+  answer: "An AI receptionist for home service businesses answers every call 24/7, takes the caller's name, number and job details, flags urgent calls to your cell, and books routine work into your Google Calendar. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["home services answering service", "virtual receptionist for home services", "24/7 call answering for contractors"],
   faq: [
     ['Can it be configured for my specific type of business?', 'Yes — WebCrew is set up on your actual services, hours, service area, and booking preferences before it goes live.'],
     ['Does it replace my team?', 'No. It answers, qualifies, and books — your team still does the work and stays in control of scheduling.'],
     ['Can it text customers back if I miss a call?', 'Yes, missed-call text-back is included so a caller who can’t reach you still gets a reply in seconds.'],
-    ['How fast can I go live?', 'Most clients wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

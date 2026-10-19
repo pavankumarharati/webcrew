@@ -14,6 +14,12 @@ export type NicheContent = {
   emergencyLabel: string
   triage: { title: string; body: string }[]
   faq: [string, string][]
+  /** 40-60 word direct answer shown under the hero — the passage AI Overviews / ChatGPT quote. */
+  answer?: string
+  /** Other names buyers search for this (virtual receptionist, answering service...). */
+  aka?: string[]
+  /** Optional city list — rendered as "works in any US city, including…". Never implies existing clients there. */
+  cities?: string[]
 }
 
 export default function NicheLanding({ n }: { n: NicheContent }) {
@@ -37,6 +43,14 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
           <small>$0 setup fee · 30-day free trial · card required, no charge until trial ends</small>
         </section>
 
+        {n.answer && (
+          <section className="wcn-answer" aria-label="Short answer">
+            <h2>What is an AI receptionist for {n.adj} businesses?</h2>
+            <p>{n.answer}</p>
+            {n.aka && n.aka.length > 0 && <p className="wcn-aka">Also called: {n.aka.join(' · ')}</p>}
+          </section>
+        )}
+
         <section className="wcn-triage">
           <div className="wcn-eyebrow"><span />{n.emergencyLabel}</div>
           <h2>It knows the difference between a question and a job walking away.</h2>
@@ -54,10 +68,17 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
             <li><CheckCircle2 /><span>Custom website live within about a day, on your own domain</span></li>
             <li><CheckCircle2 /><span>Call transcript + summary sent to you after every call</span></li>
             <li><CheckCircle2 /><span>Missed-call text-back and automatic day-3/day-10 follow-up</span></li>
-            <li><CheckCircle2 /><span>Weekly Google Business Profile posts and review replies</span></li>
+            <li><CheckCircle2 /><span>Review requests with your Google review link after each job, plus a monthly report</span></li>
             <li><CheckCircle2 /><span>Founding rate — $0 setup, 30-day free trial, then $99/mo locked for life (first 10 clients)</span></li>
           </ul>
         </section>
+
+        {n.cities && n.cities.length > 0 && (
+          <section className="wcn-cities">
+            <h2>Works for {n.adj} companies in any US city</h2>
+            <p>WebCrew runs in the cloud and answers on your own business number, so location doesn&rsquo;t matter. {n.label} owners anywhere in the US can use it, including in {n.cities.slice(0, -1).join(', ')} and {n.cities[n.cities.length - 1]}. The AI uses your service area and only books jobs inside it.</p>
+          </section>
+        )}
 
         <section className="wcn-faq">
           <h2>Questions {n.adj} owners actually ask</h2>
@@ -80,7 +101,7 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
       <footer className="wcn-footer">
         <a href="/" className="wcn-logo"><BrandMark size={26} />WebCrew</a>
         <p>AI front office for local businesses.</p>
-        <div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@webcrew.app">Contact</a></div>
+        <div><a href="/pricing">Pricing</a><a href="/blog">Guides</a><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@webcrew.app">Contact</a></div>
       </footer>
 
       <style>{`
@@ -117,6 +138,13 @@ export default function NicheLanding({ n }: { n: NicheContent }) {
         .wcn-included li{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;border:1px solid var(--wcn-line);border-radius:12px;background:#fff}
         .wcn-included svg{width:17px;flex:0 0 17px;color:#12b76a;margin-top:2px}
         .wcn-included span{font-size:13px;font-weight:600;line-height:1.5}
+        .wcn-answer{max-width:760px;margin:0 auto;padding:10px 24px 40px}
+        .wcn-answer h2{font-size:clamp(20px,2.6vw,26px);letter-spacing:-.02em;margin-bottom:12px}
+        .wcn-answer p{font-size:15px;line-height:1.7;color:var(--wcn-muted);margin:0}
+        .wcn-answer .wcn-aka{font-size:12.5px;margin-top:10px}
+        .wcn-cities{max-width:760px;margin:0 auto;padding:10px 24px 50px}
+        .wcn-cities h2{font-size:clamp(20px,2.6vw,26px);letter-spacing:-.02em;margin-bottom:12px}
+        .wcn-cities p{font-size:14px;line-height:1.7;color:var(--wcn-muted);margin:0}
         .wcn-faq{max-width:760px;margin:auto;padding:20px 24px 90px}
         .wcn-faq>h2{text-align:center;font-size:clamp(22px,3vw,30px);letter-spacing:-.03em;margin-bottom:34px}
         .wcn-faq-list{display:grid;gap:10px}

@@ -1,7 +1,7 @@
 import FeatureLanding, { FeatureContent } from '@/components/feature-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Small Business | WebCrew',
+  title: 'AI Receptionist & Virtual Receptionist for Small Business | WebCrew',
   description: 'A real AI receptionist that answers your calls 24/7, qualifies the caller, and books the appointment — not a voicemail replacement. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/ai-receptionist' },
   keywords: ['AI receptionist for small business', 'AI answering service', 'virtual receptionist for local business', '24/7 AI phone answering'],
@@ -24,7 +24,7 @@ const F: FeatureContent = {
     'Custom website live within about a day, on your own domain',
     'Call transcript and summary sent to you after every call',
     'Missed-call text-back and automatic day-3/day-10 follow-up',
-    'Weekly Google Business Profile posts and review replies',
+    'Review requests with your Google review link after each job, plus a monthly report',
     'Founding rate — $0 setup, 30-day free trial, then $99/mo locked for life (first 10 clients)',
   ],
   faq: [
@@ -32,7 +32,7 @@ const F: FeatureContent = {
     ['Does it sound robotic?', 'It runs on Gemini Live, Google’s native-audio voice model — natural pacing and turn-taking, not a text-to-speech script reader. Call the live demo line and judge for yourself.'],
     ['What happens with calls it can’t handle?', 'It’s configured with your escalation rules — anything outside what it’s trained to resolve gets flagged and routed to you, with the caller’s details already captured.'],
     ['Do I need to change my phone number?', 'No. WebCrew provisions the AI receptionist on its own number, or forwards your existing line — configured during setup based on what you already have.'],
-    ['How fast can I go live?', 'Most clients wake up to a text with their live site and AI receptionist link the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
   finalTitle: 'Stop losing jobs to voicemail.',
   finalBody: 'Same setup as every WebCrew client — tell us about your business, WebCrew builds your AI front office overnight.',

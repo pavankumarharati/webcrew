@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Auto Service Shops | WebCrew',
+  title: 'AI Receptionist & Answering Service for Auto Shops | WebCrew',
   description: 'A 24/7 AI receptionist that handles drop-off scheduling and "is my car ready" calls without pulling a tech off a bay — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/auto-services' },
-  keywords: ['AI receptionist for auto repair shops', 'auto service AI answering service', 'auto shop missed call recovery', 'auto repair appointment scheduling AI'],
+  keywords: ['auto shop answering service', 'virtual receptionist for auto repair', 'detailing appointment booking', 'AI receptionist for auto repair shops', 'auto service AI answering service', 'auto shop missed call recovery', 'auto repair appointment scheduling AI'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Handles status-check calls without interrupting a job', body: '"Is it ready yet?" is one of the most common calls a shop gets — WebCrew can relay status updates you provide, without pulling someone off a repair.' },
     { title: 'Never lets a quote request go cold', body: 'A caller asking about a repair cost who gets voicemail usually just calls the next shop. WebCrew answers, captures the details, and gets you the callback.' },
   ],
+  answer: "An AI receptionist for auto service and detailing shops answers every call 24/7, collects the vehicle, the problem and the preferred drop-off time, and books appointments into your Google Calendar. You keep your number and get a summary after each call. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["auto shop answering service", "virtual receptionist for auto repair", "detailing appointment booking"],
   faq: [
     ['Can it tell customers pricing over the phone?', 'It can relay estimate ranges if you want that configured — final pricing and any diagnosis stays with your team.'],
     ['Can it check my actual bay availability before booking?', 'Yes, it’s configured against how you schedule so it doesn’t overbook.'],
     ['Can it handle both walk-in and appointment-based scheduling?', 'Yes — configured to match how your shop actually operates.'],
-    ['How fast can I go live?', 'Most shops wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

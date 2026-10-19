@@ -20,5 +20,5 @@ export function BlogCta() {
 }
 
 export function BlogFooter() {
-  return <footer className="bp-foot">© WebCrew · AI front desk for local businesses · <a href="/blog">Blog</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></footer>
+  return <footer className="bp-foot">© WebCrew · AI front desk for local businesses · <a href="/blog">Blog</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></footer>
 }

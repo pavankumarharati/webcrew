@@ -102,7 +102,7 @@ const HOME_SCHEMA = {
           name: 'How fast does WebCrew build a website?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Most clients wake up to a text with their live site link the morning after submitting the form — the AI pipeline builds and deploys a complete custom website in about 6 hours with no human involvement, averaging 97/100 on Google PageSpeed.',
+            text: 'We build a free preview of your new website first, so you can see it before paying anything. Most owners are live within a few days, after they review the site and test-call the AI receptionist.',
           },
         },
         {

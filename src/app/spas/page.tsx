@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist for Spas | WebCrew',
+  title: 'AI Receptionist for Spas & Massage Businesses | WebCrew',
   description: 'A 24/7 AI receptionist that books treatments around real room and practitioner availability — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/spas' },
-  keywords: ['AI receptionist for spas', 'day spa AI answering service', 'spa appointment booking AI', 'spa missed call recovery'],
+  keywords: ['spa answering service', 'virtual receptionist for spas', 'AI receptionist for massage therapists', 'day spa call answering', 'AI receptionist for spas', 'day spa AI answering service', 'spa appointment booking AI', 'spa missed call recovery'],
 }
 
 const N: NicheContent = {
@@ -20,11 +20,13 @@ const N: NicheContent = {
     { title: 'Handles the calm, unhurried tone clients expect', body: 'A spa call isn’t an emergency — it’s configured to sound like the relaxed, attentive front desk experience your brand already has.' },
     { title: 'Recovers the callers who’d otherwise book elsewhere', body: 'Someone calling to book a gift treatment or a same-day opening who hits voicemail usually just tries a different spa. WebCrew keeps that booking.' },
   ],
+  answer: "An AI receptionist for spas and massage businesses answers every call 24/7, books treatments around your practitioners and rooms, and handles reschedules and cancellations, so the front desk can stay with the guest in front of them. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
+  aka: ["spa answering service", "virtual receptionist for spas", "AI receptionist for massage therapists", "day spa call answering"],
   faq: [
     ['Can it book against specific practitioners and rooms?', 'Yes — configured to your actual staff, rooms, and treatment menu during setup.'],
     ['Can it handle gift certificate or package inquiries?', 'It can capture the request and route it appropriately if you want that configured as part of your intake flow.'],
     ['Does it match the tone of my brand?', 'Yes — voice, pacing, and phrasing are configured before it goes live so it fits your spa’s actual experience.'],
-    ['How fast can I go live?', 'Most spas wake up to a text with their live site and AI receptionist the morning after signing up — about 6 hours, no human involvement on our side.'],
+    ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
   ],
 }
 

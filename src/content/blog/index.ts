@@ -25,6 +25,7 @@ import { post as p23 } from './what-is-voice-ai'
 import { post as p24 } from './hvac-phone-script-for-booking-more-jobs'
 import { post as p25 } from './stop-spam-robocalls-business-line'
 import { post as p26 } from './ai-receptionist-for-auto-detailing'
+import { post as p27 } from './best-ai-receptionist-for-hvac-and-plumbing'
 
-export const POSTS: BlogPost[] = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26]
+export const POSTS: BlogPost[] = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27]
 export const CATEGORIES: BlogCategory[] = ['Guides', 'Pricing & comparisons', 'By trade', 'Follow-up & reviews', 'Phone basics']
