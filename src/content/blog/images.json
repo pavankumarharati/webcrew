@@ -246,5 +246,13 @@
     "credit": "Makesavanh Oudthalith",
     "creditUrl": "https://www.pexels.com/photo/a-man-is-mowing-the-grass-on-a-golf-course-27309420/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-locksmiths": {
+    "id": "pexels:792034",
+    "src": "/blog/ai-receptionist-for-locksmiths.jpg",
+    "alt": "Detailed view of a door lock and keys emphasizing security and access.",
+    "credit": "George Becker",
+    "creditUrl": "https://www.pexels.com/photo/black-and-grey-keys-792034/",
+    "source": "Pexels"
   }
 }
