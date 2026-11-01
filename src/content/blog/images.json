@@ -254,5 +254,13 @@
     "credit": "George Becker",
     "creditUrl": "https://www.pexels.com/photo/black-and-grey-keys-792034/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-pool-service": {
+    "id": "pexels:9119784",
+    "src": "/blog/ai-receptionist-for-pool-service.jpg",
+    "alt": "A luxurious resort swimming pool illuminated at night, offering a serene and elegant ambiance.",
+    "credit": "Pavel Danilyuk",
+    "creditUrl": "https://www.pexels.com/photo/swimming-pools-with-blue-water-9119784/",
+    "source": "Pexels"
   }
 }
