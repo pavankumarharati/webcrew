@@ -38,7 +38,7 @@ For anything involving a downed power line, fire, active sparking, or a burning 
 - Explains your process for permits (if you tell it how you handle them)
 - Takes detailed call notes and sends them to you after every call
 - Books jobs into your Google Calendar, or adds the caller to a follow-up list
-- Texts leads who asked to be contacted, and follows up on day 3 and day 10 if they did not book
+- Follows up by email on day 3 and day 10 with leads who did not book
 
 ## Is a virtual receptionist for electricians different from a live answering service?
 
