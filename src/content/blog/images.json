@@ -262,5 +262,13 @@
     "credit": "Pavel Danilyuk",
     "creditUrl": "https://www.pexels.com/photo/swimming-pools-with-blue-water-9119784/",
     "source": "Pexels"
+  },
+  "cheapest-ai-receptionist-small-business": {
+    "id": "pexels:8475194",
+    "src": "/blog/cheapest-ai-receptionist-small-business.jpg",
+    "alt": "Man in apron making a business call outside a gourmet store in Portugal, checking notes.",
+    "credit": "Kampus Production",
+    "creditUrl": "https://www.pexels.com/photo/man-in-a-phone-call-reading-a-note-8475194/",
+    "source": "Pexels"
   }
 }

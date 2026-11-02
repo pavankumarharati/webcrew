@@ -1,10 +1,10 @@
 import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
-  title: 'AI Receptionist & Answering Service for Roofers | WebCrew',
-  description: 'A 24/7 AI receptionist that prioritizes active leaks and storm damage over routine quotes — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
+  title: 'AI Receptionist for Roofing Companies & Roofers | WebCrew',
+  description: 'AI receptionist and virtual receptionist for roofing companies. Answers every call 24/7, flags active leaks and storm damage, books inspections. $0 setup, 30-day free trial.',
   alternates: { canonical: 'https://webcrew.app/roofing' },
-  keywords: ['roofing answering service', 'virtual receptionist for roofers', 'roofing company call answering', 'storm damage call handling', 'roofing company AI website', 'AI answering service for roofers', 'storm damage call answering', 'roofing missed call recovery'],
+  keywords: ['ai receptionist for roofing companies', 'roofer virtual receptionist', 'ai answering service for roofers', 'roofing ai receptionist', 'ai receptionist for roofers', 'roofing answering service', 'virtual receptionist for roofers', 'roofing company call answering', 'storm damage call handling', 'roofing company AI website', 'AI answering service for roofers', 'storm damage call answering', 'roofing missed call recovery'],
 }
 
 const N: NicheContent = {
@@ -21,8 +21,11 @@ const N: NicheContent = {
     { title: 'Captures what your estimator needs', body: 'Roof age, storm date, insurance involvement, photos requested — collected up front so your first callback is a scheduling call, not a discovery call.' },
   ],
   answer: "An AI receptionist for roofing companies answers every call 24/7, including storm-season spikes, separates active leaks from routine quote requests, collects the address and damage details, and books inspections into your Google Calendar. You keep your number. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
-  aka: ["roofing answering service", "virtual receptionist for roofers", "roofing company call answering", "storm damage call handling"],
+  aka: ["AI receptionist for roofing companies", "roofer virtual receptionist", "AI answering service for roofers", "roofing answering service", "virtual receptionist for roofers", "roofing company call answering", "storm damage call handling"],
   faq: [
+    ['What is an AI receptionist for roofing companies?', 'An AI receptionist for roofing companies is software that answers your business line 24/7 in a natural voice, asks each caller about the roof and the damage, flags active leaks, and books inspections into your calendar. It works like a roofer virtual receptionist without hiring a person.'],
+    ['Is an AI answering service for roofers different from a call center?', 'A call center takes a message with a person reading a script. An AI answering service for roofers answers instantly, asks your intake questions every time, books the inspection when your calendar is connected, and emails you a summary of each call.'],
+    ['What does it cost?', 'WebCrew is $99/month for the first 10 clients (Founding 10, price locked), then $149/month. Setup is $0 and every plan starts with a 30-day free trial. There are no overage charges: at the monthly limit, calls ring your cell instead.'],
     ['Can it handle a flood of calls right after a storm hits?', 'Yes — WebCrew answers your calls in parallel, it doesn’t queue callers or send overflow to voicemail the way a single receptionist would.'],
     ['Does it know the difference between an active leak and a routine quote?', 'Yes, once configured on your business — active-damage language gets flagged for faster follow-up, routine requests get queued normally.'],
     ['Can it ask about insurance claims?', 'Yes, that’s one of the intake questions configured during setup if that’s part of your process.'],
@@ -45,7 +48,7 @@ export default function RoofingPage() {
               provider: { '@id': 'https://webcrew.app/#organization' },
               serviceType: 'AI Answering Service',
               category: 'Roofing Business Services',
-              description: 'WebCrew answers roofing company calls 24/7, prioritizes active leaks and storm damage over routine quotes, books appointments, and builds a custom website overnight.',
+              description: 'WebCrew is an AI receptionist for roofing companies: it answers calls 24/7, prioritizes active leaks and storm damage over routine quotes, and books inspections.',
               areaServed: { '@type': 'Country', name: 'United States' },
             },
             {
