@@ -3,12 +3,14 @@ import type { BlogPost } from '@/lib/blog/types'
 export const post: BlogPost = {
   slug: 'webcrew-vs-my-ai-front-desk-rosie-goodcall',
   title: 'WebCrew vs. My AI Front Desk vs. Rosie vs. Goodcall: An Honest Comparison',
-  description: 'How four AI receptionist options compare on price, booking, website, follow-ups and reviews for a local service business. Updated October 2026.',
+  description: 'Alternatives to My AI Front Desk compared: Rosie, Goodcall, and WebCrew on price, booking, website, and what happens at the usage limit. October 2026.',
   date: '2026-10-18',
   category: 'Pricing & comparisons',
   imageQuery: 'comparing options laptop',
-  keywords: ['My AI Front Desk alternative', 'Rosie alternative', 'Goodcall alternative', 'best AI receptionist for small business'],
+  keywords: ['alternatives to My AI Front Desk', 'My AI Front Desk alternative', 'My AI Front Desk competitors', 'Rosie alternative', 'Goodcall alternative', 'best AI receptionist for small business'],
   body: `
+The main alternatives to My AI Front Desk for local service businesses are Rosie, Goodcall, and WebCrew. All four answer calls with AI, but they differ on price model, calendar booking, website, and what happens when you hit your usage limit. Every figure below comes from each company's own public pricing page as of October 2026.
+
 ## How to read this comparison
 
 We make WebCrew, so treat this page as our view, not a neutral review. Every competitor detail below comes from that company's own public pricing page as of October 18, 2026. "Not listed" means we could not find it on their pricing page, not that the feature does not exist. If something has changed, their site is the source of truth.
@@ -50,4 +52,9 @@ Built for owners who want the whole front desk handled, not just the phone. You 
 
 > WebCrew Founding 10: $99/month locked for life, 250 AI minutes, $0 setup, 30-day free trial. After the first 10 clients: $149/month with 500 minutes.
 `,
+  faq: [
+    ['What is the best alternative to My AI Front Desk?', 'Rosie starts at $49/month if you only need calls answered. Goodcall prices by unique caller, which suits businesses with many repeat customers. WebCrew includes a website, chat, follow-ups, and review requests in one flat price with no overage billing. The best fit depends on what you need beyond call answering.'],
+    ['How does WebCrew compare to My AI Front Desk?', 'My AI Front Desk starts at $99/month with 200 minutes and 400 texts, charges $0.25/min for extra usage, and does not build a website for you. WebCrew starts at $99/month with 250 minutes, charges nothing for overage (calls ring your cell instead), and includes a website, Google Calendar booking, lead follow-ups, and review requests.'],
+    ['What should I compare when choosing an AI receptionist alternative?', 'Compare the price model (per-minute credits vs. flat monthly vs. per-caller), whether direct calendar booking is included on the entry plan, what happens when you hit the usage limit, whether a website is included, and the setup fee. All four options here have a $0 listed setup fee from their public pricing pages as of October 2026.'],
+  ],
 }
