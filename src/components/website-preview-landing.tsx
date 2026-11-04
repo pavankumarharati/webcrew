@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 import {
-  ArrowRight, BellRing, CalendarCheck, Check, CheckCircle2, ChevronDown,
-  Loader2, Menu, MessageSquareText, PhoneCall, Plus, Sparkles, UserCheck, X, Zap,
+  ArrowRight, Check, CheckCircle2, ChevronDown,
+  Loader2, Menu, PhoneCall, Plus, Sparkles, X, Zap,
 } from 'lucide-react'
 import BrandMark from './brand-mark'
-import { getReferralCode } from '@/lib/referral'
+import { HeroVisual, HowItWorks, HvacCalls, Pillars, Examples, Plans, LandingStyles, useFoundingSeats, ADMIN_URL, type PlanChoice } from './landing/sections'
 
 // "Paste your URL" landing page — native.no / lindaria style. A visitor pastes
 // their EXISTING website, watches a staged AI-progress UI, and gets a live,
@@ -58,24 +58,14 @@ const STAGE_COPY: Record<Exclude<Stage, 'idle'>, string> = {
 }
 const STAGE_ORDER: Stage[] = ['reading', 'understanding', 'building', 'ready']
 
-const solutionCards = [
-  { icon: PhoneCall, title: 'Talks to every visitor', body: 'Not a chatbot script — a real AI SalesPerson that knows your services, hours, and pricing.' },
-  { icon: UserCheck, title: 'Qualifies them', body: 'Understands what a visitor needs before they ever fill out a form.' },
-  { icon: CalendarCheck, title: 'Books them', body: 'Checks your calendar and locks in the appointment, day or night.' },
-  { icon: MessageSquareText, title: 'Never drops the ball', body: "If they're not ready to book, it captures them as a lead instead of letting them leave empty-handed." },
-  { icon: BellRing, title: 'Keeps you in the loop', body: 'Every conversation, every lead, sent straight to you.' },
-]
-
-const industries = ['Contractors', 'Plumbers', 'Electricians', 'HVAC', 'Roofers', 'Cleaning', 'Auto services', 'Salons', 'Spas', 'Home services']
-const styleOptions = [
-  { id: 'editorial', name: 'Editorial', tagline: 'Bold, magazine-style, content-forward' },
-  { id: 'zigzag', name: 'Professional', tagline: 'Clean, structured, classic local-business layout' },
-] as const
-
 const faqs = [
+  ['What happens with a no-heat or no-AC emergency call?', "It asks what's wrong and where they are. If it's urgent and you set a transfer number, it rings your cell. If not, it takes an urgent message and you get a text and email right away. It won't book an urgent job days out as if it were routine."],
+  ['Does it work with ServiceTitan, Housecall Pro or Jobber?', "Not directly yet. Today it books into your Google Calendar and sends you every job by text and email, so you can enter it in your field-service software. Ask us if you need a direct connection."],
+  ['Will it quote prices?', "Only the prices you give it, like your diagnostic or tune-up fee. It never makes up a price. Anything else, it takes the details and you call back with the quote."],
   ['Do you touch my actual website?', "No. Your current site stays exactly as it is — untouched, unchanged. What you're seeing here is a preview of an AI SalesPerson we can add to it, or a fresh site if you'd rather start over."],
   ['Is the chat bubble in the preview actually AI, or a demo script?', "It's the real thing — live Google Gemini running against what we just read from your site. Ask it about your own services or hours and it'll answer correctly."],
-  ['What happens if I claim it?', "We add this AI SalesPerson to your existing website with one line of code — no rebuild, no downtime, nothing to migrate. If you'd rather have a brand new site instead, we build that overnight too."],
+  ['What happens when I go live?', "You pick a plan and add a card. Nothing is charged for 30 days. We add the AI to your current website with one line of code, or build your new site, and the AI phone line is set up on the $99 plan."],
+  ['Do I need a credit card for the demo?', "No. The demo is free and needs no card. A card is only needed when you decide to go live, and you can cancel before the 30-day trial ends."],
   ['What does this cost?', "$0 setup fee and a 30-day free trial. Our first 10 clients get a founding rate of $99/month (250 AI minutes), locked for life; after that it's $149/month (500 AI minutes). No add-ons, no surprise charges: over the limit, calls ring your cell. Need something outside that — multiple locations, e-commerce, custom integrations — we quote that separately."],
   ['How is this different from a chatbot plugin?', "A chatbot plugin answers FAQs from a script. This is a full AI front office: it talks, qualifies, checks your real calendar, books real appointments, and follows up automatically if someone doesn't convert."],
 ]
@@ -84,7 +74,6 @@ export default function WebsitePreviewLanding() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [sources, setSources] = useState<SourceDraft[]>([emptySource('website')])
-  const urlInput = sources.find(s => s.type === 'website')?.url.trim() ?? ''
   const hasWebsite = sources.some(s => s.type === 'website')
   // Chosen BEFORE the demo so the demo matches it. No website → new site only.
   const [experience, setExperience] = useState<'upgrade' | 'new'>('upgrade')
@@ -100,19 +89,23 @@ export default function WebsitePreviewLanding() {
   const [answering, setAnswering] = useState(false)
   const [ctaDismissed, setCtaDismissed] = useState(false)
 
-  const [claim, setClaim] = useState({
-    name: '', business: '', email: '', phone: '', smsConsent: false,
-    mode: 'existing' as 'existing' | 'new', niche: '', city: '', state: '', style: 'editorial' as (typeof styleOptions)[number]['id'],
-  })
-  const [claimState, setClaimState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [claim, setClaim] = useState({ name: '', email: '', phone: '', smsConsent: false })
+  const [plan, setPlan] = useState<PlanChoice>('founding')
+  const [checkoutState, setCheckoutState] = useState<'idle' | 'sending' | 'error'>('idle')
+  const [checkoutError, setCheckoutError] = useState('')
+  const seatsLeft = useFoundingSeats()
 
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => () => { if (pollRef.current) clearInterval(pollRef.current) }, [])
 
+  // Back from a cancelled Stripe checkout (?preview=<id>): reopen that demo instead of starting over.
   useEffect(() => {
-    if (businessName && !claim.business) setClaim(c => ({ ...c, business: businessName }))
-  }, [businessName]) // eslint-disable-line react-hooks/exhaustive-deps
+    const id = new URLSearchParams(window.location.search).get('preview')
+    if (id && /^[0-9a-f-]{36}$/i.test(id)) { setPreviewId(id); setStage('reading'); pollStatus(id) }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => { if (seatsLeft === 0) setPlan(p => p === 'founding' ? 'standard' : p) }, [seatsLeft])
 
   async function getTurnstileToken(): Promise<string> {
     if (!TURNSTILE_SITE_KEY) return ''
@@ -188,7 +181,6 @@ export default function WebsitePreviewLanding() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Something went wrong.')
       setPreviewId(data.previewId)
-      setClaim(c => ({ ...c, mode: effectiveExperience === 'new' ? 'new' : 'existing' }))
       pollStatus(data.previewId)
     } catch (e: any) {
       setErrorMsg(e.message || 'Something went wrong. Please try again.')
@@ -245,55 +237,46 @@ export default function WebsitePreviewLanding() {
     setQuestions([]); setAnswers({})
   }
 
-  const sourcesSummary = sources.filter(sourceFilled).map(s => s.type === 'website' ? s.url.trim() : s.type === 'text' ? 'description' : s.type).join(' + ')
 
-  async function submitClaim(e: React.FormEvent<HTMLFormElement>) {
+  function pickPlan(p: PlanChoice) {
+    setPlan(p)
+    document.getElementById(showPreview ? 'claim' : 'url-form')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  // Paywall: going live always goes through Stripe Checkout (card on file, 30-day trial, $0 today).
+  // Nothing billable happens before the Stripe webhook confirms it.
+  async function startCheckout(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setClaimState('sending')
-    const consentLanguage = 'I agree to receive recurring SMS messages from WebCrew about my enquiry, requested demo, and related services. Message frequency varies. Message and data rates may apply. Consent is not a condition of purchase. Reply STOP to unsubscribe or HELP for help. Privacy: https://webcrew.app/privacy. Terms: https://webcrew.app/terms.'
+    if (!previewId) return
+    setCheckoutState('sending'); setCheckoutError('')
+    const consentLanguage = 'I agree to receive recurring SMS messages from WebCrew about my account, setup and related services. Message frequency varies. Message and data rates may apply. Consent is not a condition of purchase. Reply STOP to unsubscribe or HELP for help. Privacy: https://webcrew.app/privacy. Terms: https://webcrew.app/terms.'
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? 'https://api.webcrew.app'}/leads`, {
+      const turnstileToken = await getTurnstileToken()
+      const res = await fetch(`${ADMIN_URL}/api/public/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: claim.name.trim().split(' ')[0],
-          lastName: claim.name.trim().split(' ').slice(1).join(' '),
-          businessName: claim.business || businessName || 'Not provided',
-          businessNiche: claim.mode === 'new' ? (claim.niche || 'Other local business') : 'AI SalesPerson preview claim',
-          phone: claim.phone,
-          email: claim.email,
-          currentWebsite: urlInput || undefined,
-          interestOnly: claim.mode === 'existing',
-          templateStyle: claim.mode === 'new' ? claim.style : undefined,
-          city: claim.mode === 'new' ? claim.city : undefined,
-          state: claim.mode === 'new' ? claim.state : undefined,
-          previewConfigId: configId ?? undefined,
-          service: 'AI SalesPerson preview claim',
-          message: claim.mode === 'new'
-            ? `Saw their AI SalesPerson preview (${sourcesSummary}) and asked for a brand-new site instead (style: ${claim.style}).`
-            : `Claimed their AI SalesPerson preview (${sourcesSummary}) — add AI to existing site, no rebuild.`,
-          smsConsent: claim.smsConsent,
-          consentTimestamp: claim.smsConsent ? new Date().toISOString() : undefined,
-          consentLanguage: claim.smsConsent ? consentLanguage : undefined,
-          source: 'webcrew.app/preview',
-          submittedAt: new Date().toISOString(),
-          referredBy: getReferralCode() || undefined,
+          previewId, plan, name: claim.name, email: claim.email, phone: claim.phone, business: businessName,
+          smsConsent: claim.smsConsent, consentLanguage: claim.smsConsent ? consentLanguage : undefined, turnstileToken,
         }),
       })
-      if (!res.ok) throw new Error('Submission failed')
-      setClaimState('sent')
-    } catch {
-      setClaimState('error')
+      const data = await res.json().catch(() => ({}))
+      if (res.status === 409 && data.foundingFull) { setPlan('standard'); throw new Error(data.error) }
+      if (!res.ok || !data.checkoutUrl) throw new Error(data.error || 'Could not open checkout.')
+      window.location.href = data.checkoutUrl
+    } catch (err: any) {
+      setCheckoutError(err.message || 'Something went wrong. Please try again.')
+      setCheckoutState('error')
     }
   }
 
-  const links = [['How it works', '#how-it-works'], ['FAQ', '#faq']]
+  const links = [['How it works', '#how-it-works'], ['Pricing', '#plans'], ['FAQ', '#faq']]
   const showProgress = stage !== 'idle' && stage !== 'failed' && stage !== 'needs_input'
   const showPreview = stage === 'ready' && configId && previewId
 
   return (
     <div className="wpl-page">
-      <div className="wpl-topbar"><span className="wpl-pulse" />Free preview · No card required · Your real site untouched</div>
+      <div className="wpl-topbar"><span className="wpl-pulse" />Free demo · No card for the demo · $0 setup · 30-day free trial</div>
       <nav className="wpl-nav">
         <a href="#top" className="wpl-logo" aria-label="WebCrew home"><BrandMark size={32} className="wpl-logo-pop" />WebCrew</a>
         <div className="wpl-navlinks">{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</div>
@@ -306,9 +289,9 @@ export default function WebsitePreviewLanding() {
         <section className={`wpl-hero${stage === 'idle' ? ' has-visual' : ''}`} id="url-form">
           <div className="wpl-hero-grid">
             <div className="wpl-hero-copy">
-              <div className="wpl-pill"><Zap size={14} /> Website, Facebook, Instagram — or just tell us about it.</div>
-              <h1>Turn your website into an <em>AI SalesPerson.</em><span className="wpl-h1-alt">Or get a brand-new website that grows your business.</span></h1>
-              <p>No website? No problem. Start from your website, your Facebook or Instagram page, or a few sentences about your business. We&rsquo;ll show you a live, talking AI SalesPerson built from it. Nothing on your real pages changes.</p>
+              <div className="wpl-pill"><Zap size={14} /> Built for HVAC contractors · plumbers welcome</div>
+              <h1>Never miss another <em>no-heat call.</em><span className="wpl-h1-alt">Your website and phone become an AI dispatcher that answers, qualifies and books jobs 24/7.</span></h1>
+              <p>Paste your website and hear it handle an HVAC customer in about a minute. Free, no card. No website? Use your Facebook page or a few sentences about your shop. Nothing on your real pages changes.</p>
 
               {stage === 'idle' || stage === 'failed' ? (
                 <form className="wpl-sources" onSubmit={startPreview}>
@@ -431,34 +414,10 @@ export default function WebsitePreviewLanding() {
                 </div>
               )}
 
-              <div className="wpl-trust-row"><span><CheckCircle2 /> Free, no card required</span><span><CheckCircle2 /> Your real site is never touched</span><span><CheckCircle2 /> Talk to it live, right now</span></div>
+              <div className="wpl-trust-row"><span><CheckCircle2 /> Free demo, no card</span><span><CheckCircle2 /> Your real site is never touched</span><span><CheckCircle2 /> Talk to it live, right now</span></div>
             </div>
 
-            {stage === 'idle' && (
-              <div className="wpl-hero-visual" aria-hidden="true">
-                <div className="wpl-mock-browser">
-                  <div className="wpl-mock-bar"><span /><span /><span /><em>yourbusiness.com</em></div>
-                  <div className="wpl-mock-nav"><b>Your Business</b><div><span>Home</span><span>Services</span><span>About</span><span>Contact</span></div></div>
-                  <div className="wpl-mock-banner">
-                    <small>OPEN NOW</small>
-                    <h4>Quality service,<br />every time.</h4>
-                    <p>Fast, reliable, and affordable — right in your neighborhood.</p>
-                    <div className="wpl-mock-btns"><span className="primary">Book Now</span><span>Our Services</span></div>
-                  </div>
-                  <div className="wpl-mock-cards"><div /><div /><div /><div /></div>
-                </div>
-                <div className="wpl-mock-widget">
-                  <div className="wpl-mock-widget-top"><i />AI on site</div>
-                  <div className="wpl-mock-widget-name"><span className="wpl-mock-avatar" />Hi! I&rsquo;m your AI SalesPerson 👋</div>
-                  <ul>
-                    <li><Check size={11} /> Answers questions</li>
-                    <li><Check size={11} /> Checks availability</li>
-                    <li><Check size={11} /> Books appointments</li>
-                  </ul>
-                  <div className="wpl-mock-widget-input">Type a message…<Zap size={12} /></div>
-                </div>
-              </div>
-            )}
+            {stage === 'idle' && <HeroVisual />}
           </div>
         </section>
 
@@ -474,12 +433,9 @@ export default function WebsitePreviewLanding() {
           </section>
         )}
 
-        <section className="wpl-section wpl-solution" id="how-it-works" data-avatar-caption="This is what your AI SalesPerson actually does for every visitor.">
-          <Eyebrow>What it actually does</Eyebrow>
-          <div className="wpl-split-head"><h2>Every visitor gets<br /><em>a real conversation.</em></h2><p>Not a script. Not a form. A real AI SalesPerson that knows your business and works the room for you, 24/7.</p></div>
-          <div className="wpl-card-grid">{solutionCards.map(({ icon: Icon, title, body }, i) => <article key={title}><span className="wpl-card-num">0{i + 1}</span><div className="wpl-icon"><Icon /></div><h3>{title}</h3><p>{body}</p></article>)}</div>
-        </section>
-
+        <HowItWorks />
+        <HvacCalls />
+        <Pillars />
         <section className="wpl-dark wpl-live-demo" data-avatar-caption="Not a mockup — call the number and hear it live.">
           <div className="wpl-dark-inner">
             <div><Eyebrow light>Live product proof</Eyebrow><h2>Don&rsquo;t take our word for it — <em>test it yourself.</em></h2><p>Call our live WebCrew AI Reception line and see how a real conversation with your AI SalesPerson goes.</p><a className="wpl-live-call" href={`tel:${AI_RECEPTION_PHONE}`}><PhoneCall size={18} /> <span>Call <strong>(918) 255-5151</strong><small>Live AI Reception · test it now</small></span><ArrowRight size={17} /></a></div>
@@ -487,48 +443,57 @@ export default function WebsitePreviewLanding() {
           </div>
         </section>
 
+        <Examples />
+        <Plans seatsLeft={seatsLeft} onPick={pickPlan} />
+
         <section className="wpl-section wpl-faq" id="faq"><Eyebrow>FAQ</Eyebrow><h2>Everything practical. <em>Answered.</em></h2><div className="wpl-faq-list">{faqs.map(([q, a], i) => <button key={q} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}><span><b>{q}</b><p style={{ display: openFaq === i ? 'block' : 'none' }}>{a}</p></span><ChevronDown className={openFaq === i ? 'open' : ''} /></button>)}</div></section>
 
-        <section className="wpl-final" id="claim"><div className="wpl-final-glow" /><div className="wpl-final-grid"><div className="wpl-final-copy"><div className="wpl-pill dark"><Sparkles size={14} /> $0 setup · 30-day free trial</div><h2>Ready to make it <em>real?</em></h2><p>We&rsquo;ll add this exact AI SalesPerson to your existing website — one line of code, no rebuild, no downtime. Or if you&rsquo;d rather have a brand-new site instead, we build that overnight too.</p></div>
-          {claimState === 'sent' ? <div className="wpl-claim-success"><CheckCircle2 /><h3>Got it.</h3><p>{claim.mode === 'new' ? "We're building your brand-new site now — you'll get a text with the live link." : "We'll follow up to get your AI SalesPerson live on your real site."} {claim.smsConsent ? 'Watch for a text from WebCrew.' : "We'll reach out by email or phone."}</p></div> :
-          <form className="wpl-claim-form" onSubmit={submitClaim}>
-            <div className="wpl-form-head"><b>Claim this AI SalesPerson</b><small>Takes under a minute</small></div>
-            <div className="wpl-mode-toggle">
-              {urlInput && <button type="button" className={claim.mode === 'existing' ? 'active' : ''} onClick={() => setClaim({ ...claim, mode: 'existing' })}>Add AI to my current site</button>}
-              <button type="button" className={claim.mode === 'new' ? 'active' : ''} onClick={() => setClaim({ ...claim, mode: 'new' })}>Build me a brand-new site</button>
-            </div>
-            <div className="wpl-field-grid"><label><span>Your name *</span><input required autoComplete="name" value={claim.name} onChange={e => setClaim({ ...claim, name: e.target.value })} placeholder="Jordan Smith" /></label><label><span>Business name *</span><input required autoComplete="organization" value={claim.business} onChange={e => setClaim({ ...claim, business: e.target.value })} placeholder="Smith Plumbing" /></label></div>
-            <div className="wpl-field-grid"><label><span>Work email *</span><input required type="email" autoComplete="email" value={claim.email} onChange={e => setClaim({ ...claim, email: e.target.value })} placeholder="jordan@business.com" /></label><label><span>Mobile phone *</span><input required type="tel" autoComplete="tel" value={claim.phone} onChange={e => setClaim({ ...claim, phone: e.target.value })} placeholder="(555) 555-0123" /></label></div>
-            {claim.mode === 'new' && (
-              <>
-                <div className="wpl-field-grid"><label><span>City *</span><input required value={claim.city} onChange={e => setClaim({ ...claim, city: e.target.value })} placeholder="Tracy" /></label><label><span>State *</span><input required maxLength={2} value={claim.state} onChange={e => setClaim({ ...claim, state: e.target.value.toUpperCase() })} placeholder="CA" /></label></div>
-                <div className="wpl-field-grid">
-                  <label><span>Business type *</span><select required value={claim.niche} onChange={e => setClaim({ ...claim, niche: e.target.value })}><option value="">Select one</option>{industries.map(x => <option key={x}>{x}</option>)}<option>Other local business</option></select></label>
-                  <label><span>Website style *</span><select required value={claim.style} onChange={e => setClaim({ ...claim, style: e.target.value as typeof claim.style })}>{styleOptions.map(s => <option key={s.id} value={s.id}>{s.name} — {s.tagline}</option>)}</select></label>
-                </div>
-              </>
-            )}
-            <label className="wpl-consent"><input type="checkbox" required checked={claim.smsConsent} onChange={e => setClaim({ ...claim, smsConsent: e.target.checked })} /><span><strong>Yes, I agree to receive recurring SMS messages from WebCrew</strong> about my enquiry and related services. Message frequency varies. Message and data rates may apply. Consent is not a condition of purchase. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help. <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> &amp; <a href="/terms" target="_blank" rel="noreferrer">Terms</a>.</span></label>
-            {claimState === 'error' && <p className="wpl-form-error">We couldn&rsquo;t submit this. Please try again or email hello@webcrew.app.</p>}
-            <button className="wpl-submit" disabled={claimState === 'sending'}>{claimState === 'sending' ? 'Sending…' : claim.mode === 'new' ? <>Build my new site <ArrowRight size={17} /></> : <>Claim my AI SalesPerson <ArrowRight size={17} /></>}</button>
-            <small className="wpl-form-note">SMS consent is required to submit this, but is never a condition of any purchase.</small>
-          </form>}
-        </div></section>
+        <section className="lp-section" id="claim">
+          {showPreview ? (
+            <form className="lp-golive" onSubmit={startCheckout}>
+              <h3>Put {businessName ? `${businessName}’s` : 'your'} AI SalesPerson to work</h3>
+              <p>{effectiveExperience === 'new' ? 'We build your new website after you start your trial.' : 'We add it to your current website with one line of code.'} $0 today. Cancel anytime during the 30-day trial.</p>
+              <div className="lp-plan-toggle" role="radiogroup" aria-label="Plan">
+                <button type="button" role="radio" aria-checked={plan === 'site_ai'} className={plan === 'site_ai' ? 'on' : ''} onClick={() => setPlan('site_ai')}><strong>$49/mo</strong>Website + AI SalesPerson</button>
+                <button type="button" role="radio" aria-checked={plan !== 'site_ai'} className={plan !== 'site_ai' ? 'on' : ''} onClick={() => setPlan(seatsLeft === 0 ? 'standard' : 'founding')}><strong>{seatsLeft === 0 ? '$149/mo' : '$99/mo founding'}</strong>Full AI Front Office + phone</button>
+              </div>
+              <div className="lp-fields">
+                <label>Your name<input required autoComplete="name" value={claim.name} onChange={e => setClaim({ ...claim, name: e.target.value })} placeholder="Jordan Smith" /></label>
+                <label>Mobile phone<input required type="tel" autoComplete="tel" value={claim.phone} onChange={e => setClaim({ ...claim, phone: e.target.value })} placeholder="(555) 555-0123" /></label>
+              </div>
+              <div className="lp-fields" style={{ gridTemplateColumns: '1fr' }}>
+                <label>Work email<input required type="email" autoComplete="email" value={claim.email} onChange={e => setClaim({ ...claim, email: e.target.value })} placeholder="jordan@business.com" /></label>
+              </div>
+              <label className="lp-consent"><input type="checkbox" checked={claim.smsConsent} onChange={e => setClaim({ ...claim, smsConsent: e.target.checked })} /><span>Text me setup updates. Recurring messages from WebCrew; frequency varies; msg &amp; data rates may apply. Not required to buy. Reply STOP to opt out, HELP for help. <a href="/privacy" target="_blank" rel="noreferrer">Privacy</a> · <a href="/terms" target="_blank" rel="noreferrer">Terms</a></span></label>
+              {checkoutError && <p className="lp-err">{checkoutError}</p>}
+              <button className="lp-btn" disabled={checkoutState === 'sending'}>{checkoutState === 'sending' ? <><Loader2 size={16} className="wpl-spin" /> Opening secure checkout…</> : <>Continue to secure checkout <ArrowRight size={16} /></>}</button>
+              <p className="lp-fine">Payments by Stripe. Your card is not charged until the 30-day trial ends.</p>
+            </form>
+          ) : (
+            <>
+              <p className="lp-eyebrow">Start here</p>
+              <h2>See it work on <em>your</em> business first.</h2>
+              <p className="lp-lede">Build your free demo in about a minute. Pick a plan only if you like it.</p>
+              <a className="lp-btn" style={{ width: 'auto' }} href="#url-form">Build my free demo <ArrowRight size={16} /></a>
+            </>
+          )}
+        </section>
       </main>
 
       <footer className="wpl-footer"><a href="#top" className="wpl-logo"><BrandMark size={32} />WebCrew</a><p>AI front office for local businesses.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@webcrew.app">Contact</a></div></footer>
 
       {showPreview && !ctaDismissed && (
         <div className="wpl-sticky-cta">
-          <span><strong>{businessName || 'This business'}&rsquo;s</strong> AI SalesPerson is live above — claim it and go live this week.</span>
-          <a href="#claim">Claim this site<ArrowRight size={15} /></a>
+          <span><strong>{businessName || 'This business'}&rsquo;s</strong> AI SalesPerson is live above. Go live free for 30 days.</span>
+          <a href="#claim">Go live<ArrowRight size={15} /></a>
           <button aria-label="Dismiss" onClick={() => setCtaDismissed(true)}><X size={15} /></button>
         </div>
       )}
       {showPreview && ctaDismissed && (
-        <button className="wpl-sticky-pill" onClick={() => setCtaDismissed(false)}><Sparkles size={14} /> Claim this AI SalesPerson</button>
+        <button className="wpl-sticky-pill" onClick={() => setCtaDismissed(false)}><Sparkles size={14} /> Go live free for 30 days</button>
       )}
 
+      <LandingStyles />
       <style>{`
         :root{--wc-navy:#0d172b;--wc-navy2:#172238;--wc-orange:#ff6b1a;--wc-bg:#f6f7f9;--wc-ink:#10182b;--wc-muted:#667085;--wc-line:#e5e8ee}
         .wpl-page{visibility:visible;background:var(--wc-bg);color:var(--wc-ink);font-family:var(--font-body);overflow:hidden}.wpl-page h1,.wpl-page h2,.wpl-page h3,.wpl-page b,.wpl-page strong,.wpl-page .wpl-logo{font-family:var(--font-display)}
