@@ -1,8 +1,12 @@
 import IntroSplash from '@/components/intro-splash'
 import MissedCallLanding from '@/components/missed-call-landing'
 import WebsitePreviewLanding from '@/components/website-preview-landing'
+import dynamic from 'next/dynamic'
 import Pricing from '@/components/pricing'
-import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING } from '@/lib/features'
+import { SHOW_PUBLIC_PRICING, SHOW_NEW_LANDING, SHOW_LANDING_V3 } from '@/lib/features'
+
+// Own chunk: with the flag off the homepage ships none of the v3 / 3D code.
+const LandingV3 = dynamic(() => import('@/components/landing-v3/landing-v3'))
 
 // Homepage-only structured data. Scoped here (not root layout) so it doesn't
 // render on /privacy, /terms, or any future non-homepage route.
@@ -133,9 +137,13 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_SCHEMA) }}
       />
-      <IntroSplash />
-      {SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
-      {!SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
+      {SHOW_LANDING_V3 ? <LandingV3 /> : (
+        <>
+          <IntroSplash />
+          {SHOW_NEW_LANDING ? <WebsitePreviewLanding /> : <MissedCallLanding showPricing={SHOW_PUBLIC_PRICING} />}
+          {!SHOW_NEW_LANDING && SHOW_PUBLIC_PRICING && <Pricing />}
+        </>
+      )}
     </>
   )
 }

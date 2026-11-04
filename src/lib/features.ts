@@ -26,3 +26,12 @@ export const SHOW_NEW_LANDING =
  */
 export const SHOW_TIERED_LANDING =
   process.env.NEXT_PUBLIC_TIERED_LANDING === 'true'
+
+/**
+ * 3D landing rebuild (components/landing-v3/). Takes precedence over
+ * SHOW_NEW_LANDING. Review it at /v3 first. Rollback = unset
+ * NEXT_PUBLIC_LANDING_V3 and redeploy (old components are untouched), or roll
+ * back to the tagged pre-v3 Cloudflare deployment.
+ */
+export const SHOW_LANDING_V3 =
+  process.env.NEXT_PUBLIC_LANDING_V3 === 'true'
