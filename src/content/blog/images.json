@@ -270,5 +270,13 @@
     "credit": "Kampus Production",
     "creditUrl": "https://www.pexels.com/photo/man-in-a-phone-call-reading-a-note-8475194/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-appliance-repair": {
+    "id": "pexels:34099331",
+    "src": "/blog/ai-receptionist-for-appliance-repair.jpg",
+    "alt": "Technician working on AC PCB with tools and equipment, captured in New Delhi workshop.",
+    "credit": "Multitech Institute",
+    "creditUrl": "https://www.pexels.com/photo/technician-repairing-ac-pcb-in-new-delhi-workshop-34099331/",
+    "source": "Pexels"
   }
 }
