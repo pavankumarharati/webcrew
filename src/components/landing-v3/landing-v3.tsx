@@ -191,7 +191,7 @@ export default function LandingV3() {
               <p className="v3-eyebrow">Your preview is ready</p>
               <h2>Meet {f.businessName || 'your business'}&rsquo;s <em>AI salesperson.</em></h2>
               <p>It&rsquo;s live. Use the chat bubble in the corner of the preview: ask about your services or hours, or tap the mic and talk.</p>
-              <div className="v3-iframe"><iframe src={`${RECEPTION_URL}/preview/${f.previewId}`} title="Your AI salesperson preview" loading="lazy" /></div>
+              <div className="v3-iframe"><iframe src={`${RECEPTION_URL}/preview/${f.previewId}`} title="Your AI salesperson preview" loading="lazy" allow="microphone; autoplay" /></div>
               <div className="v3-preview-actions">
                 <a className="v3-btn" href="#claim">Go live free for 30 days <ArrowRight size={16} /></a>
                 <button className="v3-btn ghost" onClick={f.resetPreview}>Try a different business</button>
