@@ -39,6 +39,19 @@ const faqs: Array<[string, string]> = [
   ['Does it work with ServiceTitan, Housecall Pro or Jobber?', 'Not directly yet. Today it books into Google Calendar and sends every lead to you by text and email.'],
 ]
 
+/** Status of the full site rebuild that runs next to the instant AI preview. */
+function SiteBuildNote({ f }: { f: DemoFunnel }) {
+  const b = f.siteBuild
+  if (!b || b.status === 'ready') return null
+  return (
+    <p className="v3-sitebuild" role="status" aria-live="polite">
+      {b.status === 'failed'
+        ? b.reason
+        : <>Your full new website is being built now. It takes about 3&ndash;5 minutes{b.status === 'queued' && b.position && b.position > 1 ? ` (#${b.position} in line)` : ''}. It will show up on this page; you can keep this tab open.</>}
+    </p>
+  )
+}
+
 function useSceneMode() {
   // 'pending' on the server and first paint, then 'webgl' or 'static'.
   const [mode, setMode] = useState<'pending' | 'webgl' | 'static'>('pending')
@@ -183,11 +196,12 @@ export default function LandingV3() {
               </h1>
               <p className="v3-lede">We rebuild your site with an <b>AI salesperson</b> built in. It talks to every visitor, answers from your real services and hours, and sends you every lead. When you&rsquo;re ready, it answers your phone too.</p>
               <div className="v3-funnel"><Funnel f={f} /></div>
+              {!f.showPreview && <SiteBuildNote f={f} />}
               <div className="v3-trust"><span><CheckCircle2 /> Free demo, no card</span><span><CheckCircle2 /> $0 setup</span><span><CheckCircle2 /> 30-day free trial</span></div>
             </div>
           </section>
 
-          {f.showPreview && (
+          {(f.showPreview || f.siteBuild?.status === 'ready') && (
             <section className="v3-preview" ref={revealRef}>
               {f.siteBuild?.status === 'ready' && f.siteBuild.url ? (<>
                 <p className="v3-eyebrow">Your new website is ready</p>
@@ -198,13 +212,7 @@ export default function LandingV3() {
                 <p className="v3-eyebrow">Your preview is ready</p>
                 <h2>Meet {f.businessName || 'your business'}&rsquo;s <em>AI salesperson.</em></h2>
                 <p>It&rsquo;s live. Use the chat bubble in the corner of the preview: ask about your services or hours, or tap the mic and talk.</p>
-                {f.siteBuild && (
-                  <p className="v3-sitebuild" role="status" aria-live="polite">
-                    {f.siteBuild.status === 'failed'
-                      ? f.siteBuild.reason
-                      : <>Your full new website is being built now. It takes about 3&ndash;5 minutes{f.siteBuild.status === 'queued' && f.siteBuild.position && f.siteBuild.position > 1 ? ` (#${f.siteBuild.position} in line)` : ''}. It will show up right here.</>}
-                  </p>
-                )}
+                <SiteBuildNote f={f} />
                 <div className="v3-iframe"><iframe src={`${RECEPTION_URL}/preview/${f.previewId}`} title="Your AI salesperson preview" loading="lazy" allow="microphone; autoplay" /></div>
               </>)}
               <div className="v3-preview-actions">
