@@ -105,6 +105,21 @@ export default function AvatarWidget() {
   const processorRef = useRef<ScriptProcessorNode | null>(null)
   const turnstileTokenRef = useRef<string>('')
   const transcriptEndRef = useRef<HTMLDivElement>(null)
+  // Text typed before the session is connected; sent once Gemini is ready.
+  const pendingTextRef = useRef<string>('')
+  // Only ask for the mic when the visitor chose voice (launcher/mic), not when they started by typing.
+  const wantMicRef = useRef(true)
+
+  // Open the panel on arrival (desktop) so visitors see the AI salesperson. No session (and no cost) starts until they
+  // type or tap the mic. If they close it, it stays closed for the rest of the visit.
+  useEffect(() => {
+    let closed = false
+    try { closed = sessionStorage.getItem('wc-widget-closed') === '1' } catch {}
+    // Phones: the open panel would cover the preview form, so only the launcher + caption bubble show there.
+    if (closed || !window.matchMedia('(min-width: 768px)').matches) return
+    const t = setTimeout(() => setOpen(o => o || true), 1500)
+    return () => clearTimeout(t)
+  }, [])
 
   useEffect(() => {
     if (panelRef.current) {
@@ -151,6 +166,7 @@ export default function AvatarWidget() {
 
   function openWidget() {
     setOpen(true)
+    wantMicRef.current = true
     if (status === 'idle' || status === 'ended' || status === 'error') startSession()
   }
 
@@ -217,7 +233,11 @@ export default function AvatarWidget() {
         const msg = JSON.parse(event.data)
         if (msg.type === 'ready') {
           setStatus('listening')
-          startMic() // best-effort — failure here just means text-only, session already connected
+          if (pendingTextRef.current) {
+            ws.send(JSON.stringify({ type: 'text', text: pendingTextRef.current }))
+            pendingTextRef.current = ''
+          }
+          if (wantMicRef.current) startMic() // best-effort — failure here just means text-only, session already connected
         } else if (msg.type === 'audio') {
           playChunk(msg.data)
         } else if (msg.type === 'text') {
@@ -323,7 +343,16 @@ export default function AvatarWidget() {
 
   function sendText() {
     const text = textInput.trim()
-    if (!text || wsRef.current?.readyState !== WebSocket.OPEN) return
+    if (!text) return
+    if (wsRef.current?.readyState !== WebSocket.OPEN || status === 'connecting') {
+      // First message before a session exists (panel auto-opened): connect, send once ready.
+      if (status === 'connecting') return
+      pendingTextRef.current = text
+      wantMicRef.current = false
+      startSession().then(() => setTranscript([{ role: 'visitor', text }]))
+      setTextInput('')
+      return
+    }
     wsRef.current.send(JSON.stringify({ type: 'text', text }))
     setTranscript(prev => [...prev, { role: 'visitor', text }])
     setTextInput('')
@@ -335,6 +364,7 @@ export default function AvatarWidget() {
     } else if (wsRef.current?.readyState === WebSocket.OPEN) {
       startMic() // session already connected — just (re)try the mic
     } else {
+      wantMicRef.current = true
       startSession() // no session yet — start fresh (covers idle/ended/error states)
     }
   }
@@ -346,6 +376,7 @@ export default function AvatarWidget() {
     teardown()
     setStatus('idle')
     setOpen(false)
+    try { sessionStorage.setItem('wc-widget-closed', '1') } catch {}
   }
 
   const speaking = status === 'speaking'
@@ -421,7 +452,7 @@ export default function AvatarWidget() {
                 {status === 'speaking' && 'Speaking…'}
                 {status === 'error' && (errorMsg || 'Unavailable')}
                 {status === 'ended' && 'Chat ended'}
-                {status === 'idle' && 'Starting…'}
+                {status === 'idle' && 'Tap the mic to talk, or type below'}
               </div>
             </div>
             <button onClick={closePanel} aria-label="Close" style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', padding: 4 }}>
@@ -447,7 +478,7 @@ export default function AvatarWidget() {
             ))}
             {errorMsg && status === 'error' && (
               <div style={{ color: '#b91c1c', fontSize: 13, textAlign: 'center', marginTop: 8 }}>
-                {errorMsg} Prefer to talk? Call <a href="tel:+19182555151" style={{ color: '#b91c1c', fontWeight: 700 }}>(918) 255-5151</a>.
+                {errorMsg} Prefer to talk? Call <a href="tel:+14156873555" style={{ color: '#b91c1c', fontWeight: 700 }}>(415) 687-3555</a>.
               </div>
             )}
             <div ref={transcriptEndRef} />

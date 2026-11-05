@@ -95,14 +95,17 @@ export default function LandingV4() {
               <p className="l4-lede">WebCrew answers your phone 24/7, books the job into your calendar and rebuilds your website with an AI salesperson that turns visitors into calls. You get every lead by text and email.</p>
               <div className="l4-funnel"><Funnel f={f} /></div>
               {!f.showPreview && <SiteBuildNote f={f} />}
-              <CallCta />
+              <CallCta where="form" />
               <ul className="l4-trust">
                 <li><Check size={15} /> Free preview, no card</li>
                 <li><Check size={15} /> $0 setup</li>
                 <li><Check size={15} /> 30 days free</li>
               </ul>
             </div>
-            <HeroVisual />
+            <div className="l4-hero-side">
+              <CallCta where="side" />
+              <HeroVisual />
+            </div>
           </div>
         </section>
 
@@ -308,10 +311,11 @@ function SiteTabs({ noSite, setNoSite }: { noSite: boolean; setNoSite: (v: boole
 }
 
 /** The other way in: call. Our own line runs on the product and can text the trial signup link. */
-function CallCta() {
+/** where="side": big card above the hero picture (desktop). where="form": under the form (phones only). */
+function CallCta({ where }: { where: 'side' | 'form' }) {
   return (
-    <a className="l4-callcta" href={`tel:${PHONE}`}>
-      <span className="l4-or">or</span>
+    <a className={`l4-callcta l4-callcta-${where}`} href={`tel:${PHONE}`}>
+      {where === 'form' && <span className="l4-or">or</span>}
       <span className="l4-callcta-in">
         <PhoneCall size={22} />
         <span><strong>Call {PHONE_LABEL} for your free 30-day trial</strong><small>Our AI answers. Ask it anything, then it texts you the signup link.</small></span>
