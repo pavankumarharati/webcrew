@@ -154,6 +154,8 @@ const css = `
 }
 @media (max-width:520px){.v3-cards{grid-template-columns:1fr}.v3-row .v3-btn{width:100%}}
 @media (prefers-reduced-motion:reduce){.v3-bubble{animation:none;opacity:1}.v3-static>div{transition:none}}
+
+.v3-sitebuild{margin:12px 0 0;padding:10px 14px;border-radius:10px;background:rgba(255,107,26,.08);border:1px solid rgba(255,107,26,.25);font-size:15px}
 `
 
 export function V3Styles() {

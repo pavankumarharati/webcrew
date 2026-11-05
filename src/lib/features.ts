@@ -35,3 +35,10 @@ export const SHOW_TIERED_LANDING =
  */
 export const SHOW_LANDING_V3 =
   process.env.NEXT_PUBLIC_LANDING_V3 === 'true'
+
+/**
+ * Extra demo sources on the landing form (Facebook Page, Instagram, "describe my business").
+ * Off = website-only flow (owner decision 2026-11-04). Turn on with NEXT_PUBLIC_SOCIAL_SOURCES=true.
+ */
+export const SHOW_SOCIAL_SOURCES =
+  process.env.NEXT_PUBLIC_SOCIAL_SOURCES === 'true'

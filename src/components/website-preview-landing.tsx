@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { SHOW_SOCIAL_SOURCES } from '@/lib/features'
 import {
   ArrowRight, Check, CheckCircle2, ChevronDown,
   Loader2, Menu, PhoneCall, Plus, Sparkles, X, Zap,
@@ -36,13 +37,13 @@ type ClarifyQuestion = {
 /** Mirrors pipeline/src/reception/preview-sources.ts. FB/IG are never fetched — the owner pastes About text. */
 type SourceType = 'website' | 'facebook' | 'instagram' | 'text'
 type SourceDraft = { type: SourceType; url: string; text: string }
-const MAX_SOURCES = 4
-const SOURCE_TABS: Array<{ type: SourceType; label: string }> = [
+const MAX_SOURCES = SHOW_SOCIAL_SOURCES ? 4 : 1
+const SOURCE_TABS: Array<{ type: SourceType; label: string }> = ([
   { type: 'website', label: 'My website' },
   { type: 'facebook', label: 'Facebook Page' },
   { type: 'instagram', label: 'Instagram' },
   { type: 'text', label: 'Describe my business' },
-]
+] as Array<{ type: SourceType; label: string }>).filter(t => SHOW_SOCIAL_SOURCES || t.type === 'website')
 const emptySource = (type: SourceType): SourceDraft => ({ type, url: '', text: '' })
 function sourceFilled(s: SourceDraft): boolean {
   return s.type === 'website' ? !!s.url.trim() : !!s.text.trim()
@@ -291,14 +292,14 @@ export default function WebsitePreviewLanding() {
             <div className="wpl-hero-copy">
               <div className="wpl-pill"><Zap size={14} /> Built for HVAC contractors · plumbers welcome</div>
               <h1>Never miss another <em>no-heat call.</em><span className="wpl-h1-alt">Your website and phone become an AI dispatcher that answers, qualifies and books jobs 24/7.</span></h1>
-              <p>Paste your website and hear it handle an HVAC customer in about a minute. Free, no card. No website? Use your Facebook page or a few sentences about your shop. Nothing on your real pages changes.</p>
+              <p>Paste your website and hear it handle an HVAC customer in about a minute. Free, no card. {SHOW_SOCIAL_SOURCES ? 'No website? Use your Facebook page or a few sentences about your shop. ' : ''}Nothing on your real pages changes.</p>
 
               {stage === 'idle' || stage === 'failed' ? (
                 <form className="wpl-sources" onSubmit={startPreview}>
-                  <p className="wpl-sources-q">How does your business show up online?</p>
+                  <p className="wpl-sources-q">{SHOW_SOCIAL_SOURCES ? 'How does your business show up online?' : 'Your website address'}</p>
                   {sources.map((src, i) => (
                     <div className="wpl-source" key={i}>
-                      <div className="wpl-source-tabs" role="radiogroup" aria-label={`Source ${i + 1} type`}>
+                      {SOURCE_TABS.length > 1 && <div className="wpl-source-tabs" role="radiogroup" aria-label={`Source ${i + 1} type`}>
                         {SOURCE_TABS.map(t => {
                           const taken = t.type === 'website' && src.type !== 'website' && sources.some(s => s.type === 'website')
                           return (
@@ -312,7 +313,7 @@ export default function WebsitePreviewLanding() {
                         {sources.length > 1 && (
                           <button type="button" className="wpl-source-remove" aria-label={`Remove source ${i + 1}`} onClick={() => removeSource(i)}><X size={14} /></button>
                         )}
-                      </div>
+                      </div>}
                       {src.type === 'website' ? (
                         <input type="text" value={src.url} onChange={e => updateSource(i, { url: e.target.value })} placeholder="yourbusiness.com" aria-label="Your website URL" />
                       ) : (

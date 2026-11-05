@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { SHOW_SOCIAL_SOURCES } from '@/lib/features'
 import { ADMIN_URL, useFoundingSeats, type PlanChoice } from '../landing/sections'
 
 // State + network logic for the free-demo → go-live funnel. Same endpoints and
@@ -26,13 +27,17 @@ export type ClarifyQuestion = {
 /** Mirrors pipeline/src/reception/preview-sources.ts. FB/IG are never fetched — the owner pastes About text. */
 export type SourceType = 'website' | 'facebook' | 'instagram' | 'text'
 export type SourceDraft = { type: SourceType; url: string; text: string }
-export const MAX_SOURCES = 4
-export const SOURCE_TABS: Array<{ type: SourceType; label: string }> = [
+/** Full site rebuild queue (api/src/signature-queue.ts → built on our side in a few minutes). */
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.webcrew.app'
+export type SiteBuild = { id: string; status: 'queued' | 'building' | 'ready' | 'failed'; url?: string; reason?: string; position?: number }
+
+export const MAX_SOURCES = SHOW_SOCIAL_SOURCES ? 4 : 1
+export const SOURCE_TABS: Array<{ type: SourceType; label: string }> = ([
   { type: 'website', label: 'My website' },
   { type: 'facebook', label: 'Facebook Page' },
   { type: 'instagram', label: 'Instagram' },
   { type: 'text', label: 'Describe my business' },
-]
+] as Array<{ type: SourceType; label: string }>).filter(t => SHOW_SOCIAL_SOURCES || t.type === 'website')
 export const emptySource = (type: SourceType): SourceDraft => ({ type, url: '', text: '' })
 export function sourceFilled(s: SourceDraft): boolean {
   return s.type === 'website' ? !!s.url.trim() : !!s.text.trim()
@@ -95,15 +100,21 @@ export function useDemoFunnel() {
   const [checkoutError, setCheckoutError] = useState('')
   const seatsLeft = useFoundingSeats()
 
+  const [siteBuild, setSiteBuild] = useState<SiteBuild | null>(null)
+  const sitePollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const stopSitePoll = () => { if (sitePollRef.current) clearInterval(sitePollRef.current); sitePollRef.current = null }
+
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const stopPolling = () => { if (pollRef.current) clearInterval(pollRef.current); pollRef.current = null }
 
-  useEffect(() => stopPolling, [])
+  useEffect(() => () => { stopPolling(); stopSitePoll() }, [])
 
   // Back from a cancelled Stripe checkout (?preview=<id>): reopen that demo instead of starting over.
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get('preview')
     if (id && /^[0-9a-f-]{36}$/i.test(id)) { setPreviewId(id); setStage('reading'); pollStatus(id) }
+    const site = new URLSearchParams(window.location.search).get('site')
+    if (site && /^[0-9a-f-]{36}$/i.test(site)) pollSite(site)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { if (seatsLeft === 0) setPlan(p => p === 'founding' ? 'standard' : p) }, [seatsLeft])
@@ -137,6 +148,33 @@ export function useDemoFunnel() {
     }, 1500)
   }
 
+  function pollSite(id: string) {
+    stopSitePoll()
+    const tick = async () => {
+      try {
+        const res = await fetch(`${API_URL}/signature/status/${id}`)
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'lost')
+        setSiteBuild({ id, ...data })
+        if (data.status === 'ready' || data.status === 'failed') stopSitePoll()
+      } catch { stopSitePoll(); setSiteBuild(prev => prev ? { ...prev, status: 'failed', reason: 'We lost track of your site build. Please try again.' } : prev) }
+    }
+    tick()
+    sitePollRef.current = setInterval(tick, 5000)
+  }
+
+  /** The full rebuild runs next to the instant AI preview; failures here never block the AI demo. */
+  async function requestSite(siteUrl: string) {
+    try {
+      const res = await fetch(`${API_URL}/signature/request`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: siteUrl }) })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || !data.id) { setSiteBuild({ id: '', status: 'failed', reason: data.error || 'We could not start your new website.' }); return }
+      setSiteBuild({ id: data.id, status: 'queued', position: data.position })
+      const u = new URL(window.location.href); u.searchParams.set('site', data.id); window.history.replaceState(null, '', u)
+      pollSite(data.id)
+    } catch { setSiteBuild({ id: '', status: 'failed', reason: 'We could not start your new website.' }) }
+  }
+
   async function startPreview(e: React.FormEvent) {
     e.preventDefault()
     const filled = sources.filter(sourceFilled)
@@ -161,6 +199,8 @@ export function useDemoFunnel() {
       if (!res.ok) throw new Error(data.error || 'Something went wrong.')
       setPreviewId(data.previewId)
       pollStatus(data.previewId)
+      const site = filled.find(s => s.type === 'website')
+      if (site && effectiveExperience === 'new') requestSite(site.url.trim())
     } catch (e: any) {
       setErrorMsg(e.message || 'Something went wrong. Please try again.')
       setStage('failed')
@@ -211,6 +251,7 @@ export function useDemoFunnel() {
     stopPolling()
     setStage('idle'); setProgressPct(0); setPreviewId(null); setConfigId(null); setBusinessName(''); setErrorMsg('')
     setQuestions([]); setAnswers({})
+    stopSitePoll(); setSiteBuild(null)
   }
 
   // Paywall: going live always goes through Stripe Checkout (card on file, 30-day trial, $0 today).
@@ -246,7 +287,7 @@ export function useDemoFunnel() {
     sources, hasWebsite, experience: effectiveExperience, setExperience,
     stage, progressPct, previewId, businessName, errorMsg, questions, answers, answering,
     claim, setClaim, plan, setPlan, checkoutState, checkoutError, seatsLeft,
-    showProgress, showPreview,
+    showProgress, showPreview, siteBuild,
     startPreview, submitAnswers, updateSource, addSource, removeSource, setAnswer, resetPreview, startCheckout,
   }
 }

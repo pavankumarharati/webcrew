@@ -29,11 +29,12 @@ const AI_RECEPTION_PHONE_LABEL = '(918) 255-5151'
 const DEMO_VIDEO: { mp4: string; webm?: string; poster: string } | null = null
 
 const faqs: Array<[string, string]> = [
-  ['What do I actually get for $49?', 'A new, fast website built from your current site, Google listing or Facebook page, with an AI salesperson on every page. Visitors can type or talk to it; it answers from your real services and hours and sends every lead to your phone and email. 60 AI minutes a month are included.'],
+  ['What do I actually get for $49?', 'A new, fast website rebuilt from your current site, with an AI salesperson on every page. Visitors can type or talk to it; it answers from your real services and hours and sends every lead to your phone and email. 60 AI minutes a month are included.'],
   ['Do I have to give up my current website?', 'No. You can keep your site and we add the AI salesperson to it with one line of code, or let us rebuild it. Your domain and branding stay yours either way.'],
   ['What is AI Reception, and do I need it?', 'It is the same AI answering your business phone 24/7: it books jobs into your Google Calendar, sends reminders and follow-ups and asks happy customers for reviews. Start with the $49 website and add it any time. It is $99/mo for the first 10 founding customers, then $149/mo.'],
   ['Will the AI make things up?', 'It only uses what you give it and what it read from your business info: services, hours, the prices you list. If it doesn’t know, it takes the details and you get them by text and email.'],
   ['Is the demo real or a script?', 'Real. The preview you build above runs the live AI against your own business info. Ask it about your services or hours.'],
+  ['Is the preview really free?', 'Yes. Building and trying your preview costs nothing and needs no card. You only pay if you keep it: $49/mo for the website with its AI salesperson, or $99/mo (founding price, then $149) to add AI Reception for your phone, website included. Both start with 30 days free.'],
   ['What does it cost to start?', '$0 setup and a 30-day free trial. A card is needed to go live; nothing is charged for 30 days, and you can cancel anytime before that.'],
   ['Does it work with ServiceTitan, Housecall Pro or Jobber?', 'Not directly yet. Today it books into Google Calendar and sends every lead to you by text and email.'],
 ]
@@ -188,10 +189,24 @@ export default function LandingV3() {
 
           {f.showPreview && (
             <section className="v3-preview" ref={revealRef}>
-              <p className="v3-eyebrow">Your preview is ready</p>
-              <h2>Meet {f.businessName || 'your business'}&rsquo;s <em>AI salesperson.</em></h2>
-              <p>It&rsquo;s live. Use the chat bubble in the corner of the preview: ask about your services or hours, or tap the mic and talk.</p>
-              <div className="v3-iframe"><iframe src={`${RECEPTION_URL}/preview/${f.previewId}`} title="Your AI salesperson preview" loading="lazy" allow="microphone; autoplay" /></div>
+              {f.siteBuild?.status === 'ready' && f.siteBuild.url ? (<>
+                <p className="v3-eyebrow">Your new website is ready</p>
+                <h2>{f.businessName || 'Your business'}, <em>rebuilt.</em></h2>
+                <p>This is your new website, built from your current one, with your AI salesperson on every page. Click around, then try the chat bubble or tap the mic and talk. <a href={f.siteBuild.url} target="_blank" rel="noopener">Open it full screen</a>.</p>
+                <div className="v3-iframe"><iframe src={f.siteBuild.url} title="Your new website" loading="lazy" allow="microphone; autoplay" /></div>
+              </>) : (<>
+                <p className="v3-eyebrow">Your preview is ready</p>
+                <h2>Meet {f.businessName || 'your business'}&rsquo;s <em>AI salesperson.</em></h2>
+                <p>It&rsquo;s live. Use the chat bubble in the corner of the preview: ask about your services or hours, or tap the mic and talk.</p>
+                {f.siteBuild && (
+                  <p className="v3-sitebuild" role="status" aria-live="polite">
+                    {f.siteBuild.status === 'failed'
+                      ? f.siteBuild.reason
+                      : <>Your full new website is being built now. It takes about 3&ndash;5 minutes{f.siteBuild.status === 'queued' && f.siteBuild.position && f.siteBuild.position > 1 ? ` (#${f.siteBuild.position} in line)` : ''}. It will show up right here.</>}
+                  </p>
+                )}
+                <div className="v3-iframe"><iframe src={`${RECEPTION_URL}/preview/${f.previewId}`} title="Your AI salesperson preview" loading="lazy" allow="microphone; autoplay" /></div>
+              </>)}
               <div className="v3-preview-actions">
                 <a className="v3-btn" href="#claim">Go live free for 30 days <ArrowRight size={16} /></a>
                 <button className="v3-btn ghost" onClick={f.resetPreview}>Try a different business</button>
@@ -200,7 +215,7 @@ export default function LandingV3() {
           )}
 
           <Chapter n={1} kicker="01 · We rebuild it" title={<>Your old site, <em>rebuilt.</em></>}>
-            We read your current website, Google listing or Facebook page and build a fast, modern site that keeps your name, services and phone number. You see a free preview in about a minute, before you pay anything.
+            We read every page of your current website and build a fast, modern site that keeps your name, services, photos and phone number. You get a free preview in a few minutes, before you pay anything.
           </Chapter>
           <Chapter n={2} kicker="02 · It starts selling" title={<>A salesperson on <em>every page.</em></>}>
             Visitors type or talk. The AI answers from your real services and hours, asks what they need and where they are, and sends the lead to your phone and email right away. It never makes up prices.
@@ -285,7 +300,7 @@ export default function LandingV3() {
           <p className="v3-eyebrow v3-reveal-up">How it works</p>
           <h2 className="v3-reveal-up">Live in three steps.</h2>
           <ol className="v3-steps v3-stagger">
-            <li><b>1</b><h3>Build your free demo</h3><p>Paste your website, Facebook About text or a few lines about your business.</p></li>
+            <li><b>1</b><h3>Build your free demo</h3><p>Paste your website address. We read every page and rebuild it.</p></li>
             <li><b>2</b><h3>Talk to it</h3><p>Ask it what your customers ask. Change anything you don&rsquo;t like.</p></li>
             <li><b>3</b><h3>Go live</h3><p>$0 setup, 30 days free. Add AI Reception for your phone whenever you&rsquo;re ready.</p></li>
           </ol>
@@ -428,13 +443,13 @@ function Funnel({ f }: { f: DemoFunnel }) {
     <form className="v3-form" onSubmit={f.startPreview}>
       {sources.map((src, i) => (
         <div className="v3-source" key={i}>
-          <div className="v3-tabs" role="radiogroup" aria-label={`Source ${i + 1} type`}>
+          {SOURCE_TABS.length > 1 && <div className="v3-tabs" role="radiogroup" aria-label={`Source ${i + 1} type`}>
             {SOURCE_TABS.map(t => {
               const taken = t.type === 'website' && src.type !== 'website' && sources.some(s => s.type === 'website')
               return <button type="button" key={t.type} role="radio" aria-checked={src.type === t.type} disabled={taken} className={src.type === t.type ? 'on' : ''} onClick={() => f.updateSource(i, { type: t.type, url: '' })}>{t.label}</button>
             })}
             {sources.length > 1 && <button type="button" className="v3-tab-x" aria-label={`Remove source ${i + 1}`} onClick={() => f.removeSource(i)}><X size={14} /></button>}
-          </div>
+          </div>}
           {src.type === 'website' ? (
             <input type="text" inputMode="url" value={src.url} onChange={e => f.updateSource(i, { url: e.target.value })} placeholder="yourbusiness.com" aria-label="Your website URL" />
           ) : (
