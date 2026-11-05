@@ -107,6 +107,7 @@ export default function AvatarWidget() {
   const transcriptEndRef = useRef<HTMLDivElement>(null)
   // Text typed before the session is connected; sent once Gemini is ready.
   const pendingTextRef = useRef<string>('')
+  const pendingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   // Only ask for the mic when the visitor chose voice (launcher/mic), not when they started by typing.
   const wantMicRef = useRef(true)
 
@@ -170,7 +171,16 @@ export default function AvatarWidget() {
     if (status === 'idle' || status === 'ended' || status === 'error') startSession()
   }
 
+  function schedulePending(ws: WebSocket, ms: number) {
+    if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current)
+    pendingTimerRef.current = setTimeout(() => {
+      if (pendingTextRef.current && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'text', text: pendingTextRef.current }))
+      pendingTextRef.current = ''
+    }, ms)
+  }
+
   function teardown() {
+    if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current)
     wsRef.current?.close()
     wsRef.current = null
     processorRef.current?.disconnect()
@@ -233,14 +243,13 @@ export default function AvatarWidget() {
         const msg = JSON.parse(event.data)
         if (msg.type === 'ready') {
           setStatus('listening')
-          if (pendingTextRef.current) {
-            ws.send(JSON.stringify({ type: 'text', text: pendingTextRef.current }))
-            pendingTextRef.current = ''
-          }
+          // The AI greets first; a message sent during the greeting gets ignored, so wait for it to finish.
+          if (pendingTextRef.current) schedulePending(ws, 6000)
           if (wantMicRef.current) startMic() // best-effort — failure here just means text-only, session already connected
         } else if (msg.type === 'audio') {
           playChunk(msg.data)
         } else if (msg.type === 'text') {
+          if (msg.role === 'ai' && pendingTextRef.current) schedulePending(ws, 1500)
           setTranscript(prev => {
             const last = prev[prev.length - 1]
             if (last && last.role === msg.role) return [...prev.slice(0, -1), { role: msg.role, text: last.text + msg.text }]
