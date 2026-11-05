@@ -190,6 +190,25 @@ const css = `
 .l4-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .l4-reveal.in{opacity:1;transform:none}
 
+.l4-tabs{display:inline-flex;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:14px}
+.l4-tabs button{border:0;background:none;padding:9px 16px;border-radius:9px;font:600 15px var(--l4-body),sans-serif;color:var(--muted);cursor:pointer}
+.l4-tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(20,18,12,.12)}
+.l4-sub{margin:0 0 14px;font-size:15px;color:var(--muted)}
+.l4-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:14px}
+.l4-grid label{display:grid;gap:6px;font-size:14px;font-weight:600}
+.l4-grid input{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:16px var(--l4-body),sans-serif;background:#fff}
+.l4-grid input:focus{outline:2px solid var(--ink);outline-offset:-1px}
+.l4-wide{width:100%}
+.l4-callcta{display:block;text-decoration:none;margin-top:22px}
+.l4-or{display:flex;align-items:center;gap:12px;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:14px}
+.l4-or:before,.l4-or:after{content:"";height:1px;flex:1;background:var(--line)}
+.l4-callcta-in{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;background:var(--ink);color:#fff;transition:transform .2s,background .2s}
+.l4-callcta:hover .l4-callcta-in{background:#000;transform:translateY(-1px)}
+.l4-callcta-in svg{color:#f4a77c;flex:none}
+.l4-callcta-in>span{display:flex;flex-direction:column;gap:2px}
+.l4-callcta strong{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.l4-callcta small{font-size:14px;color:#c9c4b8}
+.l4-final-row{justify-content:center}
 @media (max-width:980px){
   .l4-hero-grid,.l4-two,.l4-price-wrap,.l4-golive{grid-template-columns:1fr;gap:44px}
   .l4-included{grid-template-columns:1fr 1fr}
@@ -209,6 +228,7 @@ const css = `
   .l4-input{flex-wrap:wrap;padding:8px}
   .l4-input input{flex-basis:calc(100% - 40px)}
   .l4-input .l4-btn{width:100%}
+  .l4-grid{grid-template-columns:1fr}
   .l4-included{grid-template-columns:1fr}
   .l4-included li,.l4-included li:nth-child(even){padding:24px 0;border-right:0!important}
   .l4-card-chat{left:-6px;bottom:-14px;max-width:220px}

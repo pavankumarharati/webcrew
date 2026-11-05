@@ -36,6 +36,7 @@ const FAQS: Array<[string, string]> = [
   ['Is the preview really free?', 'Yes. Paste your website and we build the preview at no cost, with no card. You only pay if you decide to go live.'],
   ['What exactly do I pay?', '$99 a month for our first 10 HVAC and home-service companies, locked for as long as you stay. After those 10 seats it is $149 a month. Setup is $0 and the first 30 days are free. A card is needed to start the trial; you can cancel any time before day 30 and pay nothing.'],
   ['Do I have to change my phone number?', 'No. You keep your number. You set your phone to forward calls to your AI line, either only when you can’t pick up or all the time. We show you the forwarding code for your carrier.'],
+  ['I don’t have a website. Can I still use it?', 'Yes. Choose “I don’t have one”, enter your business name, phone and city, and we build your website from your Google listing and reviews. Or just call us.'],
   ['Do I have to replace my website?', 'No. We can rebuild it for you, or add the AI salesperson to your current site with one line of code. Your domain stays yours.'],
   ['Will the AI make things up?', 'It only uses what is on file for your business: your services, hours, service area and any prices you choose to share. If it doesn’t know, it takes the caller’s details and sends them to you.'],
   ['What happens with emergencies?', 'Calls about no heat, no cooling in extreme weather or a leak are flagged urgent. It can transfer the caller to your cell, or take an urgent message and alert you right away.'],
@@ -77,7 +78,7 @@ export default function LandingV4() {
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
           </nav>
-          <a className="l4-nav-call" href={`tel:${PHONE}`}><PhoneCall size={15} /> Call our AI</a>
+          <a className="l4-nav-call" href={`tel:${PHONE}`}><PhoneCall size={15} /> {PHONE_LABEL}</a>
         </div>
       </header>
 
@@ -91,6 +92,7 @@ export default function LandingV4() {
               <p className="l4-lede">WebCrew answers your phone 24/7, books the job into your calendar and rebuilds your website with an AI salesperson that turns visitors into calls. You get every lead by text and email.</p>
               <div className="l4-funnel"><Funnel f={f} /></div>
               {!f.showPreview && <SiteBuildNote f={f} />}
+              <CallCta />
               <ul className="l4-trust">
                 <li><Check size={15} /> Free preview, no card</li>
                 <li><Check size={15} /> $0 setup</li>
@@ -191,7 +193,7 @@ export default function LandingV4() {
               <h2>Live in a day, not a month.</h2>
             </div>
             <ol className="l4-steps">
-              <li className="l4-reveal"><b>1</b><h3>See your free preview</h3><p>Paste your website. In a few minutes you get your rebuilt site with the AI salesperson on it. Talk to it.</p></li>
+              <li className="l4-reveal"><b>1</b><h3>See your free preview</h3><p>Paste your website, or give us your business name if you don&rsquo;t have one. In a few minutes you get your new site with the AI salesperson on it. Talk to it.</p></li>
               <li className="l4-reveal"><b>2</b><h3>Start your 30 free days</h3><p>$0 setup. You get your AI phone line, your new site and a checklist: hours, services, calendar, call forwarding.</p></li>
               <li className="l4-reveal"><b>3</b><h3>Forward your calls</h3><p>Dial one code on your phone. Missed calls (or all calls) go to your AI. Leads start arriving by text and email.</p></li>
             </ol>
@@ -249,8 +251,11 @@ export default function LandingV4() {
             {f.showPreview ? <GoLive f={f} price={price} /> : (
               <div className="l4-final-in l4-reveal">
                 <h2>See it on your business first.</h2>
-                <p>Paste your website. Your free preview is ready in a few minutes.</p>
-                <a className="l4-btn" href="#demo">Build my free preview <ArrowRight size={16} /></a>
+                <p>Paste your website, or tell us your business name if you don&rsquo;t have one. Your free preview is ready in a few minutes.</p>
+                <div className="l4-row l4-final-row">
+                  <a className="l4-btn" href="#demo">Build my free preview <ArrowRight size={16} /></a>
+                  <a className="l4-btn ghost" href={`tel:${PHONE}`}><PhoneCall size={16} /> Call {PHONE_LABEL}</a>
+                </div>
               </div>
             )}
           </div>
@@ -290,18 +295,41 @@ function HeroVisual() {
   )
 }
 
+function SiteTabs({ noSite, setNoSite }: { noSite: boolean; setNoSite: (v: boolean) => void }) {
+  return (
+    <div className="l4-tabs" role="tablist" aria-label="Do you have a website?">
+      <button type="button" role="tab" aria-selected={!noSite} className={!noSite ? 'on' : ''} onClick={() => setNoSite(false)}>I have a website</button>
+      <button type="button" role="tab" aria-selected={noSite} className={noSite ? 'on' : ''} onClick={() => setNoSite(true)}>I don&rsquo;t have one</button>
+    </div>
+  )
+}
+
+/** The other way in: call. Our own line runs on the product and can text the trial signup link. */
+function CallCta() {
+  return (
+    <a className="l4-callcta" href={`tel:${PHONE}`}>
+      <span className="l4-or">or</span>
+      <span className="l4-callcta-in">
+        <PhoneCall size={22} />
+        <span><strong>Call {PHONE_LABEL} for your free 30-day trial</strong><small>Our AI answers. Ask it anything, then it texts you the signup link.</small></span>
+      </span>
+    </a>
+  )
+}
+
 function SiteBuildNote({ f }: { f: DemoFunnel }) {
   const b = f.siteBuild
   if (!b || b.status === 'ready') return null
   return (
     <p className="l4-note" role="status" aria-live="polite">
-      {b.status === 'failed' ? b.reason : <><Loader2 size={15} className="l4-spin" /> Rebuilding your full website now, about 3&ndash;5 minutes{b.status === 'queued' && b.position && b.position > 1 ? ` (#${b.position} in line)` : ''}. It will appear on this page.</>}
+      {b.status === 'failed' ? b.reason : <><Loader2 size={15} className="l4-spin" /> {b.kind === 'listing' ? 'Building your website from your Google listing' : 'Rebuilding your full website'} now, about 3&ndash;5 minutes{b.status === 'queued' && b.position && b.position > 1 ? ` (#${b.position} in line)` : ''}. It will appear on this page.</>}
     </p>
   )
 }
 
 function Funnel({ f }: { f: DemoFunnel }) {
   const { sources, stage } = f
+  const [noSite, setNoSite] = useState(false)
   if (stage === 'needs_input') {
     return (
       <form className="l4-questions" onSubmit={e => { e.preventDefault(); f.submitAnswers() }}>
@@ -357,16 +385,33 @@ function Funnel({ f }: { f: DemoFunnel }) {
   if (stage === 'ready') return <p className="l4-ready"><CheckCircle2 size={18} /> Your preview is ready below.</p>
 
   const src = sources[0]
+  if (noSite) {
+    const l = f.listing
+    const set = (k: keyof typeof l) => (e: React.ChangeEvent<HTMLInputElement>) => f.setListing({ ...l, [k]: e.target.value })
+    const building = f.siteBuild && f.siteBuild.status !== 'failed' && f.siteBuild.kind === 'listing'
+    return (
+      <form className="l4-form" onSubmit={f.startListing}>
+        <SiteTabs noSite={noSite} setNoSite={setNoSite} />
+        <p className="l4-sub">We find your business on Google Maps and build your new website from your listing and reviews.</p>
+        <div className="l4-grid">
+          <label>Business name<input required value={l.name} onChange={set('name')} placeholder="Northline Heating & Air" autoComplete="organization" /></label>
+          <label>Business phone<input required type="tel" value={l.phone} onChange={set('phone')} placeholder="(209) 555-0142" autoComplete="tel" /></label>
+          <label>City<input required value={l.city} onChange={set('city')} placeholder="Tracy" autoComplete="address-level2" /></label>
+          <label>State<input required maxLength={2} value={l.state} onChange={set('state')} placeholder="CA" autoComplete="address-level1" /></label>
+        </div>
+        <button type="submit" className="l4-btn l4-wide" disabled={!!building}>{building ? <><Loader2 size={16} className="l4-spin" /> Building your website…</> : <>Build my free website <ArrowRight size={16} /></>}</button>
+      </form>
+    )
+  }
   return (
     <form className="l4-form" onSubmit={f.startPreview}>
-      <label htmlFor="l4-url">Your website</label>
+      <SiteTabs noSite={noSite} setNoSite={setNoSite} />
       <div className="l4-input">
         <Globe size={18} />
         <input id="l4-url" type="text" inputMode="url" autoComplete="url" value={src?.url ?? ''} onChange={e => f.updateSource(0, { url: e.target.value })} placeholder="yourbusiness.com" />
         <button type="submit" className="l4-btn" disabled={!sources.some(sourceFilled)}>See my free preview <ArrowRight size={16} /></button>
       </div>
       {stage === 'failed' && f.errorMsg && <p className="l4-error"><X size={14} /> {f.errorMsg}</p>}
-      <p className="l4-hint">No website? <a href={`tel:${PHONE}`}>Call us</a> and we&rsquo;ll build you one from your Google listing.</p>
     </form>
   )
 }
@@ -378,7 +423,7 @@ function Result({ f }: { f: DemoFunnel }) {
       <div className="l4-result-head">
         <div>
           <p className="l4-eyebrow">{site ? 'Your new website is ready' : 'Your AI salesperson is ready'}</p>
-          <h2>{site ? <>{f.businessName || 'Your business'}, rebuilt.</> : <>Talk to {f.businessName ? `${f.businessName}’s` : 'your'} AI.</>}</h2>
+          <h2>{site ? <>{f.businessName || f.listing.name || 'Your business'}{f.siteBuild?.kind === 'listing' ? '’s new website.' : ', rebuilt.'}</> : <>Talk to {f.businessName ? `${f.businessName}’s` : 'your'} AI.</>}</h2>
           <p className="l4-muted">{site
             ? 'Click around, then use the chat bubble or tap the mic and talk to it like a customer would.'
             : 'Ask it about your services, hours or service area, by typing or with the mic.'}</p>

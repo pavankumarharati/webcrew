@@ -29,7 +29,8 @@ export type SourceType = 'website' | 'facebook' | 'instagram' | 'text'
 export type SourceDraft = { type: SourceType; url: string; text: string }
 /** Full site rebuild queue (api/src/signature-queue.ts → built on our side in a few minutes). */
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.webcrew.app'
-export type SiteBuild = { id: string; status: 'queued' | 'building' | 'ready' | 'failed'; url?: string; reason?: string; position?: number }
+export type SiteBuild = { id: string; status: 'queued' | 'building' | 'ready' | 'failed'; url?: string; reason?: string; position?: number; previewId?: string; kind?: 'site' | 'listing' }
+export type ListingDraft = { name: string; phone: string; city: string; state: string }
 
 export const MAX_SOURCES = SHOW_SOCIAL_SOURCES ? 4 : 1
 export const SOURCE_TABS: Array<{ type: SourceType; label: string }> = ([
@@ -155,8 +156,13 @@ export function useDemoFunnel() {
         const res = await fetch(`${API_URL}/signature/status/${id}`)
         const data = await res.json()
         if (!res.ok) throw new Error(data.error || 'lost')
-        setSiteBuild({ id, ...data })
+        setSiteBuild(prev => ({ ...prev, id, ...data }))
         if (data.status === 'ready' || data.status === 'failed') stopSitePoll()
+        // The rebuilt site carries its own AI salesperson + a checkout-ready preview: going live claims THAT site.
+        if (data.status === 'ready' && data.previewId) {
+          stopPolling(); setQuestions([])
+          setPreviewId(data.previewId); setConfigId(c => c ?? 'site'); setStage('ready')
+        }
       } catch { stopSitePoll(); setSiteBuild(prev => prev ? { ...prev, status: 'failed', reason: 'We lost track of your site build. Please try again.' } : prev) }
     }
     tick()
@@ -164,15 +170,25 @@ export function useDemoFunnel() {
   }
 
   /** The full rebuild runs next to the instant AI preview; failures here never block the AI demo. */
-  async function requestSite(siteUrl: string) {
+  async function requestSite(target: string | ListingDraft) {
     try {
-      const res = await fetch(`${API_URL}/signature/request`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: siteUrl }) })
+      const body = typeof target === 'string' ? { url: target } : { listing: target }
+      const res = await fetch(`${API_URL}/signature/request`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       const data = await res.json().catch(() => ({}))
       if (!res.ok || !data.id) { setSiteBuild({ id: '', status: 'failed', reason: data.error || 'We could not start your new website.' }); return }
-      setSiteBuild({ id: data.id, status: 'queued', position: data.position })
+      setSiteBuild({ id: data.id, status: 'queued', position: data.position, kind: typeof target === 'string' ? 'site' : 'listing' })
       const u = new URL(window.location.href); u.searchParams.set('site', data.id); window.history.replaceState(null, '', u)
       pollSite(data.id)
     } catch { setSiteBuild({ id: '', status: 'failed', reason: 'We could not start your new website.' }) }
+  }
+
+  /** No website: build from their Google listing (found by phone on the Mac). No instant AI preview here;
+   *  the rebuilt site arrives with its AI salesperson. */
+  const [listing, setListing] = useState<ListingDraft>({ name: '', phone: '', city: '', state: '' })
+  function startListing(e: React.FormEvent) {
+    e.preventDefault()
+    setErrorMsg('')
+    requestSite({ ...listing, state: listing.state.trim().toUpperCase() })
   }
 
   async function startPreview(e: React.FormEvent) {
@@ -287,7 +303,7 @@ export function useDemoFunnel() {
     sources, hasWebsite, experience: effectiveExperience, setExperience,
     stage, progressPct, previewId, businessName, errorMsg, questions, answers, answering,
     claim, setClaim, plan, setPlan, checkoutState, checkoutError, seatsLeft,
-    showProgress, showPreview, siteBuild,
+    showProgress, showPreview, siteBuild, listing, setListing, startListing,
     startPreview, submitAnswers, updateSource, addSource, removeSource, setAnswer, resetPreview, startCheckout,
   }
 }
