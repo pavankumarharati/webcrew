@@ -42,3 +42,10 @@ export const SHOW_LANDING_V3 =
  */
 export const SHOW_SOCIAL_SOURCES =
   process.env.NEXT_PUBLIC_SOCIAL_SOURCES === 'true'
+
+/**
+ * Landing v4 (components/landing-v4/): one offer ($99 Founding 10, then $149), light editorial look,
+ * no 3D. Takes precedence over v3 and the older landings. Review at /v4. Rollback = unset + redeploy.
+ */
+export const SHOW_LANDING_V4 =
+  process.env.NEXT_PUBLIC_LANDING_V4 === 'true'
