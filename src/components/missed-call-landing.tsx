@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { trackMeta } from '@/lib/meta-pixel'
 import TierPricing from '@/components/tier-pricing'
+import CustomerProof from '@/components/customer-proof'
 import {
   ArrowRight, BellRing, CalendarCheck, Check, CheckCircle2, ChevronDown,
   Clock3, Globe, Headphones, Menu, MessageSquareText, PhoneCall, ShieldCheck,
@@ -273,7 +274,7 @@ export default function MissedCallLanding({ showPricing = false }: { showPricing
 
         <section className="wc2-section wc2-proof" data-avatar-caption="We only show verified results — no fake case studies.">
           <Eyebrow>Customer proof</Eyebrow><div className="wc2-split-head"><h2>Real businesses. Real calls. <em>Real results.</em></h2><p>We only publish verified customer outcomes. No fabricated companies, inflated numbers, or illustrative results presented as fact.</p></div>
-          <div className="wc2-proof-placeholder"><ShieldCheck /><div><h3>Verified customer stories are being prepared.</h3><p>Results will appear here after customer approval and verification.</p></div><span>Proof-first policy</span></div>
+          <CustomerProof placeholder={<div className="wc2-proof-placeholder"><ShieldCheck /><div><h3>Verified customer stories are being prepared.</h3><p>Results will appear here after customer approval and verification.</p></div><span>Proof-first policy</span></div>} />
         </section>
 
         <TierPricing />

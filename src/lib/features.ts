@@ -26,3 +26,26 @@ export const SHOW_NEW_LANDING =
  */
 export const SHOW_TIERED_LANDING =
   process.env.NEXT_PUBLIC_TIERED_LANDING === 'true'
+
+/**
+ * 3D landing rebuild (components/landing-v3/). Takes precedence over
+ * SHOW_NEW_LANDING. Review it at /v3 first. Rollback = unset
+ * NEXT_PUBLIC_LANDING_V3 and redeploy (old components are untouched), or roll
+ * back to the tagged pre-v3 Cloudflare deployment.
+ */
+export const SHOW_LANDING_V3 =
+  process.env.NEXT_PUBLIC_LANDING_V3 === 'true'
+
+/**
+ * Extra demo sources on the landing form (Facebook Page, Instagram, "describe my business").
+ * Off = website-only flow (owner decision 2026-11-04). Turn on with NEXT_PUBLIC_SOCIAL_SOURCES=true.
+ */
+export const SHOW_SOCIAL_SOURCES =
+  process.env.NEXT_PUBLIC_SOCIAL_SOURCES === 'true'
+
+/**
+ * Landing v4 (components/landing-v4/): one offer ($99 Founding 10, then $149), light editorial look,
+ * no 3D. Takes precedence over v3 and the older landings. Review at /v4. Rollback = unset + redeploy.
+ */
+export const SHOW_LANDING_V4 =
+  process.env.NEXT_PUBLIC_LANDING_V4 === 'true'
