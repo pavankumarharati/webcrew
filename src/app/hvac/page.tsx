@@ -2,9 +2,9 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist & Answering Service for HVAC Companies | WebCrew',
-  description: 'A 24/7 AI receptionist trained on no-heat, no-AC, and gas-smell triage — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
+  description: 'AI answering service for HVAC companies and contractors. 24/7 triage for no-heat, no-AC, gas-smell calls. Books into Google Calendar. $0 setup, 30-day trial, $99/mo.',
   alternates: { canonical: 'https://webcrew.app/hvac' },
-  keywords: ['HVAC answering service', 'virtual receptionist for HVAC', '24/7 HVAC call answering', 'after-hours HVAC dispatch', 'HVAC AI receptionist', 'AI answering service for HVAC companies', 'HVAC after hours emergency call answering', 'HVAC missed call recovery'],
+  keywords: ['HVAC answering service', 'virtual receptionist for HVAC', '24/7 HVAC call answering', 'after-hours HVAC dispatch', 'HVAC AI receptionist', 'AI answering service for HVAC companies', 'HVAC after hours emergency call answering', 'HVAC missed call recovery', 'ai receptionist for hvac contractors', 'best ai receptionist for hvac contractors', 'ai answering service for hvac contractors'],
 }
 
 const N: NicheContent = {
@@ -20,13 +20,14 @@ const N: NicheContent = {
     { title: 'Collects what your tech needs', body: 'System type, how long it’s been out, whether anyone smells gas, access instructions — captured before the truck rolls, not radioed in from the driveway.' },
     { title: 'Never lets an overnight call go cold', body: 'A call that comes in at 2am gets answered at 2am. You get the summary and callback details the moment you’re up, not a guess at what you missed.' },
   ],
-  answer: "An AI receptionist for HVAC companies answers every call 24/7, asks what's wrong (no heat, no AC, gas smell), flags urgent calls, and books routine service into your Google Calendar. You keep your number and get a summary after each call. WebCrew costs $99/month for the first 10 clients, with a 30-day free trial.",
-  aka: ["HVAC answering service", "virtual receptionist for HVAC", "24/7 HVAC call answering", "after-hours HVAC dispatch"],
+  answer: "WebCrew is an AI answering service for HVAC companies and contractors. It answers every call 24/7, asks what's wrong (no heat, no AC, gas smell), flags urgent calls, and books routine service into your Google Calendar. You keep your number and get a summary after each call. $99/month, $0 setup, 30-day free trial.",
+  aka: ["HVAC answering service", "virtual receptionist for HVAC", "24/7 HVAC call answering", "after-hours HVAC dispatch", "ai answering service for HVAC contractors", "ai receptionist for HVAC contractors"],
   faq: [
     ['Can it tell a no-heat emergency from a routine tune-up request?', 'Yes. WebCrew is configured on your specific service list and escalation rules before it goes live, including what counts as urgent for your business.'],
     ['What happens if someone reports a gas smell?', 'WebCrew is set up to treat gas-smell reports as a safety priority and flag them for immediate follow-up — configured to your exact escalation preference, not a generic default.'],
     ['Does it replace my dispatcher?', 'No. It answers and qualifies the call, collects what your dispatcher or tech needs, and notifies you — you stay in control of scheduling and dispatch.'],
     ['How fast can I go live?', 'Usually within a few days. We load your services, hours and booking rules, you test-call the AI yourself, then forward your business line to it. Nothing goes live until you approve it.'],
+    ['What is the best AI answering service for HVAC contractors?', 'WebCrew is built for HVAC contractors: it triages emergency calls by type (no heat, no AC, gas smell), asks what your tech needs before rolling, and books jobs into your Google Calendar. Plans start at $99/month with a 30-day free trial and no setup fee.'],
   ],
 }
 

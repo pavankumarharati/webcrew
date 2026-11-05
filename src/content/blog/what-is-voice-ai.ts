@@ -3,11 +3,11 @@ import type { BlogPost } from '@/lib/blog/types'
 export const post: BlogPost = {
   slug: 'what-is-voice-ai',
   title: 'What Is Voice AI? How It Works on a Phone Call, Explained Simply',
-  description: 'A no-jargon explanation of voice AI: how it hears a caller, decides what to say, and takes actions like booking, with the honest limits.',
+  description: 'What is voice AI? Software that holds a spoken conversation on a phone call — no button menus. How it listens, decides, books, and where it falls short.',
   date: '2026-10-18',
   category: 'Phone basics',
   imageQuery: 'voice assistant sound wave',
-  keywords: ['what is voice AI', 'how does voice AI work', 'conversational AI phone', 'AI voice agent explained'],
+  keywords: ['what is voice AI', 'how does voice AI work', 'conversational AI phone', 'AI voice agent explained', 'voice AI for small business', 'AI phone answering explained'],
   body: `
 ## The simple answer
 
@@ -42,4 +42,9 @@ The most common use is an AI receptionist: answering calls you cannot pick up, b
 
 WebCrew uses voice AI to run a full front desk for local service businesses, on the phone and on your website.
 `,
+  faq: [
+    ['What is voice AI?', 'Voice AI is software that holds a spoken conversation on a phone line. It listens to the caller, understands what they want, and responds in a natural voice — no button menus. For small businesses, it most often runs as an AI receptionist that answers calls, books jobs, and takes messages.'],
+    ['Is voice AI the same as an AI receptionist?', 'An AI receptionist uses voice AI on a business phone line. Voice AI is the underlying technology; the AI receptionist is what it does for your business — answer calls, book appointments, and handle customer questions.'],
+    ['Can voice AI answer my business phone?', 'Yes. AI receptionists built on voice AI answer calls 24/7, recognize what the caller needs, book into your calendar, and send you a summary after each call. WebCrew uses voice AI to run a front desk for local service businesses.'],
+  ],
 }
