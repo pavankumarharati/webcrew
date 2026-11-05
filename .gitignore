@@ -1,6 +1,7 @@
 node_modules/
 .next/
 .env*
+!.env.production
 *.log
 .DS_Store
 out/
