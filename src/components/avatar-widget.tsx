@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { Mic, MicOff, Send, X } from 'lucide-react'
+import { Mic, MicOff, Send, X, MessageSquareText } from 'lucide-react'
 
 // Floating "talk to WebCrew" avatar widget — the front door of webcrew.app.
 // Voice + text chat with the same Gemini Live sales brain that answers the
@@ -110,6 +110,10 @@ export default function AvatarWidget() {
   const pendingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   // Only ask for the mic when the visitor chose voice (launcher/mic), not when they started by typing.
   const wantMicRef = useRef(true)
+  // 'voice' = mic + spoken replies; 'chat' = text only (AI audio muted).
+  const [mode, setMode] = useState<'voice' | 'chat'>('voice')
+  const modeRef = useRef<'voice' | 'chat'>('voice')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   // Open the panel on arrival (desktop) so visitors see the AI salesperson. No session (and no cost) starts until they
   // type or tap the mic. If they close it, it stays closed for the rest of the visit.
@@ -249,7 +253,11 @@ export default function AvatarWidget() {
         } else if (msg.type === 'audio') {
           playChunk(msg.data)
         } else if (msg.type === 'text') {
-          if (msg.role === 'ai' && pendingTextRef.current) schedulePending(ws, 1500)
+          if (msg.role === 'ai' && pendingTextRef.current) {
+            // The AI's own spoken hello; our greeting bubble already says it, so don't show it in chat.
+            schedulePending(ws, 1500)
+            if (modeRef.current === 'chat') return
+          }
           setTranscript(prev => {
             const last = prev[prev.length - 1]
             if (last && last.role === msg.role) return [...prev.slice(0, -1), { role: msg.role, text: last.text + msg.text }]
@@ -323,7 +331,21 @@ export default function AvatarWidget() {
     captureCtxRef.current = null
   }
 
+  function pickVoice() {
+    setMode('voice'); modeRef.current = 'voice'; wantMicRef.current = true
+    if (wsRef.current?.readyState === WebSocket.OPEN) startMic()
+    else if (status !== 'connecting') startSession()
+  }
+
+  function pickChat() {
+    setMode('chat'); modeRef.current = 'chat'; wantMicRef.current = false
+    stopMic()
+    if (playbackCtxRef.current) nextPlayTimeRef.current = playbackCtxRef.current.currentTime
+    setTimeout(() => inputRef.current?.focus(), 50)
+  }
+
   function playChunk(base64Pcm24: string) {
+    if (modeRef.current === 'chat') return // text-only: don't speak replies
     const ctx = playbackCtxRef.current
     if (!ctx) return
     const pcm = base64ToInt16(base64Pcm24)
@@ -353,6 +375,7 @@ export default function AvatarWidget() {
   function sendText() {
     const text = textInput.trim()
     if (!text) return
+    if (modeRef.current === 'voice' && !streamRef.current) { setMode('chat'); modeRef.current = 'chat' }
     if (wsRef.current?.readyState !== WebSocket.OPEN || status === 'connecting') {
       // First message before a session exists (panel auto-opened): connect, send once ready.
       if (status === 'connecting') return
@@ -457,11 +480,11 @@ export default function AvatarWidget() {
               <div style={{ color: '#fff', fontWeight: 700, fontSize: 14 }}>WebCrew AI</div>
               <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>
                 {status === 'connecting' && 'Connecting…'}
-                {status === 'listening' && 'Listening — say hi, or type below'}
+                {status === 'listening' && (mode === 'chat' ? 'Online · Chat' : 'Listening — say hi, or type below')}
                 {status === 'speaking' && 'Speaking…'}
                 {status === 'error' && (errorMsg || 'Unavailable')}
                 {status === 'ended' && 'Chat ended'}
-                {status === 'idle' && 'Tap the mic to talk, or type below'}
+                {status === 'idle' && 'Online · Talk or chat'}
               </div>
             </div>
             <button onClick={closePanel} aria-label="Close" style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', padding: 4 }}>
@@ -470,10 +493,22 @@ export default function AvatarWidget() {
           </div>
 
           <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8, minHeight: 160 }}>
-            {transcript.length === 0 && status !== 'error' && (
-              <div style={{ color: '#94a3b8', fontSize: 13, textAlign: 'center', marginTop: 24 }}>
-                Say hello, or ask what WebCrew can do for your business.
-              </div>
+            {status !== 'error' && (
+              <>
+                <div style={{ alignSelf: 'flex-start', background: '#f1f5f9', color: '#0f172a', borderRadius: 14, padding: '10px 12px', fontSize: 13.5, lineHeight: 1.5, maxWidth: '88%' }}>
+                  Hi! I&rsquo;m WebCrew&rsquo;s AI assistant. Ask me about pricing, the free 30-day trial, or how I&rsquo;d answer calls for your business. Would you like to talk or chat?
+                </div>
+                {transcript.length === 0 && (status === 'idle' || status === 'ended') && (
+                  <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+                    <button onClick={pickVoice} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 12, border: 'none', background: ORANGE, color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+                      <Mic size={16} /> Talk
+                    </button>
+                    <button onClick={pickChat} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 12, border: `1.5px solid ${NAVY}`, background: '#fff', color: NAVY, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+                      <MessageSquareText size={16} /> Chat
+                    </button>
+                  </div>
+                )}
+              </>
             )}
             {transcript.map((line, i) => (
               <div key={i} style={{
@@ -493,9 +528,18 @@ export default function AvatarWidget() {
             <div ref={transcriptEndRef} />
           </div>
 
-          <div style={{ borderTop: '1px solid #e2e8f0', padding: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div style={{ borderTop: '1px solid #e2e8f0', padding: '8px 10px 0', display: transcript.length === 0 && status === 'idle' ? 'none' : 'flex', gap: 6 }} role="tablist" aria-label="Talk or chat">
+            {(['voice', 'chat'] as const).map(m => (
+              <button key={m} role="tab" aria-selected={mode === m} onClick={m === 'voice' ? pickVoice : pickChat}
+                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, padding: '6px 10px', borderRadius: 100, fontSize: 12.5, fontWeight: 700, cursor: 'pointer',
+                  border: 'none', background: mode === m ? NAVY : '#f1f5f9', color: mode === m ? '#fff' : '#475569' }}>
+                {m === 'voice' ? <><Mic size={13} /> Talk</> : <><MessageSquareText size={13} /> Chat</>}
+              </button>
+            ))}
+          </div>
+          <div style={{ padding: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
             <button
-              onClick={toggleMic}
+              onClick={() => { if (mode === 'chat') pickVoice(); else toggleMic() }}
               aria-label={streamRef.current ? 'End voice chat' : 'Start voice chat'}
               style={{
                 width: 38, height: 38, borderRadius: '50%', border: 'none', flexShrink: 0, cursor: 'pointer',
@@ -507,10 +551,11 @@ export default function AvatarWidget() {
               {streamRef.current ? <Mic size={16} /> : <MicOff size={16} />}
             </button>
             <input
+              ref={inputRef}
               value={textInput}
               onChange={e => setTextInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') sendText() }}
-              placeholder="Type a message…"
+              placeholder={mode === 'chat' ? 'Type a message…' : 'Speak, or type here…'}
               style={{ flex: 1, border: '1px solid #e2e8f0', borderRadius: 100, padding: '9px 14px', fontSize: 13.5, outline: 'none', color: '#0f172a', background: '#fff', caretColor: '#2563EB' }}
             />
             <button
