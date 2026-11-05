@@ -24,8 +24,13 @@ const css = `
 .l4-nav nav{display:flex;gap:26px;margin-left:auto}
 .l4-nav nav a{text-decoration:none;font-size:15px;color:var(--ink-2)}
 .l4-nav nav a:hover{color:var(--ink)}
-.l4-nav-call{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--ink);border-radius:999px;font-size:14px;font-weight:600;text-decoration:none}
-.l4-nav-call:hover{background:var(--ink);color:var(--paper)}
+.l4-nav-call{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--accent);background:var(--accent);color:#fff!important;border-radius:999px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap}
+.l4-nav-call:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.l4-topbar{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;background:var(--ink);color:#fff!important;text-decoration:none;font-size:14px;letter-spacing:.02em;text-align:center}
+.l4-topbar strong{font-weight:800}
+.l4-topbar svg{color:#f4a77c;flex:none}
+.l4-topbar:hover strong{text-decoration:underline}
+@media (max-width:620px){.l4-topbar{font-size:12.5px;padding:8px 10px}.l4-topbar-sub,.l4-hide-sm{display:none}.l4-nav-call{padding:8px 12px;font-size:13px}}
 
 /* buttons */
 .l4-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff!important;border:0;border-radius:10px;padding:14px 20px;font:600 16px var(--l4-body),sans-serif;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .2s,transform .2s}

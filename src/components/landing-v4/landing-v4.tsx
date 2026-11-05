@@ -70,6 +70,9 @@ export default function LandingV4() {
     <div className={`l4 ${display.variable} ${body.variable}`}>
       <L4Styles />
       <header className="l4-nav">
+        <a className="l4-topbar" href={`tel:${PHONE}`}>
+          <PhoneCall size={16} /> <strong>CALL {PHONE_LABEL} FOR YOUR FREE 30-DAY TRIAL</strong><span className="l4-topbar-sub"> &middot; our AI answers 24/7</span>
+        </a>
         <div className="l4-wrap l4-nav-in">
           <a href="/" className="l4-logo" aria-label="WebCrew home"><BrandMark size={30} /> WebCrew</a>
           <nav aria-label="Main">
@@ -78,7 +81,7 @@ export default function LandingV4() {
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
           </nav>
-          <a className="l4-nav-call" href={`tel:${PHONE}`}><PhoneCall size={15} /> {PHONE_LABEL}</a>
+          <a className="l4-nav-call" href={`tel:${PHONE}`}><PhoneCall size={15} /> <span className="l4-hide-sm">Free trial: </span>{PHONE_LABEL}</a>
         </div>
       </header>
 
