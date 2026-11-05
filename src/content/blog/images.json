@@ -278,5 +278,13 @@
     "credit": "Multitech Institute",
     "creditUrl": "https://www.pexels.com/photo/technician-repairing-ac-pcb-in-new-delhi-workshop-34099331/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-towing-companies": {
+    "id": "pexels:17429097",
+    "src": "/blog/ai-receptionist-for-towing-companies.jpg",
+    "alt": "Tow truck operator loading white GMC pickup truck on street in daytime.",
+    "credit": "Jonathan  Reynaga",
+    "creditUrl": "https://www.pexels.com/photo/a-car-on-a-tow-truck-17429097/",
+    "source": "Pexels"
   }
 }
