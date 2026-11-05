@@ -114,6 +114,8 @@ export default function AvatarWidget() {
   const [mode, setMode] = useState<'voice' | 'chat'>('voice')
   const modeRef = useRef<'voice' | 'chat'>('voice')
   const inputRef = useRef<HTMLInputElement>(null)
+  // Has the visitor picked Talk or Chat yet? Until then the panel only shows the greeting + the two choices.
+  const [chosen, setChosen] = useState(false)
 
   // Open the panel on arrival (desktop) so visitors see the AI salesperson. No session (and no cost) starts until they
   // type or tap the mic. If they close it, it stays closed for the rest of the visit.
@@ -170,9 +172,7 @@ export default function AvatarWidget() {
   }, [sectionCaption])
 
   function openWidget() {
-    setOpen(true)
-    wantMicRef.current = true
-    if (status === 'idle' || status === 'ended' || status === 'error') startSession()
+    setOpen(true) // shows the greeting + Talk / Chat choice; nothing connects until they pick
   }
 
   function schedulePending(ws: WebSocket, ms: number) {
@@ -332,12 +332,14 @@ export default function AvatarWidget() {
   }
 
   function pickVoice() {
+    setChosen(true)
     setMode('voice'); modeRef.current = 'voice'; wantMicRef.current = true
     if (wsRef.current?.readyState === WebSocket.OPEN) startMic()
     else if (status !== 'connecting') startSession()
   }
 
   function pickChat() {
+    setChosen(true)
     setMode('chat'); modeRef.current = 'chat'; wantMicRef.current = false
     stopMic()
     if (playbackCtxRef.current) nextPlayTimeRef.current = playbackCtxRef.current.currentTime
@@ -375,6 +377,7 @@ export default function AvatarWidget() {
   function sendText() {
     const text = textInput.trim()
     if (!text) return
+    setChosen(true)
     if (modeRef.current === 'voice' && !streamRef.current) { setMode('chat'); modeRef.current = 'chat' }
     if (wsRef.current?.readyState !== WebSocket.OPEN || status === 'connecting') {
       // First message before a session exists (panel auto-opened): connect, send once ready.
@@ -498,7 +501,7 @@ export default function AvatarWidget() {
                 <div style={{ alignSelf: 'flex-start', background: '#f1f5f9', color: '#0f172a', borderRadius: 14, padding: '10px 12px', fontSize: 13.5, lineHeight: 1.5, maxWidth: '88%' }}>
                   Hi! I&rsquo;m WebCrew&rsquo;s AI assistant. Ask me about pricing, the free 30-day trial, or how I&rsquo;d answer calls for your business. Would you like to talk or chat?
                 </div>
-                {transcript.length === 0 && (status === 'idle' || status === 'ended') && (
+                {!chosen && transcript.length === 0 && (status === 'idle' || status === 'ended') && (
                   <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
                     <button onClick={pickVoice} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '10px 12px', borderRadius: 12, border: 'none', background: ORANGE, color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
                       <Mic size={16} /> Talk
@@ -509,6 +512,11 @@ export default function AvatarWidget() {
                   </div>
                 )}
               </>
+            )}
+            {chosen && mode === 'chat' && transcript.length === 0 && (
+              <div style={{ alignSelf: 'flex-start', background: '#f1f5f9', color: '#0f172a', borderRadius: 14, padding: '10px 12px', fontSize: 13.5, lineHeight: 1.5, maxWidth: '88%' }}>
+                Great, type your question in the box below and press send.
+              </div>
             )}
             {transcript.map((line, i) => (
               <div key={i} style={{
@@ -528,7 +536,7 @@ export default function AvatarWidget() {
             <div ref={transcriptEndRef} />
           </div>
 
-          <div style={{ borderTop: '1px solid #e2e8f0', padding: '8px 10px 0', display: transcript.length === 0 && status === 'idle' ? 'none' : 'flex', gap: 6 }} role="tablist" aria-label="Talk or chat">
+          <div style={{ borderTop: '1px solid #e2e8f0', padding: '8px 10px 0', display: chosen || transcript.length > 0 ? 'flex' : 'none', gap: 6 }} role="tablist" aria-label="Talk or chat">
             {(['voice', 'chat'] as const).map(m => (
               <button key={m} role="tab" aria-selected={mode === m} onClick={m === 'voice' ? pickVoice : pickChat}
                 style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, padding: '6px 10px', borderRadius: 100, fontSize: 12.5, fontWeight: 700, cursor: 'pointer',
@@ -556,7 +564,7 @@ export default function AvatarWidget() {
               onChange={e => setTextInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') sendText() }}
               placeholder={mode === 'chat' ? 'Type a message…' : 'Speak, or type here…'}
-              style={{ flex: 1, border: '1px solid #e2e8f0', borderRadius: 100, padding: '9px 14px', fontSize: 13.5, outline: 'none', color: '#0f172a', background: '#fff', caretColor: '#2563EB' }}
+              style={{ flex: 1, border: chosen && mode === 'chat' && !textInput ? `2px solid ${ORANGE}` : '1px solid #e2e8f0', borderRadius: 100, padding: '9px 14px', fontSize: 13.5, outline: 'none', color: '#0f172a', background: '#fff', caretColor: '#2563EB' }}
             />
             <button
               onClick={sendText}
