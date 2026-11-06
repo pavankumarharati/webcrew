@@ -99,7 +99,7 @@ export default function Footer() {
               { label: 'Privacy Policy',    href: '/privacy' },
               { label: 'Terms of Service',  href: '/terms' },
               { label: 'Affiliate Terms',   href: '/affiliate-terms' },
-              { label: 'Contact Us',        href: '#contact' },
+              { label: 'Contact Us',        href: '/contact' },
             ].map(l => (
               <a key={l.href} href={l.href} style={{
                 display: 'block', color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem',
@@ -125,7 +125,7 @@ export default function Footer() {
           flexWrap: 'wrap', gap: 16,
         }}>
           <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.78rem' }}>
-            © {year} WebCrew · AI-powered websites for local businesses · WebCrew is a product/DBA of Mind Solutions Inc.
+            © {year} WebCrew · AI-powered websites for local businesses · WebCrew is part of Mind Solutions Inc.
           </p>
           <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.72rem' }}>
             Built with Next.js · Deployed on Cloudflare Pages · 99.9% uptime
