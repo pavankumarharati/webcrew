@@ -394,7 +394,8 @@ function Funnel({ f }: { f: DemoFunnel }) {
   const src = sources[0]
   if (noSite) {
     const l = f.listing
-    const set = (k: keyof typeof l) => (e: React.ChangeEvent<HTMLInputElement>) => f.setListing({ ...l, [k]: e.target.value })
+    // Functional update: autofill can fill several boxes at once, and a stale copy would wipe the others.
+    const set = (k: keyof typeof l) => (e: React.ChangeEvent<HTMLInputElement>) => { const v = e.target.value; f.setListing(prev => ({ ...prev, [k]: v })) }
     const building = f.siteBuild && f.siteBuild.status !== 'failed' && f.siteBuild.kind === 'listing'
     return (
       <form className="l4-form" onSubmit={f.startListing}>
