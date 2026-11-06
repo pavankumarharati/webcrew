@@ -21,7 +21,7 @@ const F: FeatureContent = {
   ],
   included: [
     'AI receptionist answers your calls 24/7, trained on your services and escalation rules',
-    'Custom website live within about a day, on your own domain',
+    'Custom website built for your business, on your own domain',
     'Call transcript and summary sent to you after every call',
     'Missed-call text-back and automatic day-3/day-10 follow-up',
     'Review requests with your Google review link after each job, plus a monthly report',

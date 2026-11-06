@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist & Answering Service for Cleaning Companies | WebCrew',
-  description: 'A 24/7 AI receptionist that handles recurring bookings and reschedules without tying up your team — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
+  description: 'A 24/7 AI answering service for cleaning companies that handles recurring bookings and reschedules without tying up your team. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/cleaning' },
   keywords: ['cleaning company answering service', 'virtual receptionist for cleaners', 'maid service call answering', 'AI receptionist for cleaning companies', 'cleaning service AI answering service', 'cleaning company missed call recovery', 'recurring booking AI scheduling'],
 }
@@ -45,7 +45,7 @@ export default function CleaningPage() {
               provider: { '@id': 'https://webcrew.app/#organization' },
               serviceType: 'AI Answering Service',
               category: 'Cleaning Business Services',
-              description: 'WebCrew answers cleaning company calls 24/7, manages recurring bookings and reschedules, and builds a custom website overnight.',
+              description: 'WebCrew answers cleaning company calls 24/7 and manages recurring bookings and reschedules for cleaning businesses.',
               areaServed: { '@type': 'Country', name: 'United States' },
             },
             {

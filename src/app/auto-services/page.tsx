@@ -2,7 +2,7 @@ import NicheLanding, { NicheContent } from '@/components/niche-landing'
 
 export const metadata = {
   title: 'AI Receptionist & Answering Service for Auto Shops | WebCrew',
-  description: 'A 24/7 AI receptionist that handles drop-off scheduling and "is my car ready" calls without pulling a tech off a bay — plus a website live within about a day. $0 setup, 30-day free trial, $99/mo founding rate.',
+  description: 'A 24/7 AI answering service for auto shops that handles drop-off scheduling and status-check calls without pulling a tech off a bay. $0 setup, 30-day free trial, $99/mo founding rate.',
   alternates: { canonical: 'https://webcrew.app/auto-services' },
   keywords: ['auto shop answering service', 'virtual receptionist for auto repair', 'detailing appointment booking', 'AI receptionist for auto repair shops', 'auto service AI answering service', 'auto shop missed call recovery', 'auto repair appointment scheduling AI'],
 }
@@ -45,7 +45,7 @@ export default function AutoServicesPage() {
               provider: { '@id': 'https://webcrew.app/#organization' },
               serviceType: 'AI Answering Service',
               category: 'Auto Service Business Services',
-              description: 'WebCrew answers auto service shop calls 24/7, books drop-offs, handles status-check calls, and builds a custom website overnight.',
+              description: 'WebCrew answers auto service shop calls 24/7, books drop-offs, and handles status-check calls without interrupting work in the shop.',
               areaServed: { '@type': 'Country', name: 'United States' },
             },
             {
