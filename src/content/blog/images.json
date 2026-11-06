@@ -286,5 +286,13 @@
     "credit": "Jonathan  Reynaga",
     "creditUrl": "https://www.pexels.com/photo/a-car-on-a-tow-truck-17429097/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-painters": {
+    "id": "pexels:7218683",
+    "src": "/blog/ai-receptionist-for-painters.jpg",
+    "alt": "A woman stands on a ladder painting a wall white, part of a DIY home renovation.",
+    "credit": "Blue Bird",
+    "creditUrl": "https://www.pexels.com/photo/woman-painting-the-wall-with-a-roller-brush-7218683/",
+    "source": "Pexels"
   }
 }
