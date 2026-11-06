@@ -29,8 +29,8 @@ export type SourceType = 'website' | 'facebook' | 'instagram' | 'text'
 export type SourceDraft = { type: SourceType; url: string; text: string }
 /** Full site rebuild queue (api/src/signature-queue.ts → built on our side in a few minutes). */
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.webcrew.app'
-export type SiteBuild = { id: string; status: 'queued' | 'building' | 'ready' | 'failed'; url?: string; reason?: string; position?: number; previewId?: string; kind?: 'site' | 'listing' }
-export type ListingDraft = { name: string; phone: string; city: string; state: string }
+export type SiteBuild = { id: string; status: 'queued' | 'building' | 'ready' | 'failed'; url?: string; reason?: string; code?: string; position?: number; previewId?: string; kind?: 'site' | 'listing' }
+export type ListingDraft = { name: string; phone: string; city: string; state: string; mapsUrl?: string; noGoogle?: boolean }
 
 export const MAX_SOURCES = SHOW_SOCIAL_SOURCES ? 4 : 1
 export const SOURCE_TABS: Array<{ type: SourceType; label: string }> = ([
@@ -185,10 +185,11 @@ export function useDemoFunnel() {
   /** No website: build from their Google listing (found by phone on the Mac). No instant AI preview here;
    *  the rebuilt site arrives with its AI salesperson. */
   const [listing, setListing] = useState<ListingDraft>({ name: '', phone: '', city: '', state: '' })
-  function startListing(e: React.FormEvent) {
-    e.preventDefault()
+  function startListing(e: React.FormEvent | null, opts: { noGoogle?: boolean } = {}) {
+    e?.preventDefault()
     setErrorMsg('')
-    requestSite({ ...listing, state: listing.state.trim().toUpperCase() })
+    const { mapsUrl, ...rest } = listing
+    requestSite({ ...rest, state: listing.state.trim().toUpperCase(), ...(mapsUrl?.trim() ? { mapsUrl: mapsUrl.trim() } : {}), ...(opts.noGoogle ? { noGoogle: true } : {}) })
   }
 
   async function startPreview(e: React.FormEvent) {

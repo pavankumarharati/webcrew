@@ -406,8 +406,15 @@ function Funnel({ f }: { f: DemoFunnel }) {
           <label>Business phone<input required type="tel" value={l.phone} onChange={set('phone')} placeholder="(209) 555-0142" autoComplete="tel" /></label>
           <label>City<input required value={l.city} onChange={set('city')} placeholder="Tracy" autoComplete="address-level2" /></label>
           <label>State<input required maxLength={20} value={l.state} onChange={set('state')} placeholder="CA" autoComplete="address-level1" /></label>
+          <label className="l4-span2">Google Maps link <span className="l4-opt">(optional, helps us find you)</span><input value={l.mapsUrl ?? ''} onChange={set('mapsUrl')} placeholder="maps.app.goo.gl/..." inputMode="url" /></label>
         </div>
         <button type="submit" className="l4-btn l4-wide" disabled={!!building}>{building ? <><Loader2 size={16} className="l4-spin" /> Building your website…</> : <>Build my free website <ArrowRight size={16} /></>}</button>
+        {f.siteBuild?.status === 'failed' && f.siteBuild.code === 'not_found' && f.siteBuild.kind === 'listing' && (
+          <div className="l4-notfound">
+            <p><strong>Not on Google Maps under that name and number?</strong> Paste your Google Maps link above (open your business in Google Maps, tap Share, copy) and try again, or we can build it from what you typed.</p>
+            <button type="button" className="l4-btn ghost l4-wide" onClick={() => f.startListing(null, { noGoogle: true })}>Build it without Google <ArrowRight size={16} /></button>
+          </div>
+        )}
       </form>
     )
   }

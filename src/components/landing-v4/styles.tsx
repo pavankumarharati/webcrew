@@ -214,6 +214,10 @@ const css = `
 .l4-callcta strong{font-size:18px;font-weight:700;letter-spacing:-.01em}
 .l4-callcta small{font-size:14px;color:#c9c4b8}
 .l4-final-row{justify-content:center}
+.l4-span2{grid-column:1/-1}
+.l4-opt{font-weight:400;color:var(--muted);font-size:13px}
+.l4-notfound{margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.l4-notfound p{margin:0 0 12px;font-size:15px;line-height:1.5}
 .l4-hero-side{display:flex;flex-direction:column;gap:28px;min-width:0}
 .l4-callcta-side{margin-top:0}
 .l4-callcta-side .l4-callcta-in{padding:22px 24px;border-radius:18px;box-shadow:0 18px 40px -18px rgba(27,26,23,.55);border:2px solid var(--accent)}
