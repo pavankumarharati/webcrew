@@ -165,6 +165,10 @@ const css = `
 .l4-result{padding:24px 0 80px}
 .l4-result-in{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:0 40px 80px -40px rgba(20,18,12,.35)}
 .l4-result-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:22px}
+.l4-phonecard{display:flex;align-items:center;gap:14px;margin-top:14px;padding:16px 18px;border-radius:14px;background:#0d172b;color:#fff;text-decoration:none}
+.l4-phonecard span{flex:1;min-width:0}
+.l4-phonecard strong{display:block;font-size:18px}
+.l4-phonecard small{display:block;margin-top:3px;font-size:14px;color:#c7cfdd}
 .l4-iframe{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:14px}
 .l4-iframe iframe{display:block;width:100%;height:78vh;min-height:560px;border:0;background:#fff}
 

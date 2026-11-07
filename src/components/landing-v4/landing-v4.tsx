@@ -454,6 +454,11 @@ function Result({ f }: { f: DemoFunnel }) {
         <div className="l4-browser"><span /><span /><span /><em>{site ? new URL(site).host : 'AI salesperson preview'}</em></div>
         <iframe src={site ?? `${RECEPTION_URL}/preview/${f.previewId}`} title={site ? 'Your new website' : 'Your AI salesperson preview'} loading="lazy" allow="microphone; autoplay" />
       </div>
+      <a className="l4-phonecard" href={`tel:${PHONE}`}>
+        <PhoneCall size={22} />
+        <span><strong>Now hear it answer your phone.</strong><small>Call {PHONE_LABEL} and tell it your business name. It will act as your receptionist in a practice call.</small></span>
+        <ArrowRight size={18} />
+      </a>
       {!f.showPreview && f.stage === 'needs_input' && <p className="l4-note">Answer the quick questions above so your AI knows what to say, then you can go live.</p>}
     </div>
   )
