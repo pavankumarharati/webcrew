@@ -31,8 +31,8 @@ const TIERS: { name: string; price: string; was?: string; per: string; badge: st
     hidden: true, // shown once the 10 founding spots are filled (then hide Founding 10)
   },
   {
-    name: 'Custom', price: 'Quote', per: '', badge: 'Multi-location or high volume',
-    lede: 'Several locations, heavy call volume, or special routing. Same product, sized to you.',
+    name: 'Custom', price: 'Quote', per: '', badge: 'Multi-location, high volume or custom workflows',
+    lede: 'Several locations, heavy call volume, or custom workflows. Built around how you work.',
     limits: ['Minutes and texts sized to your volume', 'One AI line per location', 'One dashboard for every location'],
     cta: 'Get a custom quote', featured: false,
   },

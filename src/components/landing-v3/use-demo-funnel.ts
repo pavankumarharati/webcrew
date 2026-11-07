@@ -82,8 +82,8 @@ async function getTurnstileToken(): Promise<string> {
 export function useDemoFunnel() {
   const [sources, setSources] = useState<SourceDraft[]>([emptySource('website')])
   const hasWebsite = sources.some(s => s.type === 'website')
-  // Chosen BEFORE the demo so the demo matches it. No website → new site only.
-  const [experience, setExperience] = useState<'upgrade' | 'new'>('new')
+  // A business with a website keeps it and sees the AI on it. A new site is only for businesses without one.
+  const [experience, setExperience] = useState<'upgrade' | 'new'>('upgrade')
   const effectiveExperience: 'upgrade' | 'new' = hasWebsite ? experience : 'new'
   const [stage, setStage] = useState<Stage>('idle')
   const [progressPct, setProgressPct] = useState(0)
