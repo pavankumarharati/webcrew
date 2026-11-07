@@ -37,5 +37,6 @@ import { post as p34 } from './cheapest-ai-receptionist-small-business'
 import { post as p35 } from './ai-receptionist-for-appliance-repair'
 import { post as p36 } from './ai-receptionist-for-towing-companies'
 import { post as p37 } from './ai-receptionist-for-painters'
-export const POSTS: BlogPost[] = [p37, p36, p35, p34, p33, p32, p31, p30, p29, p28, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27]
+import { post as p38 } from './ai-receptionist-for-handyman-business'
+export const POSTS: BlogPost[] = [p38, p37, p36, p35, p34, p33, p32, p31, p30, p29, p28, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27]
 export const CATEGORIES: BlogCategory[] = ['Guides', 'Pricing & comparisons', 'By trade', 'Follow-up & reviews', 'Phone basics']

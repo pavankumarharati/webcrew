@@ -294,5 +294,13 @@
     "credit": "Blue Bird",
     "creditUrl": "https://www.pexels.com/photo/woman-painting-the-wall-with-a-roller-brush-7218683/",
     "source": "Pexels"
+  },
+  "ai-receptionist-for-handyman-business": {
+    "id": "pexels:17063686",
+    "src": "/blog/ai-receptionist-for-handyman-business.jpg",
+    "alt": "Handyman standing on a ladder with tool belt, repairing outdoors with visible tools.",
+    "credit": "Jimmy Liao",
+    "creditUrl": "https://www.pexels.com/photo/a-man-wearing-work-clothes-and-a-belt-with-tools-standing-on-a-ladder-17063686/",
+    "source": "Pexels"
   }
 }
