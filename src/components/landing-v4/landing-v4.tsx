@@ -446,7 +446,7 @@ function Result({ f }: { f: DemoFunnel }) {
         </div>
         <div className="l4-row">
           {site && <a className="l4-btn ghost" href={site} target="_blank" rel="noopener">Open full screen <ArrowUpRight size={15} /></a>}
-          {f.showPreview && <a className="l4-btn" href="#claim">Go live free for 30 days <ArrowRight size={16} /></a>}
+          {f.showPreview && <button type="button" className="l4-btn" onClick={() => f.startCheckout()} disabled={f.checkoutState === 'sending'}>{f.checkoutState === 'sending' ? <><Loader2 size={16} className="l4-spin" /> Opening secure checkout…</> : <>Go live free for 30 days <ArrowRight size={16} /></>}</button>}
         </div>
       </div>
       {!site && <SiteBuildNote f={f} />}
@@ -465,30 +465,29 @@ function Result({ f }: { f: DemoFunnel }) {
 }
 
 function GoLive({ f, price }: { f: DemoFunnel; price: number }) {
-  const { claim, setClaim } = f
   const newSite = f.siteBuild?.kind === 'listing'
   return (
-    <form className="l4-golive" onSubmit={f.startCheckout}>
+    <div className="l4-golive">
       <div>
         <p className="l4-eyebrow">Go live</p>
         <h2>Start your 30 free days.</h2>
-        <p className="l4-muted">${price}/month after the trial{price === 99 ? ', locked for life' : ''}. $0 today. {newSite ? 'We finish your new website after you start.' : 'We add the AI to your current website.'} Cancel anytime before day 30 and pay nothing.</p>
+        <p className="l4-muted">${price}/month after the trial{price === 99 ? ', locked for life' : ''}. $0 today. Cancel anytime before day 30 and pay nothing.</p>
         <ul className="l4-mini">
           <li><Check size={15} /> AI phone line set up for you</li>
           <li><Check size={15} /> {newSite ? 'New website + AI salesperson' : 'AI salesperson on your website'}</li>
-          <li><Check size={15} /> Setup checklist by email</li>
+          <li><Check size={15} /> Guided setup, about 10 minutes</li>
         </ul>
       </div>
       <div className="l4-golive-form">
-        <label>Your name<input required autoComplete="name" value={claim.name} onChange={e => setClaim({ ...claim, name: e.target.value })} placeholder="Jordan Smith" /></label>
-        <label>Mobile phone<input required type="tel" autoComplete="tel" value={claim.phone} onChange={e => setClaim({ ...claim, phone: e.target.value })} placeholder="(555) 555-0123" /></label>
-        <label>Work email<input required type="email" autoComplete="email" value={claim.email} onChange={e => setClaim({ ...claim, email: e.target.value })} placeholder="jordan@business.com" /></label>
-        <label className="l4-consent"><input type="checkbox" checked={claim.smsConsent} onChange={e => setClaim({ ...claim, smsConsent: e.target.checked })} /><span>Text me setup updates. Recurring messages from WebCrew; frequency varies; msg &amp; data rates may apply. Not required to buy. Reply STOP to opt out, HELP for help. <a href="/privacy" target="_blank" rel="noreferrer">Privacy</a> · <a href="/terms" target="_blank" rel="noreferrer">Terms</a></span></label>
+        <ol className="l4-next">
+          <li><b>1</b> Enter your card on Stripe. No charge today.</li>
+          <li><b>2</b> Get your AI phone number.</li>
+          <li><b>3</b> Create a password and finish setup.</li>
+        </ol>
         {f.checkoutError && <p className="l4-error">{f.checkoutError}</p>}
-        <button className="l4-btn" disabled={f.checkoutState === 'sending'}>{f.checkoutState === 'sending' ? <><Loader2 size={16} className="l4-spin" /> Opening secure checkout…</> : <>Continue to secure checkout <ArrowRight size={16} /></>}</button>
+        <button type="button" className="l4-btn" onClick={() => f.startCheckout()} disabled={f.checkoutState === 'sending'}>{f.checkoutState === 'sending' ? <><Loader2 size={16} className="l4-spin" /> Opening secure checkout…</> : <>Continue to secure checkout <ArrowRight size={16} /></>}</button>
         <p className="l4-fine"><ShieldCheck size={14} /> Payments by Stripe. Your card is not charged until the trial ends.</p>
       </div>
-    </form>
+    </div>
   )
 }
-

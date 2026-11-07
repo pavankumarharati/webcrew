@@ -169,6 +169,9 @@ const css = `
 .l4-phonecard span{flex:1;min-width:0}
 .l4-phonecard strong{display:block;font-size:18px}
 .l4-phonecard small{display:block;margin-top:3px;font-size:14px;color:#c7cfdd}
+.l4-next{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:10px;font-size:15px}
+.l4-next li{display:flex;align-items:center;gap:10px}
+.l4-next b{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#0d172b;color:#fff;font-size:13px}
 .l4-iframe{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:14px}
 .l4-iframe iframe{display:block;width:100%;height:78vh;min-height:560px;border:0;background:#fff}
 

@@ -6,15 +6,19 @@ import { useSearchParams } from 'next/navigation'
 
 const ADMIN_URL = process.env.NEXT_PUBLIC_ADMIN_URL ?? 'https://admin.webcrew.app'
 const POLL_INTERVAL_MS = 2000
-const POLL_TIMEOUT_MS = 60_000
+const POLL_TIMEOUT_MS = 90_000
+const PRICES: Record<string, string> = { site_ai: '$49', founding: '$99', all_in_one: '$149' }
 
-type DashboardState = 'pending' | 'ready' | 'timed_out' | 'no_session'
+type Ready = { authUrl: string; business?: string; plan?: string; aiPhone?: string; trialEnds?: string }
+type State = 'pending' | 'ready' | 'timed_out' | 'no_session'
+
+const pretty = (n?: string) => n?.replace(/^\+?1?(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3')
+const longDate = (iso?: string) => iso ? new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : null
 
 export function ThankYouClient() {
-  const searchParams = useSearchParams()
-  const sessionId = searchParams.get('session_id')
-  const [state, setState] = useState<DashboardState>(sessionId ? 'pending' : 'no_session')
-  const [authUrl, setAuthUrl] = useState<string | null>(null)
+  const sessionId = useSearchParams().get('session_id')
+  const [state, setState] = useState<State>(sessionId ? 'pending' : 'no_session')
+  const [info, setInfo] = useState<Ready | null>(null)
 
   // Stripe only redirects here after a completed checkout, so this is a trial start. eventID = session id lets
   // Meta drop the duplicate if the page is reloaded.
@@ -32,76 +36,65 @@ export function ThankYouClient() {
     if (!sessionId) return
     let cancelled = false
     const startedAt = Date.now()
-
     async function poll() {
       if (cancelled) return
       try {
         const res = await fetch(`${ADMIN_URL}/api/client/session-login?session_id=${encodeURIComponent(sessionId!)}`)
         const data = await res.json()
         if (cancelled) return
-        if (data.status === 'ready' && data.authUrl) {
-          setAuthUrl(data.authUrl)
-          setState('ready')
-          return
-        }
-      } catch {
-        // Provisioning is likely still in progress — keep polling until timeout.
-      }
-      if (Date.now() - startedAt >= POLL_TIMEOUT_MS) {
-        setState('timed_out')
-        return
-      }
+        if (data.status === 'ready' && data.authUrl) { setInfo(data); setState('ready'); return }
+      } catch { /* the account is likely still being set up: keep checking */ }
+      if (Date.now() - startedAt >= POLL_TIMEOUT_MS) { setState('timed_out'); return }
       setTimeout(poll, POLL_INTERVAL_MS)
     }
-
     poll()
     return () => { cancelled = true }
   }, [sessionId])
 
-  const steps: [string, string, string][] = [
-    ['1', 'Provisioning', state === 'pending' ? 'Creating your workspace and reception configuration…' : 'Workspace and reception configuration created.'],
-    ['2', 'Secure access', state === 'ready' ? 'Your one-click dashboard link is ready below.' : 'Your one-click dashboard link is being prepared.'],
-    ['3', 'Go live', 'Confirm business details, then test your AI Reception.'],
-  ]
+  const price = info?.plan ? PRICES[info.plan] : undefined
+  const trialEnds = longDate(info?.trialEnds)
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] px-6 py-20 text-[var(--color-text)]">
-      <section className="mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center">
-        <div className="w-full rounded-[2rem] border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-2xl backdrop-blur-xl sm:p-12">
-          <div className="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-accent-dim)] text-2xl text-[var(--color-accent)]" aria-hidden="true">✓</div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-blue)]" style={{ fontFamily: 'var(--font-display)' }}>WebCrew AI Front Office</p>
-          <h1 className="gradient-brand text-4xl font-black tracking-tight sm:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>Your trial checkout is complete.</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--color-muted)]">
-            We are preparing your workspace and AI Reception. Your secure dashboard link and setup details will arrive by email and, when you consented to texts, by SMS.
-          </p>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {steps.map(([number, title, copy], i) => {
-              const active = (i === 0 && state === 'pending') || (i === 1 && state === 'pending')
-              return (
-                <div key={number} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-blue-dim)] p-5">
-                  <span className={`text-sm font-bold ${active ? 'text-[var(--color-blue)]' : 'text-[var(--color-accent)]'}`}>{number}</span>
-                  <h2 className="mt-3 font-bold" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
-                  <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">{copy}</p>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            {state === 'ready' && authUrl ? (
-              <a href={authUrl} className="btn-primary justify-center"><span>Open client dashboard</span></a>
-            ) : state === 'timed_out' || state === 'no_session' ? (
-              <a href="https://admin.webcrew.app/client/login" className="btn-primary justify-center"><span>Open client dashboard</span></a>
-            ) : (
-              <button type="button" disabled className="btn-primary justify-center opacity-60" style={{ cursor: 'wait' }}>
-                <span>Preparing your dashboard…</span>
-              </button>
-            )}
-            <a href="mailto:hello@webcrew.app" className="btn-ghost justify-center">Need help?</a>
-          </div>
-        </div>
+    <main className="ty">
+      <style>{CSS}</style>
+      <section className="ty-card">
+        <p className="ty-eyebrow">WebCrew</p>
+        {state === 'no_session' ? <>
+          <h1>Looking for your account?</h1>
+          <p className="ty-lede">Sign in to see your AI front office.</p>
+          <a className="ty-btn" href={`${ADMIN_URL}/client/login`}>Sign in</a>
+        </> : <>
+          <h1>{state === 'ready' ? `You're in${info?.business ? `, ${info.business}` : ''}.` : 'Your trial has started.'}</h1>
+          <p className="ty-lede">$0 charged today. We are emailing you a setup link too.</p>
+          <ul className="ty-list">
+            <li className="done"><span>✓</span> Card saved, 30-day free trial started</li>
+            <li className={state === 'ready' ? 'done' : ''}><span>{state === 'ready' ? '✓' : '…'}</span> {state === 'ready' ? (info?.aiPhone ? `Your AI number is ${pretty(info.aiPhone)}` : 'Your AI is ready') : 'Setting up your AI'}</li>
+            <li><span>3</span> Create a password and finish setup, about 10 minutes</li>
+          </ul>
+          {state === 'ready' && trialEnds && <p className="ty-note">Your trial runs until {trialEnds}{price ? `, then ${price}/month` : ''}. Cancel any time before then and pay nothing.</p>}
+          {state === 'ready' && info && <a className="ty-btn" href={info.authUrl}>Continue to setup</a>}
+          {state === 'pending' && <button className="ty-btn" disabled>Getting your account ready…</button>}
+          {state === 'timed_out' && <p className="ty-note">This is taking longer than usual. Your trial is safe. We are emailing you a link to create your password and finish setup.</p>}
+        </>}
+        <p className="ty-help">Need help? <a href="mailto:hello@webcrew.app">hello@webcrew.app</a></p>
       </section>
     </main>
   )
 }
+
+const CSS = `
+.ty{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f6f3ed;color:#10182b;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.ty-card{width:100%;max-width:560px;padding:36px;border-radius:18px;background:#fff;border:1px solid #e5e0d6}
+.ty-eyebrow{margin:0 0 14px;font-size:14px;font-weight:700;color:#c2410c}
+.ty h1{margin:0 0 8px;font-size:34px;line-height:1.15;letter-spacing:-.02em}
+.ty-lede{margin:0 0 22px;font-size:17px;color:#475467}
+.ty-list{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:12px;font-size:16px}
+.ty-list li{display:flex;align-items:center;gap:12px}
+.ty-list span{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;flex-shrink:0;border-radius:50%;background:#f2f4f7;font-size:13px;font-weight:700}
+.ty-list li.done span{background:#dcfce7;color:#15803d}
+.ty-note{margin:0 0 20px;font-size:15px;line-height:1.5;color:#475467}
+.ty-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border:0;border-radius:11px;background:#c2410c;color:#fff;font:700 16px system-ui;text-decoration:none;cursor:pointer}
+.ty-btn:disabled{opacity:.6;cursor:wait}
+.ty-help{margin:18px 0 0;font-size:14px;color:#667085}
+.ty-help a{color:inherit}
+`

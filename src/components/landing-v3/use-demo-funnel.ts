@@ -273,8 +273,9 @@ export function useDemoFunnel() {
 
   // Paywall: going live always goes through Stripe Checkout (card on file, 30-day trial, $0 today).
   // Nothing billable happens before the Stripe webhook confirms it.
-  async function startCheckout(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+  // Stripe's page collects email, name, phone and card once, so nothing is typed twice.
+  async function startCheckout(e?: React.FormEvent<HTMLFormElement>) {
+    e?.preventDefault()
     if (!previewId) return
     setCheckoutState('sending'); setCheckoutError('')
     try {
